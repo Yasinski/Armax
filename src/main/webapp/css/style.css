@@ -1,0 +1,258 @@
+body {
+    /*background-color: #FFF;*/
+    background-image: url(http://tinyurl.com/agzamep);
+    background-repeat: no-repeat;
+    /*background-attachment: fixed;*/
+    background-position: 50% 0;
+    width: 850px;
+    margin-top: 210px;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+}
+
+.header {
+    background-color: #808080;
+    width: 850px;
+    height: 87px;
+    margin-bottom: 30px;
+}
+
+.button_open_test {
+    position: relative;
+    width: 100px;
+    top: 12px;
+    left: 380px;
+    background-color: yellow;
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+}
+
+.push_me {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.button_open_context {
+    position: relative;
+    top: 12px;
+    left: 381px;
+    width: 24px;
+    height: 24px;
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+}
+
+.raquo {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: -1px -3px 0 3px;
+    padding: 0;
+}
+
+#moviesInfo {
+    background-color: #f2f2f2;
+    background-image: url(http://i.pixs.ru/storage/5/6/4/stkinopois_9473100_6862564.gif);
+    background-position: 619px 97%;
+    background-repeat: no-repeat;
+    width: 850px;
+    height: 564px;
+    margin: auto;
+
+}
+
+#mainInfo {
+    width: 589px;
+    float: left;
+}
+
+#title {
+    /*background-color: green;*/
+    margin: 21px 0 22px 15px;
+    font-family: tahoma, verdana, arial, sans-serif;
+
+}
+
+#title-1 {
+    margin: 0;
+    height: 30px;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+#title-2 {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+#info {
+
+}
+
+#poster {
+    float: left;
+    width: 120px;
+    height: 171px;
+    margin-right: 15px;
+    /*padding-right: 10px;*/
+    border-left-width: 10px;
+    border-left-style: solid;
+    border-left-color: #f60;
+}
+
+#actorsInfo {
+    width: 251px;
+    float: left;
+    padding: 20px 10px 0 0;
+    text-align: right;
+}
+
+#roles {
+    vertical-align: top;
+    color: #f60;
+    margin: 0;
+    padding: 0;
+}
+
+#data {
+    width: 439px;
+    border-collapse: collapse;
+}
+
+.tr_data {
+
+    /*background-color: #dc143c;*/
+    vertical-align: middle;
+    border-bottom-style: dotted;
+    border-bottom-color: #808080;
+    border-bottom-width: 1px;
+
+}
+
+.td_data_1 {
+    background-image: url(http://i.pixs.ru/storage/5/7/4/stkinopois_6183940_6862574.gif);
+    background-position: 11px 11px;
+    background-repeat: no-repeat;
+    width: 119px;
+    color: #f60;
+    padding: 5px 0 6px 23px;
+
+    border-bottom-style: dotted;
+    border-bottom-color: #808080;
+    border-bottom-width: 1px;
+
+}
+
+.td_data_2 {
+    width: 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 16px;
+
+}
+
+#dollar {
+    background-image: url(http://www.iconsearch.ru/uploads/icons/siena/128x128/currency_dollarred.png);
+}
+
+#calendar_1, #calendar_2 {
+    background-image: url(http://www.ctlr.org/Calendar-icon.gif);
+}
+
+.blu-ray {
+    background-image: url(http://png-1.findicons.com/files/icons/1171/media/256/blu_ray.png);
+}
+
+#dvd {
+    background-image: url(http://icons.iconarchive.com/icons/visualpharm/must-have/256/DVD-Disk-icon.png);
+}
+
+#time {
+    background-image: url(http://www.cougarguide.com/TimeIcon.png);
+}
+
+.td_data_3 {
+    padding-left: 2px;
+}
+
+#popup_test {
+    background-image: url("http://img8.joyreactor.cc/pics/post/картинки-ядерный-взрыв-удалённое-352458.jpeg");
+    background-repeat: no-repeat;
+    background-size: 650px 667px;
+    width: 650px;
+    height: 647px;
+    position: absolute;
+    top: 180px;
+    left: 400px;
+    margin: auto;
+    display: none;
+    z-index: 500;
+}
+
+#popup_context {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    top: 12px;
+    left: 381px;
+    display: none;
+     float: left;
+    z-index: 100;
+
+}
+
+#popup_context table{
+    width: inherit;
+    background-color: yellow;
+    border-collapse:collapse;
+    border: solid 1px;
+    margin-top: -17px;
+}
+
+#popup_context table th{
+    height: 21px;
+    background-color: #9acd32;
+    font-weight: bold;
+}
+
+#popup_context table td{
+    height: 20px;
+}
+#popup_context table td:hover {
+    background-color: #9acdaa
+}
+
+.button_close {
+    margin-left: 630px;
+    width: 20px;
+    height: 20px;
+}
+
+.close_context {
+    margin-left:80px;
+}
+
+.times {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: -3px -3px 3px 3px;
+    padding: 0;
+}
+.clear{
+    height: 20px;
+    clear: both;
+}
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+  <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+  <!--<property name="urlMap">-->
+  <!--<map>-->
+  <!--<entry key="/start" value-ref="start"/>-->
+  <!--</map>-->
+  <!--</property>-->
+
+  <!--</bean>-->
+
+  <bean name="/start/" class="third.service.ServletStart"/>
+  <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
+  <bean name="/actorAdd/" class="third.service.ActorAdd"/>
+  <bean name="/actorsInfo/" class="third.service.ActorsInfo"/>
+  <bean name="/actorMoviesList/" class="third.service.ActorsMoviesList"/>
+  <bean name="/directorActorsList/" class="third.service.DirectorActorsList"/>
+  <bean name="/directorMoviesList/" class="third.service.DirectorMoviesList"/>
+  <bean name="/moviePage/" class="third.service.MoviePage"/>
+  <bean name="/movieAdd/" class="third.service.MovieAdd"/>
+  <bean name="/movieAddShort/" class="third.service.MovieAddShort"/>
+  <bean name="/moviesWithoutActors/" class="third.service.MoviesWithoutActors"/>
+  <bean name="/movieUpdate/" class="third.service.MovieUpdate"/>
+  <bean name="/registration/" class="third.service.Registration"/>
+
+  <!--<bean id="actorsDAO" class="third.DAO.Impl.ActorsDAOImpl"/>-->
+  <!--<bean id="directorsDAO" class="third.DAO.Impl.DirectorsDAOImpl"/>-->
+  <!--<bean id="moviesDAO" class="third.DAO.Impl.MoviesDAOImpl"/>-->
+  <!--<bean id="userDAO" class="third.DAO.Impl.UserDAOImpl"/>-->
+
+
+  <bean name="userDetailsServiceImpl" class="third.facade.UserDetailsServiceImpl"/>
+  <!--<bean name="dbUserQueryer" class="third.facade.DBUserQueryer"/>-->
+  <!--<bean name="dbMovieQueryer" class="third.facade.DBMovieQueryer"/>-->
+  <!--<bean name="dbDirectorQueryer" class="third.facade.DBDirectorQueryer"/>-->
+  <!--<bean name="dbActorQueryer" class="third.facade.DBActorQueryer"/>-->
+  <bean name="pagination" class="third.facade.Pagination"/>
+</beans>
