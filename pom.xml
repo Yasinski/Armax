@@ -278,6 +278,9 @@
       <resource>
         <directory>src/main/java</directory>
       </resource>
+      <resource>
+        <directory>src/main/test</directory>
+      </resource>
     </resources>
   </build>
 </project>

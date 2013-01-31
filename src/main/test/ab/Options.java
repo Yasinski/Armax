@@ -1,4 +1,4 @@
-package by.onliner.ab;
+package ab;
 
 /**
  * writeme: Should be the description of the class
