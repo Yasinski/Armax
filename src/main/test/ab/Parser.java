@@ -1,4 +1,4 @@
-package by.onliner.ab;
+package ab;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;

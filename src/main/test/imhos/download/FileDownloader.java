@@ -1,4 +1,4 @@
-package com.imhos.download;
+package imhos.download;
 
 
 import java.io.*;

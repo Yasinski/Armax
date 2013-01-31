@@ -1,4 +1,4 @@
-package com.imhos.movie.searcher;
+package imhos.movie.searcher;
 
 /**
  * Created with IntelliJ IDEA.

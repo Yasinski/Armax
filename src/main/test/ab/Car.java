@@ -1,4 +1,4 @@
-package by.onliner.ab;
+package ab;
 
 import java.util.List;
 import java.util.Map;
