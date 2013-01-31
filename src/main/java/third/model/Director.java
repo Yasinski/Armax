@@ -28,7 +28,7 @@ public class Director extends Human {
 	}
 
 	public Director(Integer id, String firstName, String lastName, Set<Movie> hisMovies) {
-		this.id = id;
+		this.id  = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hisMovies = hisMovies;
