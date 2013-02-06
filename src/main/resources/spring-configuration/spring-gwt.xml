@@ -12,6 +12,7 @@
         </property>
     </bean>
 
+
     <bean id="sampleService" class="third.service.gwt.SampleApplicationServiceImpl"/>
 
 </beans>

@@ -52,6 +52,15 @@
         <url-pattern>/application/rpc/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>authServlet</servlet-name>
+        <servlet-class>third.service.gwt.SampleApplicationServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>authServlet</servlet-name>
+        <url-pattern>/application/rpc/auth</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>springapp</servlet-name>
