@@ -41,11 +41,11 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 	}
 
 	public Users getUserByLogin(String username) {
-		Users users = (Users) getSession().createCriteria(Users.class)
+		Users user = (Users) getSession().createCriteria(Users.class)
 				.add(Restrictions.eq("username", username))
 				.setFetchMode("authorities", FetchMode.JOIN)
 				.uniqueResult();
-		return users;
+		return user;
 		
 	}
 

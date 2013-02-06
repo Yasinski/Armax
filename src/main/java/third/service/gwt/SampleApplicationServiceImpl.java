@@ -1,6 +1,7 @@
 package third.service.gwt;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +32,7 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
             String storedPass = user.getPassword();
             return storedPass.equals(password);
         }else {
-            return false;
+            throw new AccessDeniedException("");
         }
     }
 
