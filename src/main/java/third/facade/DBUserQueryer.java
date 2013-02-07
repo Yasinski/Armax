@@ -1,5 +1,6 @@
 package third.facade;
 
+import org.springframework.security.access.annotation.Secured;
 import third.DAO.UserDAO;
 import third.model.Users;
 
@@ -27,7 +28,8 @@ public class DBUserQueryer {
 		 return userDAO.getAllUsers();
 	}
 
-	public Users getUserByLogin(String username){
+    @Secured("ROLE_ADMIN")
+    public Users getUserByLogin(String username){
 		 return userDAO.getUserByLogin(username);
 	}
 

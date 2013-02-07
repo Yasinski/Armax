@@ -9,9 +9,12 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:spring-configuration/spring-mapping-url.xml
-            classpath:spring-configuration/applicationContext.xml
+            <!--classpath:spring-configuration/spring-mapping-url.xml-->
+            classpath:spring-configuration/common.xml
             classpath:spring-configuration/security.xml
+            classpath:spring-configuration/hibernate.xml
+            classpath:spring-configuration/dao.xml
+            classpath:spring-configuration/facade.xml
         </param-value>
     </context-param>
 
@@ -43,9 +46,10 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                classpath:spring-configuration/spring-gwt.xml
+                classpath:spring-configuration/gwt.xml
             </param-value>
         </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>gwtapp</servlet-name>
@@ -69,7 +73,6 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>
                 classpath:spring-configuration/spring-mapping-url.xml
-                classpath:spring-configuration/applicationContext.xml
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

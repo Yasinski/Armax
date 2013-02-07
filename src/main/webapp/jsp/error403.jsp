@@ -1,3 +1,5 @@
+<%@ page import="third.model.Actor" %>
+<%@ page import="third.model.Movie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Panstvo
@@ -11,6 +13,9 @@
  <title>Error</title>
 </head>
 <body>
+<%
+    Movie movie = (Movie) request.getAttribute("movie");
+%>
 <table border="1" align="CENTER">
  <TR align="center">
   <TD>

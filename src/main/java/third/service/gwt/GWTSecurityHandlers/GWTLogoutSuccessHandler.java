@@ -24,7 +24,6 @@ public class GWTLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                 Authentication authentication) throws IOException, ServletException {
 
-        HttpServletResponse httpResponse = response;
-        httpResponse.setStatus(200, "Logout is successful");
+        response.sendError(HttpServletResponse.SC_OK);
     }
 }

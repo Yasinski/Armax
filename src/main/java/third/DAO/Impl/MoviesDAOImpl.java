@@ -19,23 +19,22 @@ import java.util.List;
  * @author <a href="a.kasinski@itision.com">Arthur Kasinskiy</a>
  */
 
-public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
+public class MoviesDAOImpl  implements MoviesDAO {
 
 	private MoviesDAO moviesDAO;
+	private SessionFactory sessionFactory;
 
-	@Override
-	protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
-		HibernateTemplate result = super.createHibernateTemplate(sessionFactory);
-		result.setAllowCreate(false);
-		return result;
-	}
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
 
 	public void setMoviesDAO(MoviesDAO moviesDAO) {
 		this.moviesDAO = moviesDAO;
 	}
 
 	public Movie getMovie(Integer movieId) {
-		Movie movie = (Movie) getSession().createCriteria(Movie.class)
+		Movie movie = (Movie) sessionFactory.getCurrentSession().createCriteria(Movie.class)
 				.add(Restrictions.eq("id", movieId))
 				.setFetchMode("genres", FetchMode.JOIN)
 				.setFetchMode("actors", FetchMode.JOIN)
@@ -45,25 +44,25 @@ public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
 	}
 
 	public void saveMovie(Movie movie) {
-		getSession().save(movie);
+        sessionFactory.getCurrentSession().save(movie);
 	}
 
 	public void updateMovie(Movie movie) {
-		getSession().update(movie);
+        sessionFactory.getCurrentSession().update(movie);
 	}
 
 	public void deleteMovie(Movie movie) {
-		getSession().delete(movie);
+        sessionFactory.getCurrentSession().delete(movie);
 	}
 
 	public List<Movie> findAll() {
-		List<Movie> movies = getSession().createCriteria(Movie.class)
+		List<Movie> movies = sessionFactory.getCurrentSession().createCriteria(Movie.class)
 				.list();
 		return movies;
 	}
 
 	public List<Movie> findAllWithAuthorsCount() {
-		List<Movie> movies = getSession().createCriteria(Movie.class)
+		List<Movie> movies = sessionFactory.getCurrentSession().createCriteria(Movie.class)
 				.setProjection(Projections.projectionList()
 						.add(Projections.id())
 						.add(Projections.property("title"))
@@ -73,7 +72,7 @@ public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
 	}
 
 	public List<Movie> findWithThisActor(Integer actorId) {
-		List<Movie> movies = getSession().createCriteria(Movie.class)
+		List<Movie> movies = sessionFactory.getCurrentSession().createCriteria(Movie.class)
 				.createCriteria("actors")
 				.add(Restrictions.eq("id", actorId))
 				.list();
@@ -81,19 +80,19 @@ public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
 	}
 
 	public List<Movie> findWithoutAnyActor() {
-		List<Movie> movies = (List<Movie>) getSession().createCriteria(Movie.class)     //SELECT * FROM MOVIE WHERE IsEmpty(ACTORS)
+		List<Movie> movies = (List<Movie>) sessionFactory.getCurrentSession().createCriteria(Movie.class)     //SELECT * FROM MOVIE WHERE IsEmpty(ACTORS)
 				.add(Restrictions.isEmpty("actors"))
 				.list();
 		return movies;
 	}
 
 	public List<Movie> findAll_dirName1() {
-		Query query = getSession().createQuery("select distinct m from Movie m  left join fetch m.director d left join fetch m.genres g order by (m.title) asc");
+		Query query = sessionFactory.getCurrentSession().createQuery("select distinct m from Movie m  left join fetch m.director d left join fetch m.genres g order by (m.title) asc");
 		return query.list();
 	}
 
 	public List<Movie> findAll_dirName() {
-		Criteria criteria = getSession().createCriteria(Movie.class);
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Movie.class);
 		criteria.setFetchMode("genres", FetchMode.JOIN);
 		criteria.setFetchMode("actors", FetchMode.JOIN);
 		criteria.setFetchMode("director", FetchMode.JOIN);
@@ -103,14 +102,14 @@ public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
 	}
 
 	public List<Movie> findAll_dirName3() {
-		List<Movie> movies = (List<Movie>) getSession().createSQLQuery("SELECT DISTINCT m.* FROM MOVIE m LEFT JOIN DIRECTOR {d} ON m.DIR_ID=d.DIRECTOR_ID").list();
+		List<Movie> movies = (List<Movie>) sessionFactory.getCurrentSession().createSQLQuery("SELECT DISTINCT m.* FROM MOVIE m LEFT JOIN DIRECTOR {d} ON m.DIR_ID=d.DIRECTOR_ID").list();
 		return movies;
 	}
 
 	public List<Movie> searchByTitle(String searchString, Integer firstOnPage, Integer rowsOnPage) {
 		String queryString = "select distinct m from Movie m  left join fetch m.director d " +
 				"left join fetch m.genres g where m.title like :searchString order by (m.title) asc";
-		Query query = getSession().createQuery(queryString)
+		Query query = sessionFactory.getCurrentSession().createQuery(queryString)
 				.setParameter("searchString", "%" + searchString + "%")
 				.setFirstResult(firstOnPage)
 				.setMaxResults(rowsOnPage);
@@ -119,28 +118,28 @@ public class MoviesDAOImpl extends HibernateDaoSupport implements MoviesDAO {
 
 	public Integer getCountOfFound(String searchString) {
 		String queryString = "select count(m) from Movie m  where m.title like :searchString";
-		Query query = getSession().createQuery(queryString)
+		Query query = sessionFactory.getCurrentSession().createQuery(queryString)
 				.setParameter("searchString", "%" + searchString + "%");
 		Long count = (Long) query.uniqueResult();
 		return count.intValue();
 	}
 
 	public List<Movie> findLimit(Integer firstOnPage, Integer rowsOnPage) {
-		Query query = getSession().createQuery("select distinct m from Movie m  left join fetch m.director d left join fetch m.genres g order by (m.title) asc")
+		Query query = sessionFactory.getCurrentSession().createQuery("select distinct m from Movie m  left join fetch m.director d left join fetch m.genres g order by (m.title) asc")
 				.setFirstResult(firstOnPage)
 				.setMaxResults(rowsOnPage);
 		return query.list();
 	}
 
 	public Integer findCountOfMovies() {
-		Integer count = (Integer) getSession().createCriteria(Movie.class)
+		Integer count = (Integer) sessionFactory.getCurrentSession().createCriteria(Movie.class)
 				.setProjection(Projections.count("id"))
 				.uniqueResult();
 		return count;
 	}
 
 	public List<Movie> findWithThisDirector(Integer directorId) {
-		List<Movie> movies = (List<Movie>) getSession().createQuery("select distinct m from Movie m join m.director d where d.id = :directorId")
+		List<Movie> movies = (List<Movie>) sessionFactory.getCurrentSession().createQuery("select distinct m from Movie m join m.director d where d.id = :directorId")
 				.setParameter("directorId", directorId)
 				.list();
 		return movies;

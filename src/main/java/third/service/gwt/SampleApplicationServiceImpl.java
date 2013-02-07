@@ -2,17 +2,20 @@ package third.service.gwt;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.context.ServletContextAware;
 import third.client.module.SampleApplicationService;
 import third.facade.DBUserQueryer;
 import third.model.Users;
-import third.service.gwt.auth.CustomUserAuthentication;
+
+import javax.servlet.ServletContext;
 
 
-public class SampleApplicationServiceImpl extends RemoteServiceServlet implements SampleApplicationService {
+public class SampleApplicationServiceImpl extends RemoteServiceServlet implements SampleApplicationService  {
     // Implementation of sample interface method
     private DBUserQueryer dbUserQueryer;
 
@@ -21,6 +24,7 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
     }
 
     public String getMessage(String msg) {
+        Users user = dbUserQueryer.getUserByLogin("admin");
 
         return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
     }
@@ -35,5 +39,6 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
             throw new AccessDeniedException("");
         }
     }
+
 
 }

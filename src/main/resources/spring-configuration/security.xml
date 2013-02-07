@@ -5,28 +5,35 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+             default-autowire="byName">
 
 
-    <http auto-config="true" access-denied-page="/jsp/error403.jsp">
+    <!--<global-method-security secured-annotations="enabled" />-->
+
+
+    <http auto-config="true" access-denied-page="/jsp/error403.jsp" entry-point-ref="http403ForbiddenEntryPoint">
         <intercept-url pattern="/jsp/registration.jsp" access="ROLE_ADMIN,ROLE_USER, ROLE_ANONYMOUS"/>
-        <intercept-url pattern="/start/" access="ROLE_ADMIN,ROLE_USER, ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/start/" access="ROLE_ADMIN,ROLE_USER"/>
         <intercept-url pattern="/*Add*/" access="ROLE_USER, ROLE_ADMIN"/>
         <intercept-url pattern="/*Update*/" access="ROLE_ADMIN"/>
         <intercept-url pattern="/*Delete*/" access="ROLE_ADMIN"/>
+        <intercept-url pattern="*sample" access="ROLE_ADMIN"/>
         <form-login authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>
-        <logout success-handler-ref="logoutSuccessHandler" />
+        <logout success-handler-ref="logoutSuccessHandler"/>
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <!--<remember-me/>-->
     </http>
 
+    <beans:bean id="http403ForbiddenEntryPoint"
+                class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     <beans:bean id="authenticationSuccessHandler"
                 class="third.service.gwt.GWTSecurityHandlers.GWTAuthenticationSuccessHandler"/>
     <beans:bean id="authenticationFailureHandler"
-                class="third.service.gwt.GWTSecurityHandlers.GWTAuthenticationFailureHandler" />
+                class="third.service.gwt.GWTSecurityHandlers.GWTAuthenticationFailureHandler"/>
     <beans:bean id="logoutSuccessHandler"
-                class="third.service.gwt.GWTSecurityHandlers.GWTLogoutSuccessHandler" />
+                class="third.service.gwt.GWTSecurityHandlers.GWTLogoutSuccessHandler"/>
 
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
@@ -38,5 +45,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
             <!--<password-encoder hash="md5"/>-->
         </authentication-provider>
     </authentication-manager>
+
+
+    <beans:bean name="userDetailsServiceImpl" class="third.facade.UserDetailsServiceImpl"/>
 
 </beans:beans>

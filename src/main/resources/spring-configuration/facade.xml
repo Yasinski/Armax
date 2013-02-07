@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:secure="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+       default-autowire="byName">
+
+
+    <secure:global-method-security secured-annotations="enabled"/>
+
+    <bean id="moviesUpdater" name="moviesUpdater" class="third.facade.MoviesUpdater"/>
+    <bean id="dbActorQueryer" name="dbActorQueryer" class="third.facade.DBActorQueryer"/>
+    <bean id="dbDirectorQueryer" name="dbDirectorQueryer" class="third.facade.DBDirectorQueryer"/>
+    <bean id="dbMovieQueryer" name="dbMovieQueryer" class="third.facade.DBMovieQueryer"/>
+    <bean id="dbUserQueryer" name="dbUserQueryer" class="third.facade.DBUserQueryer"/>
+</beans>

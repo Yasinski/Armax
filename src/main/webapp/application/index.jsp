@@ -34,8 +34,10 @@
 
 <table align="center">
     <tr>
-        <td id="slot1"></td>
-        <td id="slot2"></td>
+        <td>
+            <div id="slot1"></div>
+            <div id="slot2"></div>
+        </td>
     </tr>
 </table>
 </body>
