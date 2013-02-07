@@ -21,7 +21,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <intercept-url pattern="*sample" access="ROLE_ADMIN"/>
         <form-login authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>
-        <logout success-handler-ref="logoutSuccessHandler"/>
+        <logout logout-url="/logout" success-handler-ref="logoutSuccessHandler"/>
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <!--<remember-me/>-->
     </http>

@@ -2,6 +2,7 @@ package com.imhos.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		boolean enabled = user.isEnabled();
 		Set<GrantedAuthority> set = new HashSet<GrantedAuthority>();
 		for (String authority : authorities) {
-			set.add(new GrantedAuthorityImpl(authority));
+			set.add(new SimpleGrantedAuthority(authority));
 		}
 		return new User(username, password, enabled, true, true, true, set);
 	}

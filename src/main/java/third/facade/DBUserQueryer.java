@@ -28,7 +28,7 @@ public class DBUserQueryer {
 		 return userDAO.getAllUsers();
 	}
 
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     public Users getUserByLogin(String username){
 		 return userDAO.getUserByLogin(username);
 	}
