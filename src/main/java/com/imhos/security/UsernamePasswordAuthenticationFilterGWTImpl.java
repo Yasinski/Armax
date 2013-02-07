@@ -1,4 +1,4 @@
-package third.service.gwt;
+package com.imhos.security;
 
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;

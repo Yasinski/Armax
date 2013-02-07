@@ -1,4 +1,4 @@
-package third.service.gwt.GWTSecurityHandlers;
+package com.imhos.security;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleServletHandlerAdapter;

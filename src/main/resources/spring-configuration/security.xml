@@ -29,11 +29,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <beans:bean id="http403ForbiddenEntryPoint"
                 class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     <beans:bean id="authenticationSuccessHandler"
-                class="third.service.gwt.GWTSecurityHandlers.GWTAuthenticationSuccessHandler"/>
+                class="com.imhos.security.handlers.GWTAuthenticationSuccessHandler"/>
     <beans:bean id="authenticationFailureHandler"
-                class="third.service.gwt.GWTSecurityHandlers.GWTAuthenticationFailureHandler"/>
+                class="com.imhos.security.handlers.GWTAuthenticationFailureHandler"/>
     <beans:bean id="logoutSuccessHandler"
-                class="third.service.gwt.GWTSecurityHandlers.GWTLogoutSuccessHandler"/>
+                class="com.imhos.security.handlers.GWTLogoutSuccessHandler"/>
 
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
@@ -47,6 +47,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     </authentication-manager>
 
 
-    <beans:bean name="userDetailsServiceImpl" class="third.facade.UserDetailsServiceImpl"/>
+    <beans:bean name="userDetailsServiceImpl" class="com.imhos.security.UserDetailsServiceImpl"/>
 
 </beans:beans>
