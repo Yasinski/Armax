@@ -1,4 +1,4 @@
-package third.service.facebook;
+package com.imhos.security.facebook;
 
 import com.imhos.security.CustomUserAuthentication;
 import com.imhos.security.UserDetailsServiceImpl;
@@ -58,7 +58,7 @@ public class FacebookCallback implements Controller {
         Facebook facebook = connection.getApi();
         String profileId = facebook.userOperations().getUserProfile().getId();
         String profileName = facebook.userOperations().getUserProfile().getName();
-        System.out.println("Facebook: " + profileId + " " + profileName);
+
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
         if (user == null) {

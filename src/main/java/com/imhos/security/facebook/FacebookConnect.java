@@ -1,4 +1,4 @@
-package third.service.facebook;
+package com.imhos.security.facebook;
 
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.GrantType;

@@ -13,8 +13,8 @@
 
   <!--</bean>-->
 
-  <bean name="/facebookconnect/" class="third.service.facebook.FacebookConnect"/>
-  <bean name="/facebookcallback/" class="third.service.facebook.FacebookCallback"/>
+  <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect"/>
+  <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback"/>
   <bean name="/start/" class="third.service.ServletStart"/>
   <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
   <bean name="/actorAdd/" class="third.service.ActorAdd"/>
