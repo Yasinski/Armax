@@ -10,7 +10,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import third.facade.DBUserQueryer;
-import third.model.Users;
+import third.model.Role;
+import third.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,19 +31,19 @@ public class Registration implements Controller {
 	}
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		Set<String> authorities = new HashSet<String>();
+		Set<Role> authorities = new HashSet<Role>();
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String authority = request.getParameter("authority");
 		boolean enabled = true;
-		authorities.add(authority);
+		authorities.add(Role.ROLE_USER);
 
 		if(username.equals("admin")){
-			authorities.add("ROLE_ADMIN");
+			authorities.add(Role.ROLE_ADMIN);
 		}
 
-		Users user = new Users(username, password,authorities, enabled);
+		User user = new User(username, password,authorities, enabled);
 		try {
 			dbUserQueryer.saveUser(user);
 			return new ModelAndView("/jsp/login.jsp");

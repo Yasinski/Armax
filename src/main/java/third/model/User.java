@@ -1,6 +1,7 @@
 package third.model;
 
 import org.hibernate.annotations.CollectionOfElements;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,13 +16,16 @@ import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
-public class Users {
+public class User implements UserDetails {
 
 
 	@Id
 	@GeneratedValue
 	@Column
 	private int id;
+
+    @Column
+    private String facebookId;
 
 	@Column
 	private String username;
@@ -32,24 +36,33 @@ public class Users {
 	@CollectionOfElements
 	@JoinTable
 	@Column(name = "authority", nullable = false)
-	private Set<String> authorities = new HashSet<String>();
+    @Enumerated(EnumType.STRING)
+    private Set<Role> authorities = new HashSet<Role>();
 
 	@Column
 	private boolean enabled;
 
-	public Users() {
+	public User() {
 	}
 
-	public Users(String username, String password) {
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
 
-	public Users(String username, String password, Set<String> authorities, boolean enabled) {
+    public User(String username, String password, Set<Role> authorities, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+        this.enabled = enabled;
+    }
+
+    public User(String facebookId, String username, String password, Set<Role> authorities, boolean enabled) {
 		this.authorities = authorities;
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
+        this.facebookId = facebookId;
 	}
 
 	public int getId() {
@@ -60,11 +73,27 @@ public class Users {
 		this.id = id;
 	}
 
+    @Override
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public void setUsername(String username) {
 		this.username = username;
 	}
 
@@ -76,11 +105,11 @@ public class Users {
 		this.password = password;
 	}
 
-	public Set<String> getAuthorities() {
+	public Set<Role> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(Set<String> authorities) {
+	public void setAuthorities(Set<Role> authorities) {
 		this.authorities = authorities;
 	}
 
@@ -92,4 +121,11 @@ public class Users {
 		this.enabled = enabled;
 	}
 
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
 }

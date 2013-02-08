@@ -1,6 +1,6 @@
 package third.DAO;
 
-import third.model.Users;
+import third.model.User;
 
 import java.util.List;
 
@@ -12,11 +12,13 @@ import java.util.List;
 
 public interface UserDAO {
 
-	public void saveUser(Users user);
+	public void saveUser(User user);
 
-	public List<Users> getAllUsers();
+	public List<User> getAllUsers();
 
-	public Users getUserByLogin(String username);
+	public User getUserByLogin(String username);
+
+    public User getUserByFacebookId(String facebookId);
 
 	public void deleteUser(String username);
 }

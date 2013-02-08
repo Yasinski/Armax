@@ -59,10 +59,10 @@ public class ServletStart implements Controller {
 //			Set<String> authotities = new HashSet<String>();
 //			authotities.add("ROLE_USER");   // ROLE_ADMIN
 //
-//			Users user1 = new Users("user1", "1111", authotities, true);
-//			Users user3 = new Users("user3", "3333", authotities, true);
-//			Users user4 = new Users("user4", "4444", authotities, false);
-////			Users admin = new Users("admin", "admin", authotities, true);
+//			User user1 = new User("user1", "1111", authotities, true);
+//			User user3 = new User("user3", "3333", authotities, true);
+//			User user4 = new User("user4", "4444", authotities, false);
+////			User admin = new User("admin", "admin", authotities, true);
 //
 //			dbUserQueryer.saveUser(user1);
 //			dbUserQueryer.saveUser(user3);

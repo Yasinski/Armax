@@ -6,10 +6,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 /**
@@ -26,6 +23,7 @@ public class SampleApplication implements EntryPoint {
         final Button button = new Button("Button");
         final TextBox username = new TextBox();
         final PasswordTextBox password = new PasswordTextBox();
+        final CheckBox rememberMe= new CheckBox("rememberMe");
 
 
         login.addClickHandler(new ClickHandler() {
@@ -43,7 +41,7 @@ public class SampleApplication implements EntryPoint {
                 SampleApplicationService.App.getInstance().getMessage("test", new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("[Failure] "+caught.getMessage());
+                        Window.alert("[Failure] " + caught.getMessage());
 
                     }
 
@@ -58,12 +56,13 @@ public class SampleApplication implements EntryPoint {
 
         RootPanel.get("slot1").add(username);
         RootPanel.get("slot1").add(password);
+        RootPanel.get("slot1").add(rememberMe);
         RootPanel.get("slot1").add(login);
         RootPanel.get("slot1").add(logout);
         RootPanel.get("slot2").add(button);
     }
 
-   private void login(String login, String pass) {
+    private void login(String login, String pass) {
 //        RequestFactory
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
 //        rb.setUser("Content-Type", "application/x-www-form-urlencoded");
@@ -76,7 +75,7 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(response.getStatusCode() == 200) {
+                if (response.getStatusCode() == 200) {
                     Window.alert("Success");
                 } else {
                     Window.alert(response.getStatusCode() + "," + response.getStatusText());
@@ -101,7 +100,7 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(response.getStatusCode() == 200) {
+                if (response.getStatusCode() == 200) {
                     Window.alert("[logout] Success");
                 } else {
                     Window.alert("[logout] " + response.getStatusCode() + "," + response.getStatusText());

@@ -69,7 +69,7 @@ package third.facade;
 //}
 
 
-//import third.model.Users;
+//import third.model.User;
 //
 //import java.util.HashSet;
 //import java.util.Set;
@@ -84,7 +84,7 @@ package third.facade;
 //		Set<String> authotities = new HashSet<String>();
 //		authotities.add("ROLE_USER");   // ROLE_ADMIN
 //
-//		Users user = new Users(username, password, authotities, enabled);
+//		User user = new User(username, password, authotities, enabled);
 //		dbUserQueryer.saveUser(user);
 //
 //	}

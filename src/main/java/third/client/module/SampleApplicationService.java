@@ -10,6 +10,7 @@ public interface SampleApplicationService extends RemoteService {
     String getMessage(String msg);
 
     boolean login(String login, String password);
+
     /**
      * Utility/Convenience class.
      * Use SampleApplicationService.App.getInstance() to access static instance of MySampleApplicationServiceAsync

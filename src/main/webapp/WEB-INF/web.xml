@@ -57,16 +57,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>authServlet</servlet-name>
-        <servlet-class>third.service.gwt.SampleApplicationServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>authServlet</servlet-name>
-        <url-pattern>/application/rpc/auth</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
         <servlet-name>springapp</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
@@ -80,6 +70,8 @@
     <servlet-mapping>
         <servlet-name>springapp</servlet-name>
         <url-pattern>/start/</url-pattern>
+        <url-pattern>/facebookconnect/</url-pattern>
+        <url-pattern>/facebookcallback/</url-pattern>
         <url-pattern>/actorAdd/</url-pattern>
         <url-pattern>/actorDirectorsList/</url-pattern>
         <url-pattern>/actorsInfo/</url-pattern>

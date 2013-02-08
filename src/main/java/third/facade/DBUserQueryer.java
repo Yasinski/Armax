@@ -1,8 +1,7 @@
 package third.facade;
 
-import org.springframework.security.access.annotation.Secured;
 import third.DAO.UserDAO;
-import third.model.Users;
+import third.model.User;
 
 import java.util.List;
 
@@ -20,18 +19,22 @@ public class DBUserQueryer {
 		this.userDAO = userDAO;
 	}
 
-	public void saveUser(Users user){
+	public void saveUser(User user){
 		  userDAO.saveUser(user);
 	}
 
-	public List<Users> getAllUsers(){
+	public List<User> getAllUsers(){
 		 return userDAO.getAllUsers();
 	}
 
 //    @Secured("ROLE_ADMIN")
-    public Users getUserByLogin(String username){
+    public User getUserByLogin(String username){
 		 return userDAO.getUserByLogin(username);
 	}
+
+    public User getUserByFacebookId(String facebookId){
+        return userDAO.getUserByFacebookId(facebookId);
+    }
 
 	public void deleteUser(String username){
 		userDAO.deleteUser(username);

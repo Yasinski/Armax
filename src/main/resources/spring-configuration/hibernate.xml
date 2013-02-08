@@ -47,7 +47,7 @@
                 <value>third.model.Actor</value>
                 <value>third.model.Director</value>
                 <value>third.model.Movie</value>
-                <value>third.model.Users</value>
+                <value>third.model.User</value>
             </list>
         </property>
         <!--<property name="configLocation" value="classpath:/hibernate.cfg.xml"/>-->
