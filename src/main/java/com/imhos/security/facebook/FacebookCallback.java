@@ -61,7 +61,7 @@ public class FacebookCallback implements Controller {
 
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
-        if (user == null) {
+        if(user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
             dbUserQueryer.saveUser(new User(profileId, profileName, authCode, authorities, true));

@@ -13,31 +13,31 @@ import java.util.List;
 
 public class DBUserQueryer {
 
-	private UserDAO userDAO;
+    private UserDAO userDAO;
 
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
-	public void saveUser(User user){
-		  userDAO.saveUser(user);
-	}
+    public void saveUser(User user) {
+        userDAO.saveUser(user);
+    }
 
-	public List<User> getAllUsers(){
-		 return userDAO.getAllUsers();
-	}
+    //    @Secured(Role.ROLE_ADMIN)
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
 
-//    @Secured("ROLE_ADMIN")
-    public User getUserByLogin(String username){
-		 return userDAO.getUserByLogin(username);
-	}
+    public User getUserByLogin(String username) {
+        return userDAO.getUserByLogin(username);
+    }
 
-    public User getUserByFacebookId(String facebookId){
+    public User getUserByFacebookId(String facebookId) {
         return userDAO.getUserByFacebookId(facebookId);
     }
 
-	public void deleteUser(String username){
-		userDAO.deleteUser(username);
-	}
+    public void deleteUser(String username) {
+        userDAO.deleteUser(username);
+    }
 
 }

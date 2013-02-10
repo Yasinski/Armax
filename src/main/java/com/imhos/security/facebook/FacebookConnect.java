@@ -1,5 +1,6 @@
 package com.imhos.security.facebook;
 
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
@@ -28,7 +29,7 @@ public class FacebookConnect implements Controller {
         String appID = "243747852427266";
         String appSecret = "cb94bc23e354c19c54fdf1ba13bdabea";
 
-        FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory(appID, appSecret);
+        OAuth2ConnectionFactory connectionFactory = new FacebookConnectionFactory(appID, appSecret);
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
         params.setRedirectUri("http://localhost:8080/facebookcallback/");

@@ -8,7 +8,7 @@ import third.facade.DBUserQueryer;
 import third.model.User;
 
 
-public class SampleApplicationServiceImpl extends RemoteServiceServlet implements SampleApplicationService  {
+public class SampleApplicationServiceImpl extends RemoteServiceServlet implements SampleApplicationService {
     // Implementation of sample interface method
     private DBUserQueryer dbUserQueryer;
 
@@ -17,19 +17,19 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
     }
 
     public String getMessage(String msg) {
-        User user = dbUserQueryer.getUserByLogin("admin");
+        dbUserQueryer.getAllUsers();
 
         return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
-                SecurityContextHolder.getContext().getAuthentication().getName()+"\"\n";
+                SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
     }
 
     @Override
     public boolean login(String login, String password) {
         User user = dbUserQueryer.getUserByLogin(login);
-        if (user!= null) {
+        if(user != null) {
             String storedPass = user.getPassword();
             return storedPass.equals(password);
-        }else {
+        } else {
             throw new AccessDeniedException("");
         }
     }
