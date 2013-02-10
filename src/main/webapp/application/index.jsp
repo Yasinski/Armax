@@ -39,10 +39,6 @@
             <div id="slot1"></div>
             <div id="slot2"></div>
         </td>
-    </tr>
-    <tr>
-       <a href="/j_spring_security_logout"><input type="submit" value="Logout"></a>
-    </tr>
 </table>
 </body>
 </html>

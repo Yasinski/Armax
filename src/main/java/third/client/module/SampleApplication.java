@@ -7,7 +7,7 @@ import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.web.bindery.requestfactory.shared.RequestFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -23,12 +23,11 @@ public class SampleApplication implements EntryPoint {
         final Button button = new Button("Button");
         final TextBox username = new TextBox();
         final PasswordTextBox password = new PasswordTextBox();
-        final CheckBox rememberMe= new CheckBox("rememberMe");
-
+        final CheckBox rememberMe = new CheckBox("rememberMe");
 
         login.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                login(username.getText(), password.getText());
+                login(username.getText(), password.getText(),rememberMe.getValue().toString());
             }
         });
         logout.addClickHandler(new ClickHandler() {
@@ -54,20 +53,30 @@ public class SampleApplication implements EntryPoint {
             }
         });
 
+//        if (!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
         RootPanel.get("slot1").add(username);
         RootPanel.get("slot1").add(password);
         RootPanel.get("slot1").add(rememberMe);
         RootPanel.get("slot1").add(login);
         RootPanel.get("slot1").add(logout);
+//    }
+
         RootPanel.get("slot2").add(button);
     }
 
-    private void login(String login, String pass) {
+    private void login(String login, String pass, String rememberMeValue) {
+        String rememberMe = "0";
+        if (rememberMeValue.equals("true")){
+            rememberMe = "1";
+        }
+
 //        RequestFactory
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
 //        rb.setUser("Content-Type", "application/x-www-form-urlencoded");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
-        rb.setRequestData("j_username=" + URL.encode(login + "&j_password=" + URL.encode(pass)));
+        rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
+                + "&_spring_security_remember_me=" + URL.encode(rememberMe)
+        );
 
         rb.setCallback(new RequestCallback() {
             public void onError(Request request, Throwable exception) {

@@ -21,11 +21,20 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <intercept-url pattern="*sample" access="ROLE_ADMIN"/>
         <form-login authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>
-        <logout logout-success-url="/application/" />
+        <logout success-handler-ref="logoutSuccessHandler" />
         <!--<logout success-handler-ref="logoutSuccessHandler" />-->
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
-        <!--<remember-me/>-->
+        <remember-me/>
+        <!--<custom-filter position="REMEMBER_ME_FILTER" ref="myRememberMeFilter" />-->
     </http>
+
+    <!--<beans:bean id="myRememberMeFilter" class="com.imhos.security.MyRememberMeFilter"/>-->
+
+    <!--<beans:bean id="rememberMeServices" class=-->
+            <!--"com.imhos.security.MyRememberMeServices">-->
+        <!--<beans:property name="key" value="springRocks"/>-->
+    <!--</beans:bean>-->
+
 
     <beans:bean id="http403ForbiddenEntryPoint"
                 class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
@@ -42,12 +51,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     </beans:bean>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref='userDetailsServiceImpl'>
+        <authentication-provider user-service-ref='userDetailsService'>
             <!--<password-encoder hash="md5"/>-->
         </authentication-provider>
     </authentication-manager>
 
 
-    <beans:bean name="userDetailsServiceImpl" class="com.imhos.security.UserDetailsServiceImpl"/>
+    <beans:bean name="userDetailsService" class="com.imhos.security.UserDetailsServiceImpl"/>
 
 </beans:beans>

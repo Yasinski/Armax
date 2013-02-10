@@ -70,9 +70,8 @@ public class FacebookCallback implements Controller {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        Authentication authentication = userDetailsServiceImpl.trust(user);
         //        ...
-        return null;
+        return new ModelAndView("/application/");
     }
 }
 

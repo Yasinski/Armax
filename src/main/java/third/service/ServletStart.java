@@ -6,10 +6,14 @@ import third.facade.DBMovieQueryer;
 import third.facade.DBUserQueryer;
 import third.facade.Pagination;
 import third.model.Movie;
+import third.model.Role;
+import third.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServletStart implements Controller {
 	private DBMovieQueryer dbMovieQueryer;
@@ -56,19 +60,22 @@ public class ServletStart implements Controller {
 		if (movies != null && !movies.isEmpty()) {
 
 //			//временно. засетаем юзеров в базу)
-//			Set<String> authotities = new HashSet<String>();
-//			authotities.add("ROLE_USER");   // ROLE_ADMIN
+//			Set<Role> authotities = new HashSet<Role>();
+//			authotities.add(Role.ROLE_USER);   // ROLE_ADMIN
+//            Set<Role> authotities2 = new HashSet<Role>();
+//            authotities2.add(Role.ROLE_USER);
+//            authotities2.add(Role.ROLE_ADMIN);
 //
 //			User user1 = new User("user1", "1111", authotities, true);
-//			User user3 = new User("user3", "3333", authotities, true);
+//			User user3 = new User("user2", "2222", authotities, true);
 //			User user4 = new User("user4", "4444", authotities, false);
-////			User admin = new User("admin", "admin", authotities, true);
+//			User admin = new User("admin", "admin", authotities2, true);
 //
 //			dbUserQueryer.saveUser(user1);
 //			dbUserQueryer.saveUser(user3);
 //			dbUserQueryer.saveUser(user4);
-////			dbUserQueryer.saveUser(admin);
-			//
+//			dbUserQueryer.saveUser(admin);
+//			//
 
 			request.setAttribute("movies", movies);
 			request.setAttribute("searchStr", searchStr);

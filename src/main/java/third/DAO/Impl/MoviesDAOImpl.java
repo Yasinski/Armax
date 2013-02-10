@@ -139,7 +139,7 @@ public class MoviesDAOImpl  implements MoviesDAO {
 	}
 
 	public List<Movie> findWithThisDirector(Integer directorId) {
-		List<Movie> movies = (List<Movie>) sessionFactory.getCurrentSession().createQuery("select distinct m from Movie m join m.director d where d.id = :directorId")
+		List<Movie> movies = (List<Movie>) sessionFactory.getCurrentSession().createQuery("select distinct m from Movie m join fetch m.director d where d.id = :directorId")
 				.setParameter("directorId", directorId)
 				.list();
 		return movies;

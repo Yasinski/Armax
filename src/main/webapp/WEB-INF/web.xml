@@ -18,6 +18,14 @@
         </param-value>
     </context-param>
 
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+
+    <listener>
+        <listener-class>com.imhos.security.HttpSessionChecker</listener-class>
+    </listener>
+
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
