@@ -14,6 +14,8 @@ public interface UserDAO {
 
 	public void saveUser(User user);
 
+    public void updateUser(User user);
+
 	public List<User> getAllUsers();
 
 	public User getUserByLogin(String username);
@@ -21,5 +23,7 @@ public interface UserDAO {
     public User getUserByFacebookId(String facebookId);
 
 	public void deleteUser(String username);
+
+    public String getPassword(int userId);
 }
 

@@ -12,16 +12,19 @@ import third.facade.DBUserQueryer;
 
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-	   private DBUserQueryer dbUserQueryer;
+    private DBUserQueryer dbUserQueryer;
 
-	public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-		this.dbUserQueryer = dbUserQueryer;
-	}
+    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
+        this.dbUserQueryer = dbUserQueryer;
+    }
 
-	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public DBUserQueryer getDbUserQueryer() {
+        return dbUserQueryer;
+    }
 
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return dbUserQueryer.getUserByLogin(login);
-	}
+    }
 
 }
 

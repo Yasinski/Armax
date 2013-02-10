@@ -4,11 +4,8 @@ import com.imhos.security.CustomUserAuthentication;
 import com.imhos.security.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
-import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import third.facade.DBUserQueryer;
@@ -30,7 +27,17 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class FacebookCallback implements Controller {
+    private String appID;
+    private String appSecret;
     private DBUserQueryer dbUserQueryer;
+
+    public void setAppID(String appID) {
+        this.appID = appID;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
 
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
@@ -45,32 +52,29 @@ public class FacebookCallback implements Controller {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String appID = "243747852427266";
-        String appSecret = "cb94bc23e354c19c54fdf1ba13bdabea";
 
-        FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory(appID, appSecret);
-        OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         String authCode = request.getParameter("code");
-        AccessGrant accessGrant =
-                oauthOperations.exchangeForAccess(authCode, "http://localhost:8080/facebookcallback/", null);
-        Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
-
-        Facebook facebook = connection.getApi();
+        FacebookController facebookController = new FacebookController(appID, appSecret);
+        AccessGrant accessGrant = facebookController.getFacebookAccessGrant(authCode);
+        Facebook facebook = facebookController.getFacebookProfile(accessGrant);
         String profileId = facebook.userOperations().getUserProfile().getId();
         String profileName = facebook.userOperations().getUserProfile().getName();
-
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
         if(user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
-            dbUserQueryer.saveUser(new User(profileId, profileName, authCode, authorities, true));
+            dbUserQueryer.saveUser(new User(profileId, profileName, "facebook",
+                    accessGrant.getAccessToken(), authorities, true));
+        } else {
+            user.setFacebookToken(accessGrant.getAccessToken());
+            dbUserQueryer.updateUser(user);
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        //        ...
+
         return new ModelAndView("/application/");
     }
 }

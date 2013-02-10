@@ -1,12 +1,12 @@
 package com.imhos.security.facebook;
 
-import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import third.facade.DBUserQueryer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,19 +23,24 @@ import java.io.IOException;
 
 public class FacebookConnect implements Controller {
 
+    private String appID;
+    private String appSecret;
+
+    public void setAppID(String appID) {
+        this.appID = appID;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
+
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String appID = "243747852427266";
-        String appSecret = "cb94bc23e354c19c54fdf1ba13bdabea";
 
-        OAuth2ConnectionFactory connectionFactory = new FacebookConnectionFactory(appID, appSecret);
-        OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
-        OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri("http://localhost:8080/facebookcallback/");
-        String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
+        FacebookController facebookController = new FacebookController(appID, appSecret);
+        String authorizeUrl = facebookController.getAuthorizeUrl();
         response.sendRedirect(authorizeUrl);
-
         return null;
     }
 }

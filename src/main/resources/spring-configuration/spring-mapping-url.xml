@@ -13,8 +13,14 @@
 
   <!--</bean>-->
 
-  <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect"/>
-  <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback"/>
+  <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect">
+      <property name="appID" value="${facebook.application.id}"/>
+      <property name="appSecret" value="${facebook.application.secret}"/>
+  </bean>
+  <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback">
+      <property name="appID" value="${facebook.application.id}"/>
+      <property name="appSecret" value="${facebook.application.secret}"/>
+  </bean>
   <bean name="/start/" class="third.service.ServletStart"/>
   <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
   <bean name="/actorAdd/" class="third.service.ActorAdd"/>

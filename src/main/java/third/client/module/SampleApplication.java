@@ -27,7 +27,7 @@ public class SampleApplication implements EntryPoint {
 
         login.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                login(username.getText(), password.getText(),rememberMe.getValue().toString());
+                login(username.getText(), password.getText(), rememberMe.getValue());
             }
         });
         logout.addClickHandler(new ClickHandler() {
@@ -64,18 +64,14 @@ public class SampleApplication implements EntryPoint {
         RootPanel.get("slot2").add(button);
     }
 
-    private void login(String login, String pass, String rememberMeValue) {
-        String rememberMe = "0";
-        if (rememberMeValue.equals("true")){
-            rememberMe = "1";
-        }
+    private void login(String login, String pass, boolean rememberMe) {
 
 //        RequestFactory
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
 //        rb.setUser("Content-Type", "application/x-www-form-urlencoded");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
-                + "&_spring_security_remember_me=" + URL.encode(rememberMe)
+                + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
         );
 
         rb.setCallback(new RequestCallback() {

@@ -23,11 +23,16 @@ public class DBUserQueryer {
         userDAO.saveUser(user);
     }
 
-    //    @Secured(Role.ROLE_ADMIN)
+    public void updateUser(User user) {
+        userDAO.updateUser(user);
+    }
+
+
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
+    //    @Secured("ROLE_ADMIN")
     public User getUserByLogin(String username) {
         return userDAO.getUserByLogin(username);
     }
@@ -38,6 +43,10 @@ public class DBUserQueryer {
 
     public void deleteUser(String username) {
         userDAO.deleteUser(username);
+    }
+
+    public String getPassword(int userId) {
+        return userDAO.getPassword(userId);
     }
 
 }

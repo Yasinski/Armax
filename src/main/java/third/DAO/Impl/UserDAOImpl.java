@@ -2,6 +2,7 @@ package third.DAO.Impl;
 
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -18,38 +19,42 @@ import java.util.List;
 
 public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 
-	private UserDAO userDAO;
+    private UserDAO userDAO;
 
-	@Override
-	protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
-		HibernateTemplate result = super.createHibernateTemplate(sessionFactory);
-		result.setAllowCreate(false);
-		return result;
-	}
+    @Override
+    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
+        HibernateTemplate result = super.createHibernateTemplate(sessionFactory);
+        result.setAllowCreate(false);
+        return result;
+    }
 
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
-	public void saveUser(User user) {
-		getSession().save(user);
-	}
+    public void saveUser(User user) {
+        getSession().save(user);
+    }
 
-	public List<User> getAllUsers() {
-		return getSession().createCriteria(User.class)
-				.list();
-	}
+    public void updateUser(User user) {
+        getSession().update(user);
+    }
 
-	public User getUserByLogin(String username) {
-		User user = (User) getSession().createCriteria(User.class)
-				.add(Restrictions.eq("username", username))
-				.setFetchMode("authorities", FetchMode.JOIN)
-				.uniqueResult();
-		return user;
-		
-	}
+    public List<User> getAllUsers() {
+        return getSession().createCriteria(User.class)
+                .list();
+    }
 
-    public User getUserByFacebookId(String facebookId){
+    public User getUserByLogin(String username) {
+        User user = (User) getSession().createCriteria(User.class)
+                .add(Restrictions.eq("username", username))
+                .setFetchMode("authorities", FetchMode.JOIN)
+                .uniqueResult();
+        return user;
+
+    }
+
+    public User getUserByFacebookId(String facebookId) {
         return (User) getSession().createCriteria(User.class)
                 .add(Restrictions.eq("facebookId", facebookId))
                 .setFetchMode("authorities", FetchMode.JOIN)
@@ -59,11 +64,19 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 
 
     public void deleteUser(String username) {
-		User user = getUserByLogin(username);
-		if (user != null) {
-			getSession().delete(user);
-		}
+        User user = getUserByLogin(username);
+        if (user != null) {
+            getSession().delete(user);
+        }
 
-	}
+    }
+
+    public String getPassword(int userId) {
+        return (String) getSession().createCriteria(User.class)
+                .setProjection(Projections.property("password"))
+                .add(Restrictions.eq("id", userId))
+                .uniqueResult();
+    }
+
 
 }

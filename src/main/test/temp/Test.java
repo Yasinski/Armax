@@ -13,7 +13,7 @@
 // * @author <a href="a.kasinski@itision.com">Arthur Kasinskiy</a>
 // */
 //
-//public class Test {
+//public class FacebookController {
 //	public static void main(String[] args) {
 //		List<Movies> movies = new ArrayList<Movies>();
 //		movies.add(new Movies("Title a", "Genre 111", "1993", 4));

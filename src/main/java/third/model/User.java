@@ -33,6 +33,9 @@ public class User implements UserDetails {
 	@Column
 	private String password;
 
+    @Column
+    private String facebookToken;
+
 	@CollectionOfElements
 	@JoinTable
 	@Column(name = "authority", nullable = false)
@@ -65,7 +68,16 @@ public class User implements UserDetails {
         this.facebookId = facebookId;
 	}
 
-	public int getId() {
+    public User(String facebookId, String username, String password, String facebookToken, Set<Role> authorities, boolean enabled) {
+        this.facebookId = facebookId;
+        this.username = username;
+        this.password = password;
+        this.facebookToken = facebookToken;
+        this.authorities = authorities;
+        this.enabled = enabled;
+    }
+
+    public int getId() {
 		return id;
 	}
 
@@ -105,7 +117,15 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public Set<Role> getAuthorities() {
+    public String getFacebookToken() {
+        return facebookToken;
+    }
+
+    public void setFacebookToken(String facebookToken) {
+        this.facebookToken = facebookToken;
+    }
+
+    public Set<Role> getAuthorities() {
 		return authorities;
 	}
 

@@ -6,7 +6,7 @@ package third.facade;
 // * @author <a href="a.kasinski@itision.com">Arthur Kasinskiy</a>
 // */
 //
-//public class Test {
+//public class FacebookController {
 //	public static void main(String[] args) {
 //		ThreadTest t1 = new ThreadTest("Thread1", 1000);
 //		ThreadTest t2 = new ThreadTest("Thread2", 2000);
@@ -74,7 +74,7 @@ package third.facade;
 //import java.util.HashSet;
 //import java.util.Set;
 //
-//public class Test {
+//public class FacebookController {
 //
 //	public static void main(String[] args) {
 //		DBUserQueryer dbUserQueryer = new DBUserQueryer();

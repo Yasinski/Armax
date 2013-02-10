@@ -13,7 +13,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
 
     <http auto-config="true" access-denied-page="/jsp/error403.jsp" entry-point-ref="http403ForbiddenEntryPoint">
-        <intercept-url pattern="/jsp/registration.jsp" access="ROLE_ADMIN,ROLE_USER, ROLE_ANONYMOUS, ROLE_MANAGER"/>
+        <intercept-url pattern="/jsp/registration.jsp" access="ROLE_ADMIN,ROLE_USER, ROLE_ANONYMOUS"/>
         <intercept-url pattern="/start/" access="ROLE_ADMIN,ROLE_USER"/>
         <intercept-url pattern="/*Add*/" access="ROLE_USER, ROLE_ADMIN"/>
         <intercept-url pattern="/*Update*/" access="ROLE_ADMIN"/>
@@ -21,20 +21,18 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <intercept-url pattern="*sample" access="ROLE_ADMIN"/>
         <form-login authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>
-        <logout success-handler-ref="logoutSuccessHandler"/>
+        <logout success-handler-ref="logoutSuccessHandler" />
         <!--<logout success-handler-ref="logoutSuccessHandler" />-->
-        <!--<custom-filter position="FORM_LOGIN_FILTER" ref="myFilter" />-->
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
-        <remember-me/>
+        <remember-me services-ref="rememberMeServices"/>
         <!--<custom-filter position="REMEMBER_ME_FILTER" ref="myRememberMeFilter" />-->
     </http>
 
-    <!--<beans:bean id="myRememberMeFilter" class="com.imhos.security.MyRememberMeFilter"/>-->
-
-    <!--<beans:bean id="rememberMeServices" class=-->
-    <!--"com.imhos.security.MyRememberMeServices">-->
-    <!--<beans:property name="key" value="springRocks"/>-->
-    <!--</beans:bean>-->
+    <beans:bean id="rememberMeServices" class=
+            "org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+        <beans:property name="userDetailsService" ref="RemMeUserDetailsService"/>
+        <beans:property name="key" value="springRocks"/>
+    </beans:bean>
 
 
     <beans:bean id="http403ForbiddenEntryPoint"
@@ -60,4 +58,5 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean name="userDetailsService" class="com.imhos.security.UserDetailsServiceImpl"/>
 
+    <beans:bean name="RemMeUserDetailsService" class="com.imhos.security.RememberMeUserDetailsServicesImpl"/>
 </beans:beans>
