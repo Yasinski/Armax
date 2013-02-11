@@ -70,6 +70,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
+                classpath:spring-configuration/common.xml
                 classpath:spring-configuration/spring-mapping-url.xml
             </param-value>
         </init-param>

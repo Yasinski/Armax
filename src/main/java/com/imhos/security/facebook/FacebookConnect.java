@@ -25,6 +25,7 @@ public class FacebookConnect implements Controller {
 
     private String appID;
     private String appSecret;
+    private String facebookCallBackUrl;
 
     public void setAppID(String appID) {
         this.appID = appID;
@@ -34,11 +35,20 @@ public class FacebookConnect implements Controller {
         this.appSecret = appSecret;
     }
 
+    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
+        this.facebookCallBackUrl = facebookCallBackUrl;
+    }
+
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        FacebookController facebookController = new FacebookController(appID, appSecret);
+        String rememberMe = request.getParameter("rememberMe");
+
+        String facebookCallBackUrl = this.facebookCallBackUrl + "?rememberMe=" + rememberMe;
+
+        FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
+
         String authorizeUrl = facebookController.getAuthorizeUrl();
         response.sendRedirect(authorizeUrl);
         return null;

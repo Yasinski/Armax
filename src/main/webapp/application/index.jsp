@@ -39,6 +39,17 @@
             <div id="slot1"></div>
             <div id="slot2"></div>
         </td>
+    </tr>
+    <tr>
+        <form method="POST" action="/facebookconnect/">
+            <tr>
+                <td>RememberMe<input type="checkbox" name="rememberMe" value="true"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Sign in with Facebook"/></td>
+            </tr>
+        </form>
+    </tr>
 </table>
 </body>
 </html>

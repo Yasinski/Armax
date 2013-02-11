@@ -4,6 +4,8 @@ import com.imhos.security.CustomUserAuthentication;
 import com.imhos.security.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +31,9 @@ import java.util.Set;
 public class FacebookCallback implements Controller {
     private String appID;
     private String appSecret;
+    private String facebookCallBackUrl;
     private DBUserQueryer dbUserQueryer;
+    private TokenBasedRememberMeServices rememberMeServices;
 
     public void setAppID(String appID) {
         this.appID = appID;
@@ -37,6 +41,14 @@ public class FacebookCallback implements Controller {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
+        this.facebookCallBackUrl = facebookCallBackUrl;
+    }
+
+    public void setRememberMeServices(TokenBasedRememberMeServices rememberMeServices) {
+        this.rememberMeServices = rememberMeServices;
     }
 
     private UserDetailsServiceImpl userDetailsServiceImpl;
@@ -54,18 +66,22 @@ public class FacebookCallback implements Controller {
             throws IOException, ServletException {
 
         String authCode = request.getParameter("code");
-        FacebookController facebookController = new FacebookController(appID, appSecret);
+        String rememberMe = request.getParameter("rememberMe");
+        String facebookCallBackUrl = this.facebookCallBackUrl + "?rememberMe=" + rememberMe;
+        FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
+
         AccessGrant accessGrant = facebookController.getFacebookAccessGrant(authCode);
         Facebook facebook = facebookController.getFacebookProfile(accessGrant);
         String profileId = facebook.userOperations().getUserProfile().getId();
         String profileName = facebook.userOperations().getUserProfile().getName();
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
-        if(user == null) {
+        if (user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
-            dbUserQueryer.saveUser(new User(profileId, profileName, "facebook",
-                    accessGrant.getAccessToken(), authorities, true));
+            user = new User(profileId, profileName, "facebook",
+                    accessGrant.getAccessToken(), authorities, true);
+            dbUserQueryer.saveUser(user);
         } else {
             user.setFacebookToken(accessGrant.getAccessToken());
             dbUserQueryer.updateUser(user);
@@ -75,6 +91,11 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        if("true".equals(rememberMe)){
+            rememberMeServices.onLoginSuccess(request, response, authentication);
+        }  else {
+            rememberMeServices.logout(request, response, authentication);
+        }
         return new ModelAndView("/application/");
     }
 }

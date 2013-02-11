@@ -17,24 +17,36 @@ import org.springframework.social.oauth2.OAuth2Parameters;
  */
 
 public class FacebookController {
-    public static final String FACEBOOK_CALL_BACK_URL = "http://localhost:8080/facebookcallback/";
+    private String facebookCallBackUrl;
     private FacebookConnectionFactory connectionFactory;
+
+    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
+        this.facebookCallBackUrl = facebookCallBackUrl;
+    }
+
+    public FacebookController() {
+    }
 
     public FacebookController(String appID, String appSecret) {
         connectionFactory = new FacebookConnectionFactory(appID, appSecret);
     }
 
+        public FacebookController(String appID, String appSecret, String facebookCallBackUrl) {
+        connectionFactory = new FacebookConnectionFactory(appID, appSecret);
+        this.facebookCallBackUrl = facebookCallBackUrl;
+    }
+
     public AccessGrant getFacebookAccessGrant(String authCode) {
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         AccessGrant accessGrant =
-                oauthOperations.exchangeForAccess(authCode, FACEBOOK_CALL_BACK_URL, null);
+                oauthOperations.exchangeForAccess(authCode, facebookCallBackUrl, null);
         return accessGrant;
     }
 
     public String getAuthorizeUrl() {
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri(FACEBOOK_CALL_BACK_URL);
+        params.setRedirectUri(facebookCallBackUrl);
         String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
         return authorizeUrl;
     }

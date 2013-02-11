@@ -4,39 +4,43 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-autowire="byName">
 
-  <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
-  <!--<property name="urlMap">-->
-  <!--<map>-->
-  <!--<entry key="/start" value-ref="start"/>-->
-  <!--</map>-->
-  <!--</property>-->
+    <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+    <!--<property name="urlMap">-->
+    <!--<map>-->
+    <!--<entry key="/start" value-ref="start"/>-->
+    <!--</map>-->
+    <!--</property>-->
 
-  <!--</bean>-->
+    <!--</bean>-->
 
-  <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect">
-      <property name="appID" value="${facebook.application.id}"/>
-      <property name="appSecret" value="${facebook.application.secret}"/>
-  </bean>
-  <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback">
-      <property name="appID" value="${facebook.application.id}"/>
-      <property name="appSecret" value="${facebook.application.secret}"/>
-  </bean>
-  <bean name="/start/" class="third.service.ServletStart"/>
-  <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
-  <bean name="/actorAdd/" class="third.service.ActorAdd"/>
-  <bean name="/actorsInfo/" class="third.service.ActorsInfo"/>
-  <bean name="/actorMoviesList/" class="third.service.ActorsMoviesList"/>
-  <bean name="/directorActorsList/" class="third.service.DirectorActorsList"/>
-  <bean name="/directorMoviesList/" class="third.service.DirectorMoviesList"/>
-  <bean name="/moviePage/" class="third.service.MoviePage"/>
-  <bean name="/movieAdd/" class="third.service.MovieAdd"/>
-  <bean name="/movieAddShort/" class="third.service.MovieAddShort"/>
-  <bean name="/moviesWithoutActors/" class="third.service.MoviesWithoutActors"/>
-  <bean name="/movieUpdate/" class="third.service.MovieUpdate"/>
-  <bean name="/registration/" class="third.service.Registration"/>
+    <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect">
+        <property name="appID" value="${facebook.application.id}"/>
+        <property name="appSecret" value="${facebook.application.secret}"/>
+        <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
+    </bean>
+    <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback">
+        <property name="appID" value="${facebook.application.id}"/>
+        <property name="appSecret" value="${facebook.application.secret}"/>
+        <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
+    </bean>
+    <bean name="/start/" class="third.service.ServletStart"/>
+    <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
+    <bean name="/actorAdd/" class="third.service.ActorAdd"/>
+    <bean name="/actorsInfo/" class="third.service.ActorsInfo"/>
+    <bean name="/actorMoviesList/" class="third.service.ActorsMoviesList"/>
+    <bean name="/directorActorsList/" class="third.service.DirectorActorsList"/>
+    <bean name="/directorMoviesList/" class="third.service.DirectorMoviesList"/>
+    <bean name="/moviePage/" class="third.service.MoviePage"/>
+    <bean name="/movieAdd/" class="third.service.MovieAdd"/>
+    <bean name="/movieAddShort/" class="third.service.MovieAddShort"/>
+    <bean name="/moviesWithoutActors/" class="third.service.MoviesWithoutActors"/>
+    <bean name="/movieUpdate/" class="third.service.MovieUpdate"/>
+    <bean name="/registration/" class="third.service.Registration"/>
 
 
+    <bean name="pagination" class="third.facade.Pagination"/>
+    <bean name="facebookController" class="com.imhos.security.facebook.FacebookController">
+    <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
+    </bean>
 
-
-  <bean name="pagination" class="third.facade.Pagination"/>
 </beans>
