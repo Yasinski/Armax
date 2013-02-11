@@ -32,23 +32,20 @@
     without starting from scratch.
 </p>
 
-
+<%--<script type="text/javascript">--%>
+    <%--function loggedin (username) {--%>
+        <%--alert ("Hello from parent!");--%>
+    <%--}--%>
+    <%--function doStuff () {--%>
+        <%--var w = window.open("testa.html");--%>
+    <%--}--%>
+<%--</script>--%>
 <table align="center">
     <tr>
         <td>
             <div id="slot1"></div>
             <div id="slot2"></div>
         </td>
-    </tr>
-    <tr>
-        <form method="POST" action="/facebookconnect/">
-            <tr>
-                <td>RememberMe<input type="checkbox" name="rememberMe" value="true"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Sign in with Facebook"/></td>
-            </tr>
-        </form>
     </tr>
 </table>
 </body>

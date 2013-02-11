@@ -14,16 +14,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SampleApplication implements EntryPoint {
 
+    public static final String NOT_LOGGED_IN = "Not logged in";
+    private Label message = new Label(NOT_LOGGED_IN);
+    private Button login = new Button("Login");
+    private Button loginFacebook = new Button("Sign in with Facebook");
+    private Button logout = new Button("Logout");
+    private Button button = new Button("Button");
+    private TextBox username = new TextBox();
+    private PasswordTextBox password = new PasswordTextBox();
+    private CheckBox rememberMe = new CheckBox("rememberMe");
+
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        final Button login = new Button("Login");
-        final Button logout = new Button("Logout");
-        final Button button = new Button("Button");
-        final TextBox username = new TextBox();
-        final PasswordTextBox password = new PasswordTextBox();
-        final CheckBox rememberMe = new CheckBox("rememberMe");
+        registerLoginHandler();
 
         login.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
@@ -52,16 +57,27 @@ public class SampleApplication implements EntryPoint {
                 });
             }
         });
-
+        loginFacebook.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                loginFacebook(rememberMe.getValue());
+            }
+        });
 //        if (!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+        RootPanel.get("slot1").add(message);
         RootPanel.get("slot1").add(username);
         RootPanel.get("slot1").add(password);
         RootPanel.get("slot1").add(rememberMe);
         RootPanel.get("slot1").add(login);
+        RootPanel.get("slot1").add(loginFacebook);
         RootPanel.get("slot1").add(logout);
 //    }
 
         RootPanel.get("slot2").add(button);
+    }
+
+    private void loginFacebook(boolean rememberMe) {
+        Window.open("/facebookconnect/?rememberMe=" + rememberMe, "Facebook Login", null);
     }
 
     private void login(String login, String pass, boolean rememberMe) {
@@ -81,6 +97,7 @@ public class SampleApplication implements EntryPoint {
 
             public void onResponseReceived(Request request, Response response) {
                 if (response.getStatusCode() == 200) {
+//                    message.setText(user);
                     Window.alert("Success");
                 } else {
                     Window.alert(response.getStatusCode() + "," + response.getStatusText());
@@ -106,6 +123,7 @@ public class SampleApplication implements EntryPoint {
 
             public void onResponseReceived(Request request, Response response) {
                 if (response.getStatusCode() == 200) {
+                    message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
                 } else {
                     Window.alert("[logout] " + response.getStatusCode() + "," + response.getStatusText());
@@ -119,4 +137,17 @@ public class SampleApplication implements EntryPoint {
             re.printStackTrace();
         }
     }
+
+
+    public void handleLogin(String user) {
+        message.setText(user);
+    }
+
+    public static native void registerLoginHandler() /*-{
+        $wnd.handleLogin =
+            this.@third.client.module.SampleApplication::handleLogin(Ljava/lang/String;);
+//        window.loginHandler = function (user) {
+//            this.@third.client.module.SampleApplication::loginHandler(Ljava/lang/String;)(user);
+//        };
+    }-*/;
 }

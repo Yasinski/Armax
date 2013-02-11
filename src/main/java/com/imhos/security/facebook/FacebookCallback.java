@@ -91,12 +91,16 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if("true".equals(rememberMe)){
+        if ("true".equals(rememberMe)) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
-        }  else {
+        } else {
             rememberMeServices.logout(request, response, authentication);
         }
-        return new ModelAndView("/application/");
+        response.getWriter().print("<script>\n" +
+//                "    window.opener.handleLogin('" + user.getUsername() + "');\n" +
+                "            window.close();\n" +
+                "        </script>");
+        return null;
     }
 }
 
