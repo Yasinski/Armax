@@ -4,9 +4,10 @@
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.imhos.security.shared.SharedSecurity'/>
 
     <!-- Specify the app entry point class.                   -->
-    <entry-point class='third.client.module.SampleApplication'/>
+    <entry-point class='com.imhos.security.client.module.SampleApplication'/>
 
 
     <!-- Specify the app servlets.                   -->

@@ -1,6 +1,6 @@
-package com.imhos.security;
+package com.imhos.security.server;
 
-import com.imhos.security.facebook.FacebookController;
+import com.imhos.security.server.facebook.FacebookController;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;

@@ -21,6 +21,6 @@
     <bean name="/sample" class="third.service.gwt.SampleApplicationServiceImpl"/>
 
     <!--<bean class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>-->
-    <bean class="com.imhos.security.SimpleGwtServletHandlerAdapter"/>
+    <bean class="com.imhos.security.server.SimpleGwtServletHandlerAdapter"/>
 
 </beans>

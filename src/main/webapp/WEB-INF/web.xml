@@ -23,7 +23,7 @@
     </session-config>
 
     <listener>
-        <listener-class>com.imhos.security.HttpSessionChecker</listener-class>
+        <listener-class>com.imhos.security.server.HttpSessionChecker</listener-class>
     </listener>
 
     <filter>

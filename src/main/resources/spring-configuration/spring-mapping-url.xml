@@ -13,12 +13,12 @@
 
     <!--</bean>-->
 
-    <bean name="/facebookconnect/" class="com.imhos.security.facebook.FacebookConnect">
+    <bean name="/facebookconnect/" class="com.imhos.security.server.facebook.FacebookConnect">
         <property name="appID" value="${facebook.application.id}"/>
         <property name="appSecret" value="${facebook.application.secret}"/>
         <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
     </bean>
-    <bean name="/facebookcallback/" class="com.imhos.security.facebook.FacebookCallback">
+    <bean name="/facebookcallback/" class="com.imhos.security.server.facebook.FacebookCallback">
         <property name="appID" value="${facebook.application.id}"/>
         <property name="appSecret" value="${facebook.application.secret}"/>
         <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
@@ -39,7 +39,7 @@
 
 
     <bean name="pagination" class="third.facade.Pagination"/>
-    <bean name="facebookController" class="com.imhos.security.facebook.FacebookController">
+    <bean name="facebookController" class="com.imhos.security.server.facebook.FacebookController">
         <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
     </bean>
 

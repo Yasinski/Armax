@@ -1,4 +1,4 @@
-package com.imhos.security;
+package com.imhos.security.server;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;

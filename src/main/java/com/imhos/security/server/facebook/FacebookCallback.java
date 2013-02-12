@@ -1,7 +1,7 @@
-package com.imhos.security.facebook;
+package com.imhos.security.server.facebook;
 
-import com.imhos.security.CustomUserAuthentication;
-import com.imhos.security.UserDetailsServiceImpl;
+import com.imhos.security.server.CustomUserAuthentication;
+import com.imhos.security.server.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;

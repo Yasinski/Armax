@@ -1,4 +1,4 @@
-package third.client.module;
+package com.imhos.security.client.module;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;

@@ -40,11 +40,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <beans:bean id="http403ForbiddenEntryPoint"
                 class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
     <beans:bean id="authenticationSuccessHandler"
-                class="com.imhos.security.handlers.GWTAuthenticationSuccessHandler"/>
+                class="com.imhos.security.server.handlers.GWTAuthenticationSuccessHandler"/>
     <beans:bean id="authenticationFailureHandler"
-                class="com.imhos.security.handlers.GWTAuthenticationFailureHandler"/>
+                class="com.imhos.security.server.handlers.GWTAuthenticationFailureHandler"/>
     <beans:bean id="logoutSuccessHandler"
-                class="com.imhos.security.handlers.GWTLogoutSuccessHandler"/>
+                class="com.imhos.security.server.handlers.GWTLogoutSuccessHandler"/>
 
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
@@ -58,9 +58,9 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     </authentication-manager>
 
 
-    <beans:bean name="userDetailsService" class="com.imhos.security.UserDetailsServiceImpl"/>
+    <beans:bean name="userDetailsService" class="com.imhos.security.server.UserDetailsServiceImpl"/>
 
-    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.RememberMeUserDetailsServicesImpl">
+    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.RememberMeUserDetailsServicesImpl">
         <beans:property name="appID" value="${facebook.application.id}"/>
         <beans:property name="appSecret" value="${facebook.application.secret}"/>
     </beans:bean>

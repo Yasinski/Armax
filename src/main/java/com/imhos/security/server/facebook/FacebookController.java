@@ -1,4 +1,4 @@
-package com.imhos.security.facebook;
+package com.imhos.security.server.facebook;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;

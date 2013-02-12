@@ -1,4 +1,4 @@
-package com.imhos.security.handlers;
+package com.imhos.security.server.handlers;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

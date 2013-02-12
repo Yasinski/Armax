@@ -1,4 +1,4 @@
-package com.imhos.security;
+package com.imhos.security.server;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleServletHandlerAdapter;

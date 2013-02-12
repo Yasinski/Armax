@@ -3,7 +3,7 @@ package third.service.gwt;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import third.client.module.SampleApplicationService;
+import com.imhos.security.client.module.SampleApplicationService;
 import third.facade.DBUserQueryer;
 import third.model.User;
 

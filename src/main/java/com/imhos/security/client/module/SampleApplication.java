@@ -1,12 +1,14 @@
-package third.client.module;
+package com.imhos.security.client.module;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.imhos.security.shared.model.User;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -84,7 +86,7 @@ public class SampleApplication implements EntryPoint {
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
-                                  + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
+                + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
         );
 
         rb.setCallback(new RequestCallback() {
@@ -93,9 +95,12 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(response.getStatusCode() == 200) {
+                if (response.getStatusCode() == 200) {
+//                            gson.fromJson(response.getText(), User.class);
                     //                    message.setText(user);
-                    Window.alert("Success");
+                    Window.alert("Success "
+                                 // + user.getUsername()
+                    );
                 } else {
                     Window.alert(response.getStatusCode() + "," + response.getStatusText());
                 }
@@ -119,7 +124,7 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(response.getStatusCode() == 200) {
+                if (response.getStatusCode() == 200) {
                     message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
                 } else {
@@ -143,7 +148,7 @@ public class SampleApplication implements EntryPoint {
     public native void registerLoginHandler(SampleApplication impl) /*-{
 
         $wnd.handleLogin = $entry(function (user) {
-            impl.@third.client.module.SampleApplication::handleLogin(Ljava/lang/String;)(user);
+            impl.@com.imhos.security.client.module.SampleApplication::handleLogin(Ljava/lang/String;)(user);
         });
     }-*/;
 }

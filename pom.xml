@@ -154,6 +154,14 @@
             <version>3.2</version>
         </dependency>
 
+        <!--Gson-->
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
 
         <dependency>
             <groupId>commons-collections</groupId>
@@ -299,7 +307,7 @@
                 </executions>
                 <configuration>
                     <!--<style>OBFUSCATED</style>-->
-                    <module>third.client.MySampleApplication</module>
+                    <module>com.imhos.security.client.MySampleApplication</module>
                     <!--<extraJvmArgs>-Xmx512m -Xss2048k</extraJvmArgs>-->
                     <disableCastChecking>true</disableCastChecking>
                     <disableClassMetadata>true</disableClassMetadata>

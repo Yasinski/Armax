@@ -1,13 +1,17 @@
-package com.imhos.security.handlers;
+package com.imhos.security.server.handlers;
 
+import com.google.gson.Gson;
+import com.imhos.security.shared.model.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +27,17 @@ public class GWTAuthenticationSuccessHandler implements AuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        response.setStatus(HttpServletResponse.SC_OK);
+        User user = new User();
+        user.setUsername(authentication.getName());
+        List<String> authorities = new ArrayList<String>();
+        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+            authorities.add(grantedAuthority.toString());
+        }
+        user.setAuthorities(authorities);
 
+        Gson gson = new Gson();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(gson.toJson(user));
     }
+
 }

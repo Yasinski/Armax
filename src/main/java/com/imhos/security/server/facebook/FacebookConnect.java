@@ -1,12 +1,7 @@
-package com.imhos.security.facebook;
+package com.imhos.security.server.facebook;
 
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.oauth2.GrantType;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import third.facade.DBUserQueryer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
