@@ -5,6 +5,7 @@ import com.imhos.security.server.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.social.RevokedAuthorizationException;
 import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,14 +68,24 @@ public class FacebookCallback implements Controller {
             throws IOException, ServletException {
 
         String authCode = request.getParameter(FACEBOOK_AUTH_CODE_PARAMETER);
+        if(authCode == null||authCode.isEmpty()) {
+            return sentLoginError(response);
+        }
         String rememberMe = request.getParameter(REMEMBER_ME_PARAMETER);
         String facebookCallBackUrl = this.facebookCallBackUrl + "?" + REMEMBER_ME_PARAMETER + "=" + rememberMe;
         FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
 
-        AccessGrant accessGrant = facebookController.getFacebookAccessGrant(authCode);
-        FacebookProfile profile = facebookController.getFacebookProfile(accessGrant).userOperations().getUserProfile();
+        AccessGrant accessGrant;
+        FacebookProfile profile;
+        try {
+            accessGrant = facebookController.getFacebookAccessGrant(authCode);
+            profile = facebookController.getFacebookProfile(accessGrant).userOperations().getUserProfile();
+        } catch (RevokedAuthorizationException e) {
+            return sentLoginError(response);
+        }
         String profileId = profile.getId();
         String profileName = profile.getName();
+        String email = profile.getEmail();
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
         if(user == null) {
@@ -97,8 +108,20 @@ public class FacebookCallback implements Controller {
         } else {
             rememberMeServices.logout(request, response, authentication);
         }
+        return sentLoginSuccess(response, user);
+    }
+
+    private ModelAndView sentLoginSuccess(HttpServletResponse response, User user) throws IOException {
         response.getWriter().print("<script>\n" +
                                            "    window.opener.handleLogin('" + user.getUsername() + "');\n" +
+                                           "            window.close();\n" +
+                                           "        </script>");
+        return null;
+    }
+
+    private ModelAndView sentLoginError(HttpServletResponse response) throws IOException {
+        response.getWriter().print("<script>\n" +
+                                           "    window.opener.handleLoginError('');\n" +
                                            "            window.close();\n" +
                                            "        </script>");
         return null;
