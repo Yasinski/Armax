@@ -40,8 +40,8 @@ public class RememberMeUserDetailsServicesImpl extends UserDetailsServiceImpl {
             return user;
         } else {
             FacebookController facebookController = new FacebookController(appID, appSecret);
-            Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
             try {
+                Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
                 if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {
                     return user;
                 } else {
