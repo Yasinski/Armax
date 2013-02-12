@@ -5,6 +5,10 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.*;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -96,10 +100,12 @@ public class SampleApplication implements EntryPoint {
 
             public void onResponseReceived(Request request, Response response) {
                 if (response.getStatusCode() == 200) {
-//                            gson.fromJson(response.getText(), User.class);
-                    //                    message.setText(user);
+                    String json = response.getText();
+//                    JSONValue value = JSONParser.parseLenient(json);
+                    handleLogin(deserialize(json));
+
                     Window.alert("Success "
-                                 // + user.getUsername()
+                            // + user.getUsername()
                     );
                 } else {
                     Window.alert(response.getStatusCode() + "," + response.getStatusText());
@@ -112,6 +118,21 @@ public class SampleApplication implements EntryPoint {
         } catch (RequestException re) {
             re.printStackTrace();
         }
+    }
+
+    private User deserialize(String json) {
+        JSONValue parsed = JSONParser.parseStrict(json);
+        JSONObject jsonObj = parsed.isObject();
+        User user = new User();
+        if (jsonObj != null) {
+            user.setUsername(jsonObj.get(User.USERNAME_FIELD).toString());
+            JSONArray array = jsonObj.get(User.AUTHORITIES_FIELD).isArray();
+            for (int i = 0; i < array.size(); i++) {
+                JSONValue obj = array.get(i);
+                user.getAuthorities().add(obj.toString());
+            }
+        }
+        return user;
     }
 
     void logout() {
@@ -141,8 +162,11 @@ public class SampleApplication implements EntryPoint {
     }
 
 
-    public void handleLogin(String user) {
-        message.setText(user);
+    public void handleLogin(String  user) {
+        handleLogin(deserialize(user));
+    }
+    public void handleLogin(User user) {
+        message.setText(user.getUsername());
     }
 
     public native void registerLoginHandler(SampleApplication impl) /*-{

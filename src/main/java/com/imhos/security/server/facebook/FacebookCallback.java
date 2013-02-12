@@ -1,8 +1,10 @@
 package com.imhos.security.server.facebook;
 
+import com.google.gson.Gson;
 import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.social.RevokedAuthorizationException;
@@ -18,7 +20,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -68,7 +72,7 @@ public class FacebookCallback implements Controller {
             throws IOException, ServletException {
 
         String authCode = request.getParameter(FACEBOOK_AUTH_CODE_PARAMETER);
-        if(authCode == null||authCode.isEmpty()) {
+        if (authCode == null || authCode.isEmpty()) {
             return sentLoginError(response);
         }
         String rememberMe = request.getParameter(REMEMBER_ME_PARAMETER);
@@ -88,11 +92,11 @@ public class FacebookCallback implements Controller {
         String email = profile.getEmail();
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
-        if(user == null) {
+        if (user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
             user = new User(profileId, profileName, "facebook",
-                            accessGrant.getAccessToken(), authorities, true);
+                    accessGrant.getAccessToken(), authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
             user.setFacebookToken(accessGrant.getAccessToken());
@@ -103,7 +107,7 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if("true".equals(rememberMe)) {
+        if ("true".equals(rememberMe)) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
         } else {
             rememberMeServices.logout(request, response, authentication);
@@ -113,18 +117,32 @@ public class FacebookCallback implements Controller {
 
     private ModelAndView sentLoginSuccess(HttpServletResponse response, User user) throws IOException {
         response.getWriter().print("<script>\n" +
-                                           "    window.opener.handleLogin('" + user.getUsername() + "');\n" +
-                                           "            window.close();\n" +
-                                           "        </script>");
+                "    window.opener.handleLogin('" + serialize(user) + "');\n" +
+                "            window.close();\n" +
+                "        </script>");
         return null;
     }
 
     private ModelAndView sentLoginError(HttpServletResponse response) throws IOException {
         response.getWriter().print("<script>\n" +
-                                           "    window.opener.handleLoginError('');\n" +
-                                           "            window.close();\n" +
-                                           "        </script>");
+                "    window.opener.handleLoginError('');\n" +
+                "            window.close();\n" +
+                "        </script>");
         return null;
+    }
+
+    private String serialize(User authentication) {
+
+        com.imhos.security.shared.model.User user = new com.imhos.security.shared.model.User();
+        user.setUsername(authentication.getUsername());
+        List<String> authorities = new ArrayList<String>();
+        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+            authorities.add(grantedAuthority.toString());
+        }
+        user.setAuthorities(authorities);
+
+        Gson gson = new Gson();
+        return gson.toJson(user);
     }
 }
 

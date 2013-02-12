@@ -3,6 +3,7 @@
 <module rename-to="application">
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.json.JSON'/>
     <inherits name='com.google.gwt.user.User'/>
     <inherits name='com.imhos.security.shared.SharedSecurity'/>
 

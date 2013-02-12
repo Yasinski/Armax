@@ -1,5 +1,6 @@
 package com.imhos.security.shared.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +11,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class User {
+    public static final String USERNAME_FIELD = "username";
+    public static final String AUTHORITIES_FIELD = "AUTHORITIES";
     private String username;
     private List<String> authorities;
 
     public User() {
+        authorities = new ArrayList<String>();
     }
 
     public String getUsername() {
