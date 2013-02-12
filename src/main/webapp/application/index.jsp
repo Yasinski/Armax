@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+
+<!DOCTYPE HTML >
 <html>
 <head>
 
@@ -33,12 +35,12 @@
 </p>
 
 <%--<script type="text/javascript">--%>
-    <%--function loggedin (username) {--%>
-        <%--alert ("Hello from parent!");--%>
-    <%--}--%>
-    <%--function doStuff () {--%>
-        <%--var w = window.open("testa.html");--%>
-    <%--}--%>
+<%--function loggedin (username) {--%>
+<%--alert ("Hello from parent!");--%>
+<%--}--%>
+<%--function doStuff () {--%>
+<%--var w = window.open("testa.html");--%>
+<%--}--%>
 <%--</script>--%>
 <table align="center">
     <tr>

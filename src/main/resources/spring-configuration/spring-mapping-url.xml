@@ -40,7 +40,7 @@
 
     <bean name="pagination" class="third.facade.Pagination"/>
     <bean name="facebookController" class="com.imhos.security.facebook.FacebookController">
-    <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
+        <property name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
     </bean>
 
 </beans>

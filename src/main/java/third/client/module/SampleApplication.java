@@ -7,7 +7,6 @@ import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -28,7 +27,7 @@ public class SampleApplication implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        registerLoginHandler();
+        registerLoginHandler(this);
 
         login.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
@@ -63,7 +62,7 @@ public class SampleApplication implements EntryPoint {
                 loginFacebook(rememberMe.getValue());
             }
         });
-//        if (!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+
         RootPanel.get("slot1").add(message);
         RootPanel.get("slot1").add(username);
         RootPanel.get("slot1").add(password);
@@ -71,23 +70,21 @@ public class SampleApplication implements EntryPoint {
         RootPanel.get("slot1").add(login);
         RootPanel.get("slot1").add(loginFacebook);
         RootPanel.get("slot1").add(logout);
-//    }
+
 
         RootPanel.get("slot2").add(button);
     }
 
     private void loginFacebook(boolean rememberMe) {
-        Window.open("/facebookconnect/?rememberMe=" + rememberMe, "Facebook Login", null);
+        Window.open("/facebookconnect/?rememberMe=" + rememberMe, "Facebook Login", "width=500,height=300");
     }
 
     private void login(String login, String pass, boolean rememberMe) {
 
-//        RequestFactory
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
-//        rb.setUser("Content-Type", "application/x-www-form-urlencoded");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
-                + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
+                                  + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
         );
 
         rb.setCallback(new RequestCallback() {
@@ -96,8 +93,8 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if (response.getStatusCode() == 200) {
-//                    message.setText(user);
+                if(response.getStatusCode() == 200) {
+                    //                    message.setText(user);
                     Window.alert("Success");
                 } else {
                     Window.alert(response.getStatusCode() + "," + response.getStatusText());
@@ -122,7 +119,7 @@ public class SampleApplication implements EntryPoint {
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if (response.getStatusCode() == 200) {
+                if(response.getStatusCode() == 200) {
                     message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
                 } else {
@@ -143,11 +140,10 @@ public class SampleApplication implements EntryPoint {
         message.setText(user);
     }
 
-    public static native void registerLoginHandler() /*-{
-        $wnd.handleLogin =
-            this.@third.client.module.SampleApplication::handleLogin(Ljava/lang/String;);
-//        window.loginHandler = function (user) {
-//            this.@third.client.module.SampleApplication::loginHandler(Ljava/lang/String;)(user);
-//        };
+    public native void registerLoginHandler(SampleApplication impl) /*-{
+
+        $wnd.handleLogin = $entry(function (user) {
+            impl.@third.client.module.SampleApplication::handleLogin(Ljava/lang/String;)(user);
+        });
     }-*/;
 }

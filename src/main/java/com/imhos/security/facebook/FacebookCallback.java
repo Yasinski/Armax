@@ -4,9 +4,8 @@ import com.imhos.security.CustomUserAuthentication;
 import com.imhos.security.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -29,6 +28,8 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class FacebookCallback implements Controller {
+    public static final String FACEBOOK_AUTH_CODE_PARAMETER = "code";
+    public static final String REMEMBER_ME_PARAMETER = "rememberMe";
     private String appID;
     private String appSecret;
     private String facebookCallBackUrl;
@@ -65,22 +66,22 @@ public class FacebookCallback implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String authCode = request.getParameter("code");
-        String rememberMe = request.getParameter("rememberMe");
-        String facebookCallBackUrl = this.facebookCallBackUrl + "?rememberMe=" + rememberMe;
+        String authCode = request.getParameter(FACEBOOK_AUTH_CODE_PARAMETER);
+        String rememberMe = request.getParameter(REMEMBER_ME_PARAMETER);
+        String facebookCallBackUrl = this.facebookCallBackUrl + "?" + REMEMBER_ME_PARAMETER + "=" + rememberMe;
         FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
 
         AccessGrant accessGrant = facebookController.getFacebookAccessGrant(authCode);
-        Facebook facebook = facebookController.getFacebookProfile(accessGrant);
-        String profileId = facebook.userOperations().getUserProfile().getId();
-        String profileName = facebook.userOperations().getUserProfile().getName();
+        FacebookProfile profile = facebookController.getFacebookProfile(accessGrant).userOperations().getUserProfile();
+        String profileId = profile.getId();
+        String profileName = profile.getName();
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
-        if (user == null) {
+        if(user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
             user = new User(profileId, profileName, "facebook",
-                    accessGrant.getAccessToken(), authorities, true);
+                            accessGrant.getAccessToken(), authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
             user.setFacebookToken(accessGrant.getAccessToken());
@@ -91,15 +92,15 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if ("true".equals(rememberMe)) {
+        if("true".equals(rememberMe)) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
         } else {
             rememberMeServices.logout(request, response, authentication);
         }
         response.getWriter().print("<script>\n" +
-//                "    window.opener.handleLogin('" + user.getUsername() + "');\n" +
-                "            window.close();\n" +
-                "        </script>");
+                                           "    window.opener.handleLogin('" + user.getUsername() + "');\n" +
+                                           "            window.close();\n" +
+                                           "        </script>");
         return null;
     }
 }

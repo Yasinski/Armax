@@ -31,7 +31,7 @@ public class FacebookController {
         connectionFactory = new FacebookConnectionFactory(appID, appSecret);
     }
 
-        public FacebookController(String appID, String appSecret, String facebookCallBackUrl) {
+    public FacebookController(String appID, String appSecret, String facebookCallBackUrl) {
         connectionFactory = new FacebookConnectionFactory(appID, appSecret);
         this.facebookCallBackUrl = facebookCallBackUrl;
     }
@@ -47,6 +47,7 @@ public class FacebookController {
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
         params.setRedirectUri(facebookCallBackUrl);
+        params.set("display", "popup");
         String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
         return authorizeUrl;
     }
