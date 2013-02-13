@@ -20,6 +20,7 @@ import java.io.IOException;
 
 public class GWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
+
     private Serializer<AuthenticationException> serializer = new AuthenticationExceptionSerializer();
 
 
