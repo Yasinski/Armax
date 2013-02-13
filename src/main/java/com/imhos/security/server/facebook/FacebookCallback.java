@@ -3,6 +3,8 @@ package com.imhos.security.server.facebook;
 import com.google.gson.Gson;
 import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.UserDetailsServiceImpl;
+import com.imhos.security.shared.model.AuthenticationError;
+import com.imhos.security.shared.model.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,8 +74,8 @@ public class FacebookCallback implements Controller {
             throws IOException, ServletException {
 
         String authCode = request.getParameter(FACEBOOK_AUTH_CODE_PARAMETER);
-        if (authCode == null || authCode.isEmpty()) {
-            return sentLoginError(response);
+        if(authCode == null||authCode.isEmpty()) {
+            return sentLoginError(response, AuthenticationError.THIRD_PARTY_AUTHORIZATION_REJECTED);
         }
         String rememberMe = request.getParameter(REMEMBER_ME_PARAMETER);
         String facebookCallBackUrl = this.facebookCallBackUrl + "?" + REMEMBER_ME_PARAMETER + "=" + rememberMe;
@@ -85,18 +87,19 @@ public class FacebookCallback implements Controller {
             accessGrant = facebookController.getFacebookAccessGrant(authCode);
             profile = facebookController.getFacebookProfile(accessGrant).userOperations().getUserProfile();
         } catch (RevokedAuthorizationException e) {
-            return sentLoginError(response);
+            return sentLoginError(response, AuthenticationError.THIRD_PARTY_AUTHORIZATION_REJECTED);
         }
         String profileId = profile.getId();
         String profileName = profile.getName();
+        //todo: email should be used as login
         String email = profile.getEmail();
 
         User user = dbUserQueryer.getUserByFacebookId(profileId);
-        if (user == null) {
+        if(user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
             user = new User(profileId, profileName, "facebook",
-                    accessGrant.getAccessToken(), authorities, true);
+                            accessGrant.getAccessToken(), authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
             user.setFacebookToken(accessGrant.getAccessToken());
@@ -107,7 +110,7 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if ("true".equals(rememberMe)) {
+        if("true".equals(rememberMe)) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
         } else {
             rememberMeServices.logout(request, response, authentication);
@@ -117,23 +120,29 @@ public class FacebookCallback implements Controller {
 
     private ModelAndView sentLoginSuccess(HttpServletResponse response, User user) throws IOException {
         response.getWriter().print("<script>\n" +
-                "    window.opener.handleLogin('" + serialize(user) + "');\n" +
-                "            window.close();\n" +
-                "        </script>");
+                                           "window.opener.handleLoginSuccess('" + serialize(user) + "');\n" +
+                                           "window.close();\n" +
+                                           "</script>");
         return null;
     }
 
-    private ModelAndView sentLoginError(HttpServletResponse response) throws IOException {
+    private ModelAndView sentLoginError(HttpServletResponse response, AuthenticationError error) throws IOException {
         response.getWriter().print("<script>\n" +
-                "    window.opener.handleLoginError('');\n" +
-                "            window.close();\n" +
-                "        </script>");
+                                           "window.opener.handleLoginError('" + serialize(error) + "');\n" +
+                                           "window.close();\n" +
+                                           "</script>");
         return null;
     }
 
+    //todo: should be separated to some kind of AuthenticationError serializer class
+    private String serialize(AuthenticationError error) {
+        return String.valueOf(error.ordinal());
+    }
+
+    //todo: should be separated to some kind of User serializer class
     private String serialize(User authentication) {
 
-        com.imhos.security.shared.model.User user = new com.imhos.security.shared.model.User();
+        UserDetailsImpl user = new UserDetailsImpl();
         user.setUsername(authentication.getUsername());
         List<String> authorities = new ArrayList<String>();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {

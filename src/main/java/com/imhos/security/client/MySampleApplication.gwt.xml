@@ -5,6 +5,7 @@
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.json.JSON'/>
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.google.web.bindery.autobean.AutoBean'/>
     <inherits name='com.imhos.security.shared.SharedSecurity'/>
 
     <!-- Specify the app entry point class.                   -->
@@ -13,6 +14,6 @@
 
     <!-- Specify the app servlets.                   -->
     <!--<servlet path='/SampleApplicationService' class='third.service.gwt.SampleApplicationServiceImpl>-->
-    <source path='module' />
+    <source path='module'/>
 
 </module>

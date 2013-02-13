@@ -1,7 +1,7 @@
 package com.imhos.security.server.handlers;
 
 import com.google.gson.Gson;
-import com.imhos.security.shared.model.User;
+import com.imhos.security.shared.model.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -27,7 +27,8 @@ public class GWTAuthenticationSuccessHandler implements AuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        User user = new User();
+        //todo: should be separated to some kind of User serializer class
+        UserDetailsImpl user = new UserDetailsImpl();
         user.setUsername(authentication.getName());
         List<String> authorities = new ArrayList<String>();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {

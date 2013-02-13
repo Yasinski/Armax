@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Panstvo
- * Date: 12.02.13
- * Time: 9:53
- * To change this template use File | Settings | File Templates.
+ * writeme: Should be the description of the class
+ *
+ * @author <a href="a.kasinskiy@gmail.com">Arthur Kasinskiy</a>
+ * @updated 12.02.13 12:26
  */
-public class User {
+public class UserDetailsImpl implements UserDetails {
+
     public static final String USERNAME_FIELD = "username";
-    public static final String AUTHORITIES_FIELD = "AUTHORITIES";
+    public static final String AUTHORITIES_FIELD = "authorities";
     private String username;
     private List<String> authorities;
 
-    public User() {
+    public UserDetailsImpl() {
         authorities = new ArrayList<String>();
     }
 
@@ -35,4 +35,6 @@ public class User {
     public void setAuthorities(List<String> authorities) {
         this.authorities = authorities;
     }
+
+
 }

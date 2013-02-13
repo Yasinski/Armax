@@ -1,5 +1,6 @@
 package com.imhos.security.server.handlers;
 
+import com.imhos.security.shared.model.AuthenticationError;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -22,5 +23,6 @@ public class GWTAuthenticationFailureHandler implements AuthenticationFailureHan
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(AuthenticationError.BAD_CREDENTIALS.ordinal());
     }
 }

@@ -2,9 +2,11 @@ package com.imhos.security.server;
 
 import com.imhos.security.server.facebook.FacebookController;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
-import org.springframework.social.RevokedAuthorizationException;
+import org.springframework.social.NotAuthorizedException;
+import org.springframework.social.RejectedAuthorizationException;
 import org.springframework.social.facebook.api.Facebook;
 import third.model.User;
 
@@ -15,10 +17,11 @@ import third.model.User;
  * Time: 9:02
  * To change this template use File | Settings | File Templates.
  */
-public class RememberMeUserDetailsServicesImpl extends UserDetailsServiceImpl {
+public class RememberMeUserDetailsServicesImpl {
 
     private String appID;
     private String appSecret;
+    private UserDetailsService userDetailsService;
 
     public void setAppID(String appID) {
         this.appID = appID;
@@ -28,14 +31,13 @@ public class RememberMeUserDetailsServicesImpl extends UserDetailsServiceImpl {
         this.appSecret = appSecret;
     }
 
-    //    private DBUserQueryer dbUserQueryer;
-    //
-    //    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-    //        this.dbUserQueryer = dbUserQueryer;
-    //    }
+
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = (User) super.loadUserByUsername(login);
+        User user = (User) userDetailsService.loadUserByUsername(login);
         if(user.getFacebookId() == null) {
             return user;
         } else {
@@ -45,10 +47,12 @@ public class RememberMeUserDetailsServicesImpl extends UserDetailsServiceImpl {
                 if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {
                     return user;
                 } else {
-                    System.out.println("Аккаунт был удален!");
-                    throw new UsernameNotFoundException("Аккаунт был удален");
+                    throw new UsernameNotFoundException("");
                 }
-            } catch (RevokedAuthorizationException e) {
+//       todo: all kind of exceptions should be checked
+            } catch (RejectedAuthorizationException e) {
+                throw new RememberMeAuthenticationException(e.getMessage());
+            } catch (NotAuthorizedException e) {
                 throw new RememberMeAuthenticationException(e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
