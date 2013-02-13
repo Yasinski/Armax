@@ -24,7 +24,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <logout success-handler-ref="logoutSuccessHandler"/>
         <!--<logout success-handler-ref="logoutSuccessHandler" />-->
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
-        <remember-me services-ref="rememberMeServices" key="springRocks" />
+        <remember-me services-ref="rememberMeServices" key="springRocks"/>
         <!--<custom-filter position="REMEMBER_ME_FILTER" ref="myRememberMeFilter" />-->
     </http>
 
@@ -34,7 +34,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <beans:property name="userDetailsService" ref="rememberMeUserDetailsService"/>
         <beans:property name="key" value="springRocks"/>
     </beans:bean>
-
 
 
     <beans:bean id="http403ForbiddenEntryPoint"
@@ -60,7 +59,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean name="userDetailsService" class="com.imhos.security.server.UserDetailsServiceImpl"/>
 
-    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.RememberMeUserDetailsServicesImpl">
+    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.UserDetailsServicesSocialWrapper">
         <beans:property name="appID" value="${facebook.application.id}"/>
         <beans:property name="appSecret" value="${facebook.application.secret}"/>
     </beans:bean>

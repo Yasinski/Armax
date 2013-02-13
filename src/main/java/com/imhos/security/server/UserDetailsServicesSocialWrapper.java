@@ -17,7 +17,7 @@ import third.model.User;
  * Time: 9:02
  * To change this template use File | Settings | File Templates.
  */
-public class RememberMeUserDetailsServicesImpl implements UserDetailsService {
+public class UserDetailsServicesSocialWrapper implements UserDetailsService {
 
     private String appID;
     private String appSecret;
@@ -38,26 +38,31 @@ public class RememberMeUserDetailsServicesImpl implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = (User) userDetailsService.loadUserByUsername(login);
-        if(user.getFacebookId() == null) {
-            return user;
-        } else {
-            FacebookController facebookController = new FacebookController(appID, appSecret);
-            try {
-                Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
-                if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {
-                    return user;
-                } else {
-                    throw new UsernameNotFoundException("");
-                }
-//       todo: all kind of exceptions should be checked
-            } catch (RejectedAuthorizationException e) {
-                throw new RememberMeAuthenticationException(e.getMessage());
-            } catch (NotAuthorizedException e) {
-                throw new RememberMeAuthenticationException(e.getMessage());
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+        if(user.getFacebookId() != null) {
+            return checkFacebook(user);
+        }
+
+        return user;
+
+    }
+
+    private UserDetails checkFacebook(User user) {
+        FacebookController facebookController = new FacebookController(appID, appSecret);
+        try {
+            Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
+            if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {
+                return user;
+            } else {
+                throw new UsernameNotFoundException("");
             }
+//       todo: all kind of exceptions should be checked
+        } catch (RejectedAuthorizationException e) {
+            throw new RememberMeAuthenticationException(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            throw new RememberMeAuthenticationException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

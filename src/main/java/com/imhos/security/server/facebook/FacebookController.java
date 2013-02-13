@@ -27,6 +27,7 @@ public class FacebookController {
     public FacebookController() {
     }
 
+    //    todo: appID and appSecret should be injected into this bean directly
     public FacebookController(String appID, String appSecret) {
         connectionFactory = new FacebookConnectionFactory(appID, appSecret);
     }
