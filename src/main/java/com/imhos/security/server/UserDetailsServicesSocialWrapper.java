@@ -4,7 +4,6 @@ import com.imhos.security.server.facebook.FacebookController;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
 import org.springframework.social.NotAuthorizedException;
 import org.springframework.social.RejectedAuthorizationException;
 import org.springframework.social.facebook.api.Facebook;
@@ -51,9 +50,9 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
             }
 //       todo: all kind of exceptions should be checked
         } catch (RejectedAuthorizationException e) {
-            throw new RememberMeAuthenticationException(e.getMessage());
+            throw new SocialAuthenticationRejectedException(e.getMessage(), e);
         } catch (NotAuthorizedException e) {
-            throw new RememberMeAuthenticationException(e.getMessage());
+            throw new SocialAuthenticationRejectedException(e.getMessage(), e);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

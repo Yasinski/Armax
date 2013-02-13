@@ -7,6 +7,7 @@ import com.imhos.security.shared.model.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.social.RevokedAuthorizationException;
 import org.springframework.social.facebook.api.FacebookProfile;
@@ -126,7 +127,7 @@ public class FacebookCallback implements Controller {
     }
 
     //todo: should be separated to some kind of User serializer class
-    private String serialize(User authentication) {
+    private String serialize(UserDetails authentication) {
 
         UserDetailsImpl user = new UserDetailsImpl();
         user.setUsername(authentication.getUsername());
