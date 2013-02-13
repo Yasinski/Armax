@@ -50,5 +50,6 @@
         </td>
     </tr>
 </table>
+<%--todo: serialize Authentication info to JSON properties, for further processing by client--%>
 </body>
 </html>

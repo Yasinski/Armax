@@ -53,6 +53,7 @@ public class FacebookController {
         return getFacebookProfile(accessGrant);
     }
 
+    // todo:solve encoding problem
     public Facebook getFacebookProfile(AccessGrant accessGrant) {
         Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
         Facebook facebook = connection.getApi();

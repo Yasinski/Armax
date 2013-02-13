@@ -85,6 +85,7 @@ public class FacebookCallback implements Controller {
                             accessGrant.getAccessToken(), authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
+            //todo: all profile fields should be updated
             user.setFacebookToken(accessGrant.getAccessToken());
             dbUserQueryer.updateUser(user);
         }
@@ -102,6 +103,7 @@ public class FacebookCallback implements Controller {
     }
 
     private ModelAndView sentLoginSuccess(HttpServletResponse response, User user) throws IOException {
+//        todo: use StringBuilder or forward to jsp view
         response.getWriter().print("<script>\n" +
                                            "window.opener.handleLoginSuccess('" + serialize(user) + "');\n" +
                                            "window.close();\n" +
@@ -110,6 +112,7 @@ public class FacebookCallback implements Controller {
     }
 
     private ModelAndView sentLoginError(HttpServletResponse response, AuthenticationError error) throws IOException {
+//        todo: use StringBuilder or forward to jsp view
         response.getWriter().print("<script>\n" +
                                            "window.opener.handleLoginError('" + serialize(error) + "');\n" +
                                            "window.close();\n" +
