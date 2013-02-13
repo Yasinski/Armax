@@ -18,33 +18,20 @@ import java.io.IOException;
 
 public class FacebookConnect implements Controller {
 
-    private String appID;
-    private String appSecret;
-    private String facebookCallBackUrl;
+    private FacebookController facebookController;
 
-    public void setAppID(String appID) {
-        this.appID = appID;
+    public void setFacebookController(FacebookController facebookController) {
+        this.facebookController = facebookController;
     }
 
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
-        this.facebookCallBackUrl = facebookCallBackUrl;
-    }
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String rememberMe = request.getParameter("rememberMe");
-
-        String facebookCallBackUrl = this.facebookCallBackUrl + "?rememberMe=" + rememberMe;
-
-        FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
-
-        String authorizeUrl = facebookController.getAuthorizeUrl();
+        String rememberMeParameter = request.getParameter("rememberMe");
+        boolean rememberMe = "true".equals(rememberMeParameter);
+        String authorizeUrl = facebookController.getAuthorizeUrl(rememberMe);
         response.sendRedirect(authorizeUrl);
         return null;
     }

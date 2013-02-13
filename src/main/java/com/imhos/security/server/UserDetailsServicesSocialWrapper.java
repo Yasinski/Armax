@@ -19,18 +19,13 @@ import third.model.User;
  */
 public class UserDetailsServicesSocialWrapper implements UserDetailsService {
 
-    private String appID;
-    private String appSecret;
     private UserDetailsService userDetailsService;
+    private FacebookController facebookController;
 
-    public void setAppID(String appID) {
-        this.appID = appID;
+
+    public void setFacebookController(FacebookController facebookController) {
+        this.facebookController = facebookController;
     }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
 
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -47,7 +42,6 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
     }
 
     private UserDetails checkFacebook(User user) {
-        FacebookController facebookController = new FacebookController(appID, appSecret);
         try {
             Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
             if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {

@@ -2,7 +2,6 @@ package com.imhos.security.server.facebook;
 
 import com.google.gson.Gson;
 import com.imhos.security.server.CustomUserAuthentication;
-import com.imhos.security.server.UserDetailsServiceImpl;
 import com.imhos.security.shared.model.AuthenticationError;
 import com.imhos.security.shared.model.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
@@ -37,36 +36,21 @@ import java.util.Set;
 public class FacebookCallback implements Controller {
     public static final String FACEBOOK_AUTH_CODE_PARAMETER = "code";
     public static final String REMEMBER_ME_PARAMETER = "rememberMe";
-    private String appID;
-    private String appSecret;
-    private String facebookCallBackUrl;
     private DBUserQueryer dbUserQueryer;
     private TokenBasedRememberMeServices rememberMeServices;
-
-    public void setAppID(String appID) {
-        this.appID = appID;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
-        this.facebookCallBackUrl = facebookCallBackUrl;
-    }
+    private FacebookController facebookController;
 
     public void setRememberMeServices(TokenBasedRememberMeServices rememberMeServices) {
         this.rememberMeServices = rememberMeServices;
     }
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
         this.dbUserQueryer = dbUserQueryer;
     }
 
-    public void setUserDetailsServiceImpl(UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    public void setFacebookController(FacebookController facebookController) {
+        this.facebookController = facebookController;
     }
 
     @Override
@@ -77,14 +61,13 @@ public class FacebookCallback implements Controller {
         if(authCode == null||authCode.isEmpty()) {
             return sentLoginError(response, AuthenticationError.THIRD_PARTY_AUTHORIZATION_REJECTED);
         }
-        String rememberMe = request.getParameter(REMEMBER_ME_PARAMETER);
-        String facebookCallBackUrl = this.facebookCallBackUrl + "?" + REMEMBER_ME_PARAMETER + "=" + rememberMe;
-        FacebookController facebookController = new FacebookController(appID, appSecret, facebookCallBackUrl);
+        String rememberMeParameter = request.getParameter(REMEMBER_ME_PARAMETER);
+        boolean rememberMe = "true".equals(rememberMeParameter);
 
         AccessGrant accessGrant;
         FacebookProfile profile;
         try {
-            accessGrant = facebookController.getFacebookAccessGrant(authCode);
+            accessGrant = facebookController.getFacebookAccessGrant(authCode, rememberMe);
             profile = facebookController.getFacebookProfile(accessGrant).userOperations().getUserProfile();
         } catch (RevokedAuthorizationException e) {
             return sentLoginError(response, AuthenticationError.THIRD_PARTY_AUTHORIZATION_REJECTED);
@@ -110,7 +93,7 @@ public class FacebookCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if("true".equals(rememberMe)) {
+        if(rememberMe) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
         } else {
             rememberMeServices.logout(request, response, authentication);

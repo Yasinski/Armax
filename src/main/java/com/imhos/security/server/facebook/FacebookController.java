@@ -20,37 +20,32 @@ public class FacebookController {
     private String facebookCallBackUrl;
     private FacebookConnectionFactory connectionFactory;
 
-    public void setFacebookCallBackUrl(String facebookCallBackUrl) {
-        this.facebookCallBackUrl = facebookCallBackUrl;
-    }
-
     public FacebookController() {
     }
 
-    //    todo: appID and appSecret should be injected into this bean directly
-    public FacebookController(String appID, String appSecret) {
-        connectionFactory = new FacebookConnectionFactory(appID, appSecret);
-    }
 
     public FacebookController(String appID, String appSecret, String facebookCallBackUrl) {
         connectionFactory = new FacebookConnectionFactory(appID, appSecret);
         this.facebookCallBackUrl = facebookCallBackUrl;
     }
 
-    public AccessGrant getFacebookAccessGrant(String authCode) {
+    public AccessGrant getFacebookAccessGrant(String authCode, boolean rememberMe) {
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
-        AccessGrant accessGrant =
-                oauthOperations.exchangeForAccess(authCode, facebookCallBackUrl, null);
+        AccessGrant accessGrant = oauthOperations.exchangeForAccess(authCode, getFacebookURL(rememberMe), null);
         return accessGrant;
     }
 
-    public String getAuthorizeUrl() {
+    public String getAuthorizeUrl(boolean rememberMe) {
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri(facebookCallBackUrl);
+        params.setRedirectUri(getFacebookURL(rememberMe));
         params.set("display", "popup");
         String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
         return authorizeUrl;
+    }
+
+    private String getFacebookURL(boolean rememberMe) {
+        return facebookCallBackUrl + "?" + FacebookCallback.REMEMBER_ME_PARAMETER + "=" + rememberMe;
     }
 
     public Facebook getFacebookProfile(String token) {

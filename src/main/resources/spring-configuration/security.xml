@@ -59,9 +59,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean name="userDetailsService" class="com.imhos.security.server.UserDetailsServiceImpl"/>
 
-    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.UserDetailsServicesSocialWrapper">
-        <beans:property name="appID" value="${facebook.application.id}"/>
-        <beans:property name="appSecret" value="${facebook.application.secret}"/>
+    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.UserDetailsServicesSocialWrapper"/>
+
+    <beans:bean name="facebookController" class="com.imhos.security.server.facebook.FacebookController">
+        <beans:constructor-arg name="appID" value="${facebook.application.id}"/>
+        <beans:constructor-arg name="appSecret" value="${facebook.application.secret}"/>
+        <beans:constructor-arg name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
     </beans:bean>
 
 </beans:beans>
