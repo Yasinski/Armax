@@ -23,6 +23,7 @@ public class GWTAuthenticationFailureHandler implements AuthenticationFailureHan
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        //todo: handle more Authentication Exceptions
         response.getWriter().write(AuthenticationError.BAD_CREDENTIALS.ordinal());
     }
 }
