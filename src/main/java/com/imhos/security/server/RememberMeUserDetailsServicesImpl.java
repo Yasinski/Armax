@@ -17,7 +17,7 @@ import third.model.User;
  * Time: 9:02
  * To change this template use File | Settings | File Templates.
  */
-public class RememberMeUserDetailsServicesImpl {
+public class RememberMeUserDetailsServicesImpl implements UserDetailsService {
 
     private String appID;
     private String appSecret;
