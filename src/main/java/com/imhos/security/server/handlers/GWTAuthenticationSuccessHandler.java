@@ -21,10 +21,10 @@ import java.io.IOException;
 public class GWTAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 
-    private Serializer<Authentication> serializer = new AuthenticationSerializer();
+    private Serializer<Authentication> authenticationSerializer = new AuthenticationSerializer();
 
-    public void setSerializer(Serializer<Authentication> serializer) {
-        this.serializer = serializer;
+    public void setAuthenticationSerializer(Serializer<Authentication> authenticationSerializer) {
+        this.authenticationSerializer = authenticationSerializer;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class GWTAuthenticationSuccessHandler implements AuthenticationSuccessHan
                                         Authentication authentication) throws IOException, ServletException {
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(serializer.serialize(authentication));
+        response.getWriter().write(authenticationSerializer.serialize(authentication));
     }
 
 }

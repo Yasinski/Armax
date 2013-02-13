@@ -21,17 +21,17 @@ import java.io.IOException;
 public class GWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
 
-    private Serializer<AuthenticationException> serializer = new AuthenticationExceptionSerializer();
+    private Serializer<AuthenticationException> authenticationExceptionSerializer = new AuthenticationExceptionSerializer();
 
 
-    public void setSerializer(Serializer<AuthenticationException> serializer) {
-        this.serializer = serializer;
+    public void setAuthenticationExceptionSerializer(Serializer<AuthenticationException> authenticationExceptionSerializer) {
+        this.authenticationExceptionSerializer = authenticationExceptionSerializer;
     }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(serializer.serialize(exception));
+        response.getWriter().write(authenticationExceptionSerializer.serialize(exception));
     }
 }
