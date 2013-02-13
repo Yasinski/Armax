@@ -1,17 +1,14 @@
 package com.imhos.security.server.handlers;
 
-import com.google.gson.Gson;
-import com.imhos.security.shared.model.UserDetailsImpl;
+import com.imhos.security.server.serializer.Serializer;
+import com.imhos.security.server.serializer.AuthenticationSerializer;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,22 +20,18 @@ import java.util.List;
 
 public class GWTAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    private Serializer<Authentication> serializer = new AuthenticationSerializer();
+
+    public void setSerializer(Serializer<Authentication> serializer) {
+        this.serializer = serializer;
+    }
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        //todo: should be separated to some kind of User serializer class
-        UserDetailsImpl user = new UserDetailsImpl();
-        user.setUsername(authentication.getName());
-        List<String> authorities = new ArrayList<String>();
-        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            authorities.add(grantedAuthority.toString());
-        }
-        user.setAuthorities(authorities);
-
-        Gson gson = new Gson();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(gson.toJson(user));
+        response.getWriter().write(serializer.serialize(authentication));
     }
 
 }

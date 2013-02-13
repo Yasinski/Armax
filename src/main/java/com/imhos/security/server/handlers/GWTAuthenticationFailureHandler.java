@@ -1,6 +1,7 @@
 package com.imhos.security.server.handlers;
 
-import com.imhos.security.shared.model.AuthenticationError;
+import com.imhos.security.server.serializer.AuthenticationExceptionSerializer;
+import com.imhos.security.server.serializer.Serializer;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -19,11 +20,17 @@ import java.io.IOException;
 
 public class GWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
+    private Serializer<AuthenticationException> serializer = new AuthenticationExceptionSerializer();
+
+
+    public void setSerializer(Serializer<AuthenticationException> serializer) {
+        this.serializer = serializer;
+    }
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        //todo: handle more Authentication Exceptions
-        response.getWriter().write(AuthenticationError.BAD_CREDENTIALS.ordinal());
+        response.getWriter().write(serializer.serialize(exception));
     }
 }

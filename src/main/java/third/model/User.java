@@ -30,7 +30,10 @@ public class User implements UserDetails {
 	@Column
 	private String username;
 
-	@Column
+    @Column
+    private String login;
+
+    @Column
 	private String password;
 
     @Column
@@ -71,6 +74,16 @@ public class User implements UserDetails {
     public User(String facebookId, String username, String password, String facebookToken, Set<Role> authorities, boolean enabled) {
         this.facebookId = facebookId;
         this.username = username;
+        this.password = password;
+        this.facebookToken = facebookToken;
+        this.authorities = authorities;
+        this.enabled = enabled;
+    }
+
+    public User(String facebookId, String username, String login, String password, String facebookToken, Set<Role> authorities, boolean enabled) {
+        this.facebookId = facebookId;
+        this.username = username;
+        this.login = login;
         this.password = password;
         this.facebookToken = facebookToken;
         this.authorities = authorities;
@@ -147,5 +160,13 @@ public class User implements UserDetails {
 
     public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

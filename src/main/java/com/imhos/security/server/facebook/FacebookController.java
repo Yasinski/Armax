@@ -40,6 +40,7 @@ public class FacebookController {
         OAuth2Parameters params = new OAuth2Parameters();
         params.setRedirectUri(getFacebookURL(rememberMe));
         params.set("display", "popup");
+        params.setScope("email");
         String authorizeUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, params);
         return authorizeUrl;
     }

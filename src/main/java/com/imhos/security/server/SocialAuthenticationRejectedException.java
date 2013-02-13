@@ -10,6 +10,12 @@ import org.springframework.security.authentication.AccountStatusException;
  */
 public class SocialAuthenticationRejectedException extends AccountStatusException {
 
+
+
+    public SocialAuthenticationRejectedException() {
+        super("");
+    }
+
     public SocialAuthenticationRejectedException(String msg) {
         super(msg);
     }
