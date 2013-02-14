@@ -24,8 +24,8 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     private TextBox username = new TextBox();
     private PasswordTextBox password = new PasswordTextBox();
     private CheckBox rememberMe = new CheckBox("rememberMe");
-    private UserDetailsDeserializer userDetailsDeserializer;
-    private AuthenticationErrorDeserializer<AuthenticationError> authenticationErrorDeserializer;
+    private Deserializer<UserDetails> userDetailsDeserializer;
+    private Deserializer<AuthenticationError> authenticationErrorDeserializer;
     private LoginHandler<AuthenticationError> loginHandler;
 
     /**

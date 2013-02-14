@@ -13,7 +13,7 @@ import com.imhos.security.shared.model.UserDetailsImpl;
  * @author <a href="a.kasinskiy@gmail.com">Arthur Kasinskiy</a>
  * @updated 12.02.13 17:59
  */
-public class UserDetailsDeserializerImpl implements UserDetailsDeserializer {
+public class UserDetailsDeserializerImpl implements Deserializer<UserDetails> {
 
     @Override
     public UserDetails deserialize(String json) {

@@ -12,7 +12,7 @@
     <!--</property>-->
 
     <!--</bean>-->
-    <bean name="/loggedDetector" class="com.imhos.security.server.LoggedInDetector"/>
+    <!--<bean name="/loggedDetector" class="com.imhos.security.server.LoggedInDetector"/>-->
     <bean name="/facebookconnect/" class="com.imhos.security.server.facebook.FacebookConnect"/>
     <bean name="/facebookcallback/" class="com.imhos.security.server.facebook.FacebookCallback"/>
 

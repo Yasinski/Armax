@@ -67,18 +67,19 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <beans:constructor-arg name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
     </beans:bean>
 
-    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <beans:property name="exposedContextBeanNames">
-            <beans:list>
-                <beans:value>authenticationSerializer</beans:value>
-                <beans:value>authenticationExceptionSerializer</beans:value>
-                <beans:value>securityContextHolder</beans:value>
-            </beans:list>
-        </beans:property>
-    </beans:bean>
+    <!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--<beans:property name="exposedContextBeanNames">-->
+    <!--<beans:list>-->
+    <!--<beans:value>authenticationSerializer</beans:value>-->
+    <!--<beans:value>authenticationExceptionSerializer</beans:value>-->
+    <!--<beans:value>securityContextHolder</beans:value>-->
+    <!--</beans:list>-->
+    <!--</beans:property>-->
+    <!--</beans:bean>-->
 
     <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.facebook.SocialResponseBuilder"/>
     <beans:bean name="authenticationSerializer" class="com.imhos.security.server.serializer.AuthenticationSerializer"/>
-    <beans:bean name="authenticationExceptionSerializer" class="com.imhos.security.server.serializer.AuthenticationExceptionSerializer"/>
-    <beans:bean name="securityContextHolder" class="org.springframework.security.core.context.SecurityContextHolder"/>
+    <beans:bean name="authenticationExceptionSerializer"
+                class="com.imhos.security.server.serializer.AuthenticationExceptionSerializer"/>
+    <!--<beans:bean name="securityContextHolder" class="org.springframework.security.core.context.SecurityContextHolder"/>-->
 </beans:beans>

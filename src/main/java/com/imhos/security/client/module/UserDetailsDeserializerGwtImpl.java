@@ -12,7 +12,7 @@ import com.imhos.security.shared.model.UserDetails;
  * @author <a href="a.kasinskiy@gmail.com">Arthur Kasinskiy</a>
  * @updated 12.02.13 18:00
  */
-public class UserDetailsDeserializerGwtImpl implements UserDetailsDeserializer {
+public class UserDetailsDeserializerGwtImpl implements Deserializer<UserDetails> {
     @Override
     public UserDetails deserialize(String json) {
         UserDetailsBeanFactory beanFactory = GWT.create(UserDetailsBeanFactory.class);
