@@ -95,6 +95,8 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
                 });
             }
         });
+
+        checkAuthentication();
     }
 
     private void loginFacebook(boolean rememberMe) {
@@ -179,6 +181,20 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
         loginHandler.handleLoginError(authenticationErrorDeserializer.deserialize(json));
     }
 
+
+    public boolean checkAuthentication() {
+        String authenticationJSON = getAuthenticationJSON();
+        if(authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
+            handleLoginSuccess(authenticationJSON);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public native String getAuthenticationJSON() /*-{
+        return $wnd.authentication;
+    }-*/;
 
     public native void registerLoginHandler(SampleApplication impl) /*-{
 

@@ -25,6 +25,16 @@
     <listener>
         <listener-class>com.imhos.security.server.HttpSessionChecker</listener-class>
     </listener>
+    <listener>
+        <listener-class>
+            org.springframework.web.util.Log4jConfigListener
+        </listener-class>
+    </listener>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -35,17 +45,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <listener>
-        <listener-class>
-            org.springframework.web.util.Log4jConfigListener
-        </listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
 
     <servlet>
         <servlet-name>gwtapp</servlet-name>
