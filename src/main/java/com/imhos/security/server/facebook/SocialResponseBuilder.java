@@ -14,8 +14,8 @@ import org.springframework.security.core.AuthenticationException;
 
 public class SocialResponseBuilder {
 
-    public static final String SCRIPT_POSTFIX = "');window.close();</script>";
     public static final String SCRIPT_PREFIX = "<script>window.opener.";
+    public static final String SCRIPT_POSTFIX = "');window.close();</script>";
 
     private Serializer<Authentication> authenticationSerializer;
     private Serializer<AuthenticationException> authenticationExceptionSerializer;

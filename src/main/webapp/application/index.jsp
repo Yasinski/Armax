@@ -1,5 +1,11 @@
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.imhos.security.server.serializer.AuthenticationSerializer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE HTML >
 <html>
 <head>
@@ -50,6 +56,33 @@
         </td>
     </tr>
 </table>
+<% Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (!(authentication.getPrincipal()).equals("guest")) {
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+//        authenticationSerializer.toString();
+        ApplicationContext context = RequestContextUtils.getWebApplicationContext(request);
+        AuthenticationSerializer authenticationSerializer = (AuthenticationSerializer) context.getBean("authenticationSerializer");
+//        AuthenticationSerializer authenticationSerializer=
+//                (AuthenticationSerializer)request.getAttribute("authenticationSerializer") ;
+
+//        AuthenticationSerializer authenticationSerializer = new AuthenticationSerializer();
+%>
+<div class="authentication">
+    <%
+        String s = authenticationSerializer.serialize(authentication);
+    %>
+    <%= s%>
+    <%= user.getUsername()%>
+    <%
+    } else {
+    %>
+    <%= "NOT_LOGGED_IN"%>
+    <%
+        }
+    %>
+
+   ghghgfhfghfgh -----  ${authenticationSerializer}  ======
+</div>
 <%--todo: serialize Authentication info to JSON properties, for further processing by client--%>
 </body>
 </html>

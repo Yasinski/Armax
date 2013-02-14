@@ -47,7 +47,6 @@
         </listener-class>
     </listener>
 
-
     <servlet>
         <servlet-name>gwtapp</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -81,6 +80,7 @@
         <url-pattern>/start/</url-pattern>
         <url-pattern>/facebookconnect/</url-pattern>
         <url-pattern>/facebookcallback/</url-pattern>
+        <url-pattern>/loggedDetector</url-pattern>
         <url-pattern>/actorAdd/</url-pattern>
         <url-pattern>/actorDirectorsList/</url-pattern>
         <url-pattern>/actorsInfo/</url-pattern>
