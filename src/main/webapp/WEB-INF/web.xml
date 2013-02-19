@@ -79,7 +79,8 @@
         <url-pattern>/start/</url-pattern>
         <url-pattern>/facebookconnect/</url-pattern>
         <url-pattern>/facebookcallback/</url-pattern>
-        <url-pattern>/loggedDetector</url-pattern>
+        <url-pattern>/twitterconnect/</url-pattern>
+        <url-pattern>/twittercallback/</url-pattern>
         <url-pattern>/actorAdd/</url-pattern>
         <url-pattern>/actorDirectorsList/</url-pattern>
         <url-pattern>/actorsInfo/</url-pattern>

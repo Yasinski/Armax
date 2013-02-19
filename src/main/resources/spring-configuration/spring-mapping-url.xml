@@ -12,10 +12,10 @@
     <!--</property>-->
 
     <!--</bean>-->
-    <!--<bean name="/loggedDetector" class="com.imhos.security.server.LoggedInDetector"/>-->
-    <bean name="/facebookconnect/" class="com.imhos.security.server.facebook.FacebookConnect"/>
-    <bean name="/facebookcallback/" class="com.imhos.security.server.facebook.FacebookCallback"/>
-
+    <bean name="/facebookconnect/" class="com.imhos.security.server.social.facebook.FacebookConnect"/>
+    <bean name="/facebookcallback/" class="com.imhos.security.server.social.facebook.FacebookCallback"/>
+    <bean name="/twitterconnect/" class="com.imhos.security.server.social.twitter.TwitterConnect"/>
+    <bean name="/twittercallback/" class="com.imhos.security.server.social.twitter.TwitterCallback"/>
     <bean name="/start/" class="third.service.ServletStart"/>
     <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
     <bean name="/actorAdd/" class="third.service.ActorAdd"/>

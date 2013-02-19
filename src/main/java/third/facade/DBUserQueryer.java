@@ -41,6 +41,10 @@ public class DBUserQueryer {
     public User getUserByFacebookId(String facebookId) {
         return userDAO.getUserByFacebookId(facebookId);
     }
+    public User getUserByTwitterId(String twitterId) {
+        return userDAO.getUserByTwitterId(twitterId);
+    }
+
 
     public void deleteUser(String username) {
         userDAO.deleteUser(username);

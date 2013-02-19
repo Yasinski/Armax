@@ -19,6 +19,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     private Label message = new Label(NOT_LOGGED_IN);
     private SubmitButton login = new SubmitButton("Login");
     private Button loginFacebook = new Button("Sign in with Facebook");
+    private Button loginTwitter = new Button("Sign in with Twitter");
     private Button logout = new Button("Logout");
     private Button button = new Button("Button");
     private TextBox username = new TextBox();
@@ -60,6 +61,12 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
                 loginFacebook(rememberMe.getValue());
             }
         });
+        loginTwitter.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                loginTwitter(rememberMe.getValue());
+            }
+        });
 
 //        formPanel.add(username);
 //        formPanel.add(password);
@@ -73,6 +80,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
         RootPanel.get("slot1").add(rememberMe);
         RootPanel.get("slot1").add(login);
         RootPanel.get("slot1").add(loginFacebook);
+        RootPanel.get("slot1").add(loginTwitter);
         RootPanel.get("slot1").add(logout);
 
 
@@ -104,12 +112,17 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
                 "location=1,left=0,top=0");
     }
 
+    private void loginTwitter(boolean rememberMe) {
+        Window.open("/twitterconnect/?rememberMe=" + rememberMe, "Twitter Login", "width=500,height=300," +
+                "location=1,left=0,top=0");
+    }
+
     private void login(String login, String pass, boolean rememberMe) {
 
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
-                                  + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
+                + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
         );
 
         rb.setCallback(new RequestCallback() {
@@ -118,7 +131,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(Response.SC_OK == response.getStatusCode()) {
+                if (Response.SC_OK == response.getStatusCode()) {
 //                    JsonUtils.safeEval(response.getText())
                     handleLoginSuccess(response.getText());
                 } else {
@@ -146,7 +159,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(Response.SC_OK == response.getStatusCode()) {
+                if (Response.SC_OK == response.getStatusCode()) {
                     //todo: logout handler should be implemented
                     message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
@@ -184,7 +197,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
 
     public boolean checkAuthentication() {
         String authenticationJSON = getAuthenticationJSON();
-        if(authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
+        if (authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
             handleLoginSuccess(authenticationJSON);
             return true;
         } else {

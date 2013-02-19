@@ -61,10 +61,16 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.UserDetailsServicesSocialWrapper"/>
 
-    <beans:bean name="facebookController" class="com.imhos.security.server.facebook.FacebookController">
+    <beans:bean name="facebookController" class="com.imhos.security.server.social.facebook.FacebookController">
         <beans:constructor-arg name="appID" value="${facebook.application.id}"/>
         <beans:constructor-arg name="appSecret" value="${facebook.application.secret}"/>
         <beans:constructor-arg name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
+    </beans:bean>
+
+    <beans:bean name="twitterController" class="com.imhos.security.server.social.twitter.TwitterController">
+        <beans:constructor-arg name="appID" value="${twitter.application.id}"/>
+        <beans:constructor-arg name="appSecret" value="${twitter.application.secret}"/>
+        <beans:constructor-arg name="twitterCallBackUrl" value="${twitter.call.back.url}"/>
     </beans:bean>
 
     <!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
@@ -77,7 +83,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <!--</beans:property>-->
     <!--</beans:bean>-->
 
-    <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.facebook.SocialResponseBuilder"/>
+    <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.social.SocialResponseBuilder"/>
     <beans:bean name="authenticationSerializer" class="com.imhos.security.server.serializer.AuthenticationSerializer"/>
     <beans:bean name="authenticationExceptionSerializer"
                 class="com.imhos.security.server.serializer.AuthenticationExceptionSerializer"/>

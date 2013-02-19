@@ -12,17 +12,19 @@ import java.util.List;
 
 public interface UserDAO {
 
-	public void saveUser(User user);
+    public void saveUser(User user);
 
     public void updateUser(User user);
 
-	public List<User> getAllUsers();
+    public List<User> getAllUsers();
 
-	public User getUserByLogin(String username);
+    public User getUserByLogin(String username);
 
     public User getUserByFacebookId(String facebookId);
 
-	public void deleteUser(String username);
+    public User getUserByTwitterId(String twitterId);
+
+    public void deleteUser(String username);
 
     public String getPassword(int userId);
 }

@@ -1,4 +1,4 @@
-package com.imhos.security.server.facebook;
+package com.imhos.security.server.social.facebook;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
@@ -60,4 +60,11 @@ public class FacebookController {
         Facebook facebook = connection.getApi();
         return facebook;
     }
+//
+//    public Facebook getFacebookProfile2(String token) {
+//    FacebookTemplate facebook = new FacebookTemplate(token);
+//        FacebookProfile profile = facebook.userOperations().getUserProfile();
+//        String username = profile.getUsername();
+//    return facebook;
+//    }
 }

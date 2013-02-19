@@ -27,7 +27,10 @@ public class User implements UserDetails {
     @Column
     private String facebookId;
 
-	@Column
+    @Column
+    private String twitterId;
+
+    @Column
 	private String username;
 
     @Column
@@ -168,5 +171,13 @@ public class User implements UserDetails {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getTwitterId() {
+        return twitterId;
+    }
+
+    public void setTwitterId(String twitterId) {
+        this.twitterId = twitterId;
     }
 }

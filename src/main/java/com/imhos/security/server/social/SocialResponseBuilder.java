@@ -1,4 +1,4 @@
-package com.imhos.security.server.facebook;
+package com.imhos.security.server.social;
 
 import com.imhos.security.server.serializer.Serializer;
 import org.springframework.security.core.Authentication;

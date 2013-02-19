@@ -1,7 +1,8 @@
-package com.imhos.security.server.facebook;
+package com.imhos.security.server.social.facebook;
 
 import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.SocialAuthenticationRejectedException;
+import com.imhos.security.server.social.SocialResponseBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;

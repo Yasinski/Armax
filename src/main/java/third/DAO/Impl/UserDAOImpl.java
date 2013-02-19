@@ -62,6 +62,14 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 
     }
 
+    public User getUserByTwitterId(String twitterId){
+        return (User) getSession().createCriteria(User.class)
+                .add(Restrictions.eq("twitterId", twitterId))
+                .setFetchMode("authorities", FetchMode.JOIN)
+                .uniqueResult();
+    }
+
+
 
     public void deleteUser(String username) {
         User user = getUserByLogin(username);

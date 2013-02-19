@@ -1,4 +1,4 @@
-package com.imhos.security.server.facebook;
+package com.imhos.security.server.social.facebook;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
