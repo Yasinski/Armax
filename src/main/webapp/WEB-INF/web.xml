@@ -81,6 +81,8 @@
         <url-pattern>/facebookcallback/</url-pattern>
         <url-pattern>/twitterconnect/</url-pattern>
         <url-pattern>/twittercallback/</url-pattern>
+        <url-pattern>/twitterconnect2/</url-pattern>
+        <url-pattern>/twittercallback2/</url-pattern>
         <url-pattern>/actorAdd/</url-pattern>
         <url-pattern>/actorDirectorsList/</url-pattern>
         <url-pattern>/actorsInfo/</url-pattern>

@@ -113,7 +113,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     }
 
     private void loginTwitter(boolean rememberMe) {
-        Window.open("/twitterconnect/?rememberMe=" + rememberMe, "Twitter Login", "width=500,height=300," +
+        Window.open("/twitterconnect2/?rememberMe=" + rememberMe, "Twitter Login", "width=500,height=300," +
                 "location=1,left=0,top=0");
     }
 

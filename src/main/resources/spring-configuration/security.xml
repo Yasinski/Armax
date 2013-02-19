@@ -72,7 +72,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <beans:constructor-arg name="appSecret" value="${twitter.application.secret}"/>
         <beans:constructor-arg name="twitterCallBackUrl" value="${twitter.call.back.url}"/>
     </beans:bean>
-
+    <beans:bean name="twitterController2" class="com.imhos.security.server.social.twitterNew.TwitterController2">
+        <beans:constructor-arg name="appID" value="${twitter.application.id}"/>
+        <beans:constructor-arg name="appSecret" value="${twitter.application.secret}"/>
+        <beans:constructor-arg name="twitterCallBackUrl" value="${twitter.call.back.url}"/>
+    </beans:bean>
     <!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
     <!--<beans:property name="exposedContextBeanNames">-->
     <!--<beans:list>-->

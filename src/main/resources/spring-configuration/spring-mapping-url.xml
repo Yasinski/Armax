@@ -16,6 +16,8 @@
     <bean name="/facebookcallback/" class="com.imhos.security.server.social.facebook.FacebookCallback"/>
     <bean name="/twitterconnect/" class="com.imhos.security.server.social.twitter.TwitterConnect"/>
     <bean name="/twittercallback/" class="com.imhos.security.server.social.twitter.TwitterCallback"/>
+    <bean name="/twitterconnect2/" class="com.imhos.security.server.social.twitterNew.TwitterConnect2"/>
+    <bean name="/twittercallback2/" class="com.imhos.security.server.social.twitterNew.TwitterCallback2"/>
     <bean name="/start/" class="third.service.ServletStart"/>
     <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
     <bean name="/actorAdd/" class="third.service.ActorAdd"/>

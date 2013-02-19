@@ -49,7 +49,7 @@ public class User implements UserDetails {
     private Set<Role> authorities = new HashSet<Role>();
 
 	@Column
-	private boolean enabled;
+	private boolean enabled = true;
 
 	public User() {
 	}
