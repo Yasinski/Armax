@@ -2,7 +2,6 @@
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE HTML >
@@ -69,5 +68,9 @@
     window.authentication = '${authenticationJSON}'
 </script>
 
+<a href="/signin/facebook">facebook</a>
+<a href="/signin/twitter">twitter</a>
+<a href="/connect/connect/facebook">facebook</a>
+<a href="/connect/connect/twitter">twitter</a>
 </body>
 </html>

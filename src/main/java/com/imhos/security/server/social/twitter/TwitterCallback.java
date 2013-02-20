@@ -3,26 +3,15 @@ package com.imhos.security.server.social.twitter;
 import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.SocialAuthenticationRejectedException;
 import com.imhos.security.server.social.SocialResponseBuilder;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.oauth1.AuthorizedRequestToken;
-import org.springframework.social.oauth1.OAuthToken;
-//import org.springframework.social.twitter.api.Twitter;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import third.facade.DBUserQueryer;
 import third.model.Role;
 import third.model.User;
-import twitter4j.ResponseList;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import twitter4j.http.AccessToken;
 import twitter4j.http.RequestToken;
 
@@ -30,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
+//import org.springframework.social.twitter.api.Twitter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -118,11 +108,11 @@ public class TwitterCallback implements Controller {
         int profileId = accessToken.getUserId();
         String id = Integer.toString(profileId);
         User user = dbUserQueryer.getUserByTwitterId(id);
-        if (user == null) {
+        if(user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
             user = new User(id, profileName, "twitter",
-                     authorities, true);
+                            authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
             System.out.println("blbbl");
@@ -135,14 +125,13 @@ public class TwitterCallback implements Controller {
         authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if (rememberMe) {
+        if(rememberMe) {
             rememberMeServices.onLoginSuccess(request, response, authentication);
         } else {
             rememberMeServices.logout(request, response, authentication);
         }
         return sentLoginSuccess(response, authentication);
     }
-
 
 
     private ModelAndView sentLoginSuccess(HttpServletResponse response, Authentication user) throws IOException {

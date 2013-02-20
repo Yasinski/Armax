@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        default-autowire="byName">
 
     <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
@@ -18,6 +19,8 @@
     <bean name="/twittercallback/" class="com.imhos.security.server.social.twitter.TwitterCallback"/>
     <bean name="/twitterconnect2/" class="com.imhos.security.server.social.twitterNew.TwitterConnect2"/>
     <bean name="/twittercallback2/" class="com.imhos.security.server.social.twitterNew.TwitterCallback2"/>
+
+
     <bean name="/start/" class="third.service.ServletStart"/>
     <bean name="/actorDirectorsList/" class="third.service.ActorDirectorsList"/>
     <bean name="/actorAdd/" class="third.service.ActorAdd"/>
@@ -34,5 +37,14 @@
 
 
     <bean name="pagination" class="third.facade.Pagination"/>
+
+
+    <context:annotation-config/>
+    <!--<bean id="connectController" class="org.springframework.social.connect.web.ConnectController">-->
+    <bean id="connectController" class="com.imhos.security.server.social.SocialConnectController">
+        <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
+        <constructor-arg name="connectionRepository" ref="connectionRepository"/>
+        <!--<beans:property name="applicationUrl" value=""/>-->
+    </bean>
 
 </beans>

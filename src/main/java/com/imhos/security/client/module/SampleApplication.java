@@ -122,7 +122,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
-                + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
+                                  + "&_spring_security_remember_me=" + URL.encode(rememberMe + "")
         );
 
         rb.setCallback(new RequestCallback() {
@@ -131,7 +131,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if (Response.SC_OK == response.getStatusCode()) {
+                if(Response.SC_OK == response.getStatusCode()) {
 //                    JsonUtils.safeEval(response.getText())
                     handleLoginSuccess(response.getText());
                 } else {
@@ -159,7 +159,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if (Response.SC_OK == response.getStatusCode()) {
+                if(Response.SC_OK == response.getStatusCode()) {
                     //todo: logout handler should be implemented
                     message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
@@ -197,7 +197,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
 
     public boolean checkAuthentication() {
         String authenticationJSON = getAuthenticationJSON();
-        if (authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
+        if(authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
             handleLoginSuccess(authenticationJSON);
             return true;
         } else {

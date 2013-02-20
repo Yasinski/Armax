@@ -1,27 +1,13 @@
 package com.imhos.security.server.social.twitter;
 
-import com.imhos.security.server.social.facebook.FacebookController;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.TwitterApi;
-import org.scribe.model.Token;
-import org.scribe.oauth.OAuthService;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.oauth1.AuthorizedRequestToken;
-import org.springframework.social.oauth1.OAuth1Operations;
-import org.springframework.social.oauth1.OAuth1Parameters;
-import org.springframework.social.oauth1.OAuthToken;
-import org.springframework.social.twitter.api.Twitter;
-import org.springframework.social.twitter.api.impl.TwitterTemplate;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import org.springframework.web.servlet.view.RedirectView;
-//import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import twitter4j.http.RequestToken;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+//import twitter4j.Twitter;
 
 /**
  * Created with IntelliJ IDEA.
