@@ -1,11 +1,10 @@
 package third.DAO.Impl;
 
 import org.hibernate.FetchMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import third.DAO.UserDAO;
 import third.model.User;
 
@@ -17,15 +16,18 @@ import java.util.List;
  * @author <a href="a.kasinski@itision.com">Arthur Kasinskiy</a>
  */
 
-public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
+public class UserDAOImpl implements UserDAO {
 
     private UserDAO userDAO;
+    private SessionFactory sessionFactory;
 
-    @Override
-    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
-        HibernateTemplate result = super.createHibernateTemplate(sessionFactory);
-        result.setAllowCreate(false);
-        return result;
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public void setUserDAO(UserDAO userDAO) {
@@ -62,13 +64,12 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 
     }
 
-    public User getUserByTwitterId(String twitterId){
+    public User getUserByTwitterId(String twitterId) {
         return (User) getSession().createCriteria(User.class)
                 .add(Restrictions.eq("twitterId", twitterId))
                 .setFetchMode("authorities", FetchMode.JOIN)
                 .uniqueResult();
     }
-
 
 
     public void deleteUser(String username) {

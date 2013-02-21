@@ -55,7 +55,7 @@
     </tr>
 </table>
 <% Authentication authentication = (Authentication) request.getUserPrincipal();
-    if(authentication != null) {
+    if (authentication != null) {
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application);
         AuthenticationSerializer authenticationSerializer = (AuthenticationSerializer) context.getBean("authenticationSerializer");
         String authenticationJSON = authenticationSerializer.serialize(authentication);
@@ -68,9 +68,13 @@
     window.authentication = '${authenticationJSON}'
 </script>
 
-<a href="/signin/facebook">facebook</a>
-<a href="/signin/twitter">twitter</a>
-<a href="/connect/connect/facebook">facebook</a>
-<a href="/connect/connect/twitter">twitter</a>
+<br>
+<a href="/connect/connect/facebook">connect facebook</a>
+<br>
+<a href="/connect/connect/twitter">connect twitter</a>
+<br>
+<a href="/connect/signin/facebook">signin facebook</a>
+<br>
+<a href="/connect/signin/twitter">signin twitter</a>
 </body>
 </html>

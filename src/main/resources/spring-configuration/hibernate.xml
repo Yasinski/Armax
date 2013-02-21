@@ -48,6 +48,7 @@
                 <value>third.model.Director</value>
                 <value>third.model.Movie</value>
                 <value>third.model.User</value>
+                <value>com.imhos.security.server.model.UserConnection</value>
             </list>
         </property>
 

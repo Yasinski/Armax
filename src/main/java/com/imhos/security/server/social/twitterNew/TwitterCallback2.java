@@ -3,7 +3,6 @@ package com.imhos.security.server.social.twitterNew;
 import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.SocialAuthenticationRejectedException;
 import com.imhos.security.server.social.SocialResponseBuilder;
-import com.imhos.security.server.social.twitter.TwitterController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
@@ -11,10 +10,7 @@ import org.springframework.social.RevokedAuthorizationException;
 import org.springframework.social.oauth1.AuthorizedRequestToken;
 import org.springframework.social.oauth1.OAuth1Operations;
 import org.springframework.social.oauth1.OAuthToken;
-import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.TwitterProfile;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
-import org.springframework.social.twitter.connect.TwitterServiceProvider;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import third.facade.DBUserQueryer;
@@ -132,7 +128,7 @@ public class TwitterCallback2 implements Controller {
             dbUserQueryer.saveUser(user);
         } else {
             //todo: all profile fields should be updated
-//            what we should save?
+//            what we should update?
 //            dbUserQueryer.updateUser(user);
         }
 

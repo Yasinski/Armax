@@ -29,6 +29,7 @@ public class CustomUserAuthentication implements Authentication {
         authenticated = true;
     }
 
+
     @Override
     public String getName() {
         return name;
