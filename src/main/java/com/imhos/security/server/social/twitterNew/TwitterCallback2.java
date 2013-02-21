@@ -122,7 +122,6 @@ public class TwitterCallback2 implements Controller {
             authorities.add(Role.ROLE_USER);
             user = new User();
             user.setUsername(username);
-            user.setTwitterId(id);
             user.setPassword("twitter");
             user.setAuthorities(authorities);
             dbUserQueryer.saveUser(user);

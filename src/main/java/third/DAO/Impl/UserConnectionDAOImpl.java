@@ -129,12 +129,12 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     }
 
     @Override
-    public List<UserConnection> get(String providerId, String providerUserId)
+    public UserConnection get(String providerId, String providerUserId)
             throws IncorrectResultSizeDataAccessException {
-        return (List<UserConnection>) getSession().createCriteria(UserConnection.class)
+        return (UserConnection) getSession().createCriteria(UserConnection.class)
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("providerUserId", providerUserId))
-                .list();
+                .uniqueResult();
     }
 
     @Override

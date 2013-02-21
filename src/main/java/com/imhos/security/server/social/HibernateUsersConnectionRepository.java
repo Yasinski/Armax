@@ -41,11 +41,9 @@ public class HibernateUsersConnectionRepository implements UsersConnectionReposi
     public List<String> findUserIdsWithConnection(Connection<?> connection) {
         List<String> usrs = new ArrayList<String>();
         ConnectionKey key = connection.getKey();
-        List<UserConnection> users = userConnectionDAO.get(key.getProviderId(), key.getProviderUserId());
-        if (!users.isEmpty()) {
-            for (UserConnection user : users) {
-                usrs.add(String.valueOf(user.getUserId()));
-            }
+        UserConnection user = userConnectionDAO.get(key.getProviderId(), key.getProviderUserId());
+        if (user != null) {
+            usrs.add(user.getUserId());
             return usrs;
         }
 

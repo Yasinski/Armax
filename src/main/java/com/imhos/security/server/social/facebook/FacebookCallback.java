@@ -83,12 +83,11 @@ public class FacebookCallback implements Controller {
         if (user == null) {
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(Role.ROLE_USER);
-            user = new User(profileId, profileName, email, "facebook",
-                    accessGrant.getAccessToken(), authorities, true);
+//            user = new User(profileId, profileName, email, "facebook",
+//                    accessGrant.getAccessToken(), authorities, true);
             dbUserQueryer.saveUser(user);
         } else {
             //todo: all profile fields should be updated
-            user.setFacebookToken(accessGrant.getAccessToken());
             dbUserQueryer.updateUser(user);
         }
 

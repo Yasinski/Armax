@@ -37,7 +37,7 @@ public interface UserConnectionDAO {
             String providerId,
             String providerUserId);
 
-    public List<UserConnection> get(String providerId, String providerUserId)
+    public UserConnection get(String providerId, String providerUserId)
             throws IncorrectResultSizeDataAccessException;
 
     public void remove(String userId, String providerId);

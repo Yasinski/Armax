@@ -1,13 +1,17 @@
 package com.imhos.security.server;
 
+import com.imhos.security.server.model.UserConnection;
+import com.imhos.security.server.social.HibernateConnectionRepository;
 import com.imhos.security.server.social.facebook.FacebookController;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.NotAuthorizedException;
 import org.springframework.social.RejectedAuthorizationException;
-import org.springframework.social.facebook.api.Facebook;
-import third.model.User;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import third.DAO.UserConnectionDAO;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +24,21 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
 
     private UserDetailsService userDetailsService;
     private FacebookController facebookController;
+    private UserConnectionDAO userConnectDAO;
+    private ConnectionFactoryLocator connectionFactoryLocator;
+    private TextEncryptor textEncryptor;
 
+    public void setTextEncryptor(TextEncryptor textEncryptor) {
+        this.textEncryptor = textEncryptor;
+    }
+
+    public void setConnectionFactoryLocator(ConnectionFactoryLocator connectionFactoryLocator) {
+        this.connectionFactoryLocator = connectionFactoryLocator;
+    }
+
+    public void setUserConnectDAO(UserConnectionDAO userConnectDAO) {
+        this.userConnectDAO = userConnectDAO;
+    }
 
     public void setFacebookController(FacebookController facebookController) {
         this.facebookController = facebookController;
@@ -31,32 +49,33 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
     }
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = (User) userDetailsService.loadUserByUsername(login);
-        if(user.getFacebookId() != null) {
-            return checkFacebook(user);
+        int userNameSeparatorIndex = login.indexOf(UserConnection.USERNAME_SEPARATOR);
+        if (userNameSeparatorIndex == -1) {
+            return userDetailsService.loadUserByUsername(login);
         }
+        String providerId = login.substring(0, userNameSeparatorIndex);
+        String providerUserId = login.substring(userNameSeparatorIndex + 1);
+        UserConnection userConnection = userConnectDAO.get(providerId, providerUserId);
 
-        return user;
-
-    }
-
-    private UserDetails checkFacebook(User user) {
+        HibernateConnectionRepository.ServiceProviderConnectionMapper connectionMapper
+                = new HibernateConnectionRepository.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
+        Connection connection = connectionMapper.mapEntity(userConnection);
         try {
-            Facebook facebook = facebookController.getFacebookProfile(user.getFacebookToken());
-            if(user.getFacebookId().equals(facebook.userOperations().getUserProfile().getId())) {
-                return user;
-            } else {
+            if (!userConnection.getUsername().equals(connection.fetchUserProfile().getUsername())) {
                 throw new UsernameNotFoundException("");
             }
-//       todo: all kind of exceptions should be checked
         } catch (RejectedAuthorizationException e) {
             throw new SocialAuthenticationRejectedException(e.getMessage(), e);
         } catch (NotAuthorizedException e) {
             throw new SocialAuthenticationRejectedException(e.getMessage(), e);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
         }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
+
+        return userConnection;
+
     }
 
 }

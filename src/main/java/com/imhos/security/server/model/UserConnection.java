@@ -16,9 +16,15 @@ import java.util.Collection;
  */
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"user", "providerId", "providerUserId"}),
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"providerId", "providerUserId"}),
         @UniqueConstraint(columnNames = {"user", "providerId", "rank"})})
 public class UserConnection implements UserDetails {
+
+    public static String USERNAME_SEPARATOR = "/";
+    @Id
+    @GeneratedValue
+    @Column
+    private long id;
 
     @ManyToOne
     private User user;
@@ -159,7 +165,7 @@ public class UserConnection implements UserDetails {
         return user;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return user.getId();
     }
 
@@ -179,7 +185,7 @@ public class UserConnection implements UserDetails {
 
     @Override
     public String getUsername() {
-        return providerUserId;
+        return providerId + USERNAME_SEPARATOR + providerUserId;
     }
 
     @Override

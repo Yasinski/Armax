@@ -32,6 +32,7 @@ public class HibernateConnectionRepository implements ConnectionRepository {
     private final ConnectionFactoryLocator connectionFactoryLocator;
 
     private final TextEncryptor textEncryptor;
+    private final ServiceProviderConnectionMapper connectionMapper;
     private UserDAO userDAO;
 
     public void setUserConnectionDAO(UserConnectionDAOImpl userConnectionDAO) {
@@ -44,6 +45,7 @@ public class HibernateConnectionRepository implements ConnectionRepository {
 
     public HibernateConnectionRepository(String userId, UserConnectionDAOImpl userConnectionDAO,
                                          ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
+        connectionMapper = new ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         this.userConnectionDAO = userConnectionDAO;
         this.userId = userId;
         this.connectionFactoryLocator = connectionFactoryLocator;
@@ -194,9 +196,16 @@ public class HibernateConnectionRepository implements ConnectionRepository {
         }
     }
 
-    private final ServiceProviderConnectionMapper connectionMapper = new ServiceProviderConnectionMapper();
 
-    private final class ServiceProviderConnectionMapper {
+    public final static class ServiceProviderConnectionMapper {
+        private ConnectionFactoryLocator connectionFactoryLocator;
+        private TextEncryptor textEncryptor;
+
+
+        public ServiceProviderConnectionMapper(ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
+            this.connectionFactoryLocator = connectionFactoryLocator;
+            this.textEncryptor = textEncryptor;
+        }
 
         public List<Connection<?>> mapEntities(List<UserConnection> userConnections) {
             List<Connection<?>> result = new ArrayList<Connection<?>>();
