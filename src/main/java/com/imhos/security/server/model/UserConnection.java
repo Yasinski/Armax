@@ -1,5 +1,6 @@
 package com.imhos.security.server.model;
 
+import org.hibernate.validator.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import third.model.User;
@@ -48,6 +49,7 @@ public class UserConnection implements UserDetails {
     private String imageUrl;
 
     @Column
+    @Length(max = 1000)
     private String accessToken;
 
     @Column
@@ -182,10 +184,11 @@ public class UserConnection implements UserDetails {
 
     @Override
     public String getPassword() {
-        return String.valueOf(user.getId());
+        return user.getId();
     }
 
     @Override
+//    todo: getUserName() method logically should return full name
     public String getUsername() {
         return providerId + USERNAME_SEPARATOR + providerUserId;
     }

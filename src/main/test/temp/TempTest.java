@@ -1,5 +1,7 @@
 package temp;
 
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 
 /**
@@ -10,7 +12,12 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
  */
 public class TempTest {
 
+    private static String password = "ttt";
+    private static String salt = KeyGenerators.string().generateKey();
+
     public static void main(String[] args) {
-        System.out.println(KeyGenerators.string().generateKey());
+        TextEncryptor textEncryptor = Encryptors.text(password, salt);
+        String encryptedText = textEncryptor.encrypt("test");
+        System.out.println(encryptedText);
     }
 }

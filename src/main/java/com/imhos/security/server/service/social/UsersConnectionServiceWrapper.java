@@ -24,7 +24,7 @@ public class UsersConnectionServiceWrapper implements UsersConnectionRepository 
 
 
     public List<String> findUserIdsWithConnection(Connection<?> connection) {
-        return usersConnectionService.findUserIdsWithConnection(connection);
+        return usersConnectionService.addUserIdsWithConnection(connection);
     }
 
     public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds) {

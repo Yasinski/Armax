@@ -104,7 +104,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         <!--<beans:constructor-arg ref="userConnectionDAO"/>-->
         <!--<beans:constructor-arg ref="connectionFactoryLocator"/>-->
         <!--<beans:constructor-arg ref="textEncryptor"/>-->
-        <beans:constructor-arg ref="userConnectionService"/>
+        <beans:constructor-arg ref="usersConnectionService"/>
     </beans:bean>
 
     <!--<beans:bean id="connectionRepository" factory-method="createConnectionRepository"-->
@@ -120,7 +120,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean name="connectionSignUp" class="com.imhos.security.server.service.social.SocialConnectionSignUp"/>
 
-    <beans:bean name="userConnectionService" class="com.imhos.security.server.service.social.UsersConnectionService">
+    <beans:bean name="usersConnectionService" class="com.imhos.security.server.service.social.UsersConnectionService">
         <beans:constructor-arg ref="connectionFactoryLocator"/>
         <beans:constructor-arg ref="textEncryptor"/>
     </beans:bean>

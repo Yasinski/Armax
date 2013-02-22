@@ -34,7 +34,6 @@
 
 
     <context:annotation-config/>
-    <!--<bean id="connectController" class="org.springframework.social.connect.web.ConnectController">-->
     <bean id="connectController" class="com.imhos.security.server.controller.SocialConnectController">
         <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
         <constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
@@ -44,13 +43,5 @@
         <!--<beans:property name="applicationUrl" value=""/>-->
     </bean>
 
-    <!--<bean id="connectController1" class="org.springframework.social.connect.web.ProviderSignInController">-->
-    <!--<constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>-->
-    <!--<constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>-->
-    <!--<constructor-arg name="signInAdapter">-->
-    <!--<bean class="com.imhos.security.server.service.social.SocialSignInAdapter"/>-->
-    <!--</constructor-arg>-->
-    <!--&lt;!&ndash;<beans:property name="applicationUrl" value=""/>&ndash;&gt;-->
-    <!--</bean>-->
 
 </beans>

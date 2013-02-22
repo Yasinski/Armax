@@ -11,8 +11,10 @@
     <aop:config>
         <aop:pointcut id="myPointcut" expression="execution(* third.facade.*.*(..))"/>
         <aop:pointcut id="socialPointcut" expression="execution(* com.imhos.security.server.service..*Service.*(..))"/>
+        <aop:pointcut id="daoPointcut" expression="execution(* third.DAO..*DAO.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="socialPointcut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="daoPointcut"/>
     </aop:config>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

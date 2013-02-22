@@ -25,6 +25,7 @@ public class User implements UserDetails {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column
+    //    todo: should be long???????
     private String id;
 
     @Column
@@ -37,7 +38,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @CollectionOfElements
+    @CollectionOfElements(fetch = FetchType.EAGER)
     @JoinTable
     @Column(name = "authority", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -81,6 +82,7 @@ public class User implements UserDetails {
 
 
     @Override
+    //    todo: getUserName() method logically should return full name
     public String getUsername() {
         return username;
     }

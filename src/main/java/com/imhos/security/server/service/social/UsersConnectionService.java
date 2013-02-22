@@ -5,10 +5,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.*;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import third.DAO.Impl.UserConnectionDAOImpl;
+import third.DAO.UserConnectionDAO;
 import third.DAO.UserDAO;
 import third.model.User;
 
@@ -24,7 +23,8 @@ import java.util.*;
 
 public class UsersConnectionService {
 
-    private UserConnectionDAOImpl userConnectionDAO;
+    private UsersConnectionService usersConnectionService;
+    private UserConnectionDAO userConnectionDAO;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
     private ServiceProviderConnectionMapper connectionMapper;
@@ -32,11 +32,15 @@ public class UsersConnectionService {
 
     private ConnectionSignUp connectionSignUp;
 
+    public void setUsersConnectionService(UsersConnectionService usersConnectionService) {
+        this.usersConnectionService = usersConnectionService;
+    }
+
     public void setConnectionSignUp(ConnectionSignUp connectionSignUp) {
         this.connectionSignUp = connectionSignUp;
     }
 
-    public void setUserConnectionDAO(UserConnectionDAOImpl userConnectionDAO) {
+    public void setUserConnectionDAO(UserConnectionDAO userConnectionDAO) {
         this.userConnectionDAO = userConnectionDAO;
     }
 
@@ -143,7 +147,6 @@ public class UsersConnectionService {
     }
 
 
-    @Transactional
     public void addConnection(Connection<?> connection, String userId) {
         try {
             ConnectionData data = connection.createData();
@@ -256,7 +259,7 @@ public class UsersConnectionService {
     }
 
 
-    public List<String> findUserIdsWithConnection(Connection<?> connection) {
+    public List<String> addUserIdsWithConnection(Connection<?> connection) {
         List<String> usrs = new ArrayList<String>();
         ConnectionKey key = connection.getKey();
         UserConnection user = userConnectionDAO.get(key.getProviderId(), key.getProviderUserId());
@@ -266,18 +269,26 @@ public class UsersConnectionService {
         }
 
         if (connectionSignUp != null) {
-
-            String newUserId = connectionSignUp.execute(connection);
-            if (newUserId == null)
-            //auto signup failed, so we need to go to a sign up form
-            {
-                return usrs;
+            String newUserId = addNewUserWithConnection(connection);
+            if (newUserId != null) {
+                usrs.add(newUserId);
             }
-            addConnection(connection, newUserId);
-            usrs.add(newUserId);
         }
         //if empty we should go to the sign up form
         return usrs;
+    }
+
+    //    @Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW)
+//    todo: method name should be find* (have to fix transaction read-only problem)
+    public String addNewUserWithConnection(Connection<?> connection) {
+        String newUserId = connectionSignUp.execute(connection);
+        if (newUserId == null)
+        //auto signup failed, so we need to go to a sign up form
+        {
+            return null;
+        }
+        addConnection(connection, newUserId);
+        return newUserId;
     }
 
     public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds) {
