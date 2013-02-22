@@ -1,17 +1,17 @@
 package third.DAO.Impl;
 
 import com.imhos.security.server.model.UserConnection;
-import org.hibernate.Hibernate;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.Type;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.util.MultiValueMap;
 import third.DAO.UserConnectionDAO;
+import third.model.User;
 
 import java.util.Iterator;
 import java.util.List;
@@ -46,8 +46,9 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
 
     @Override
     public Set<String> findUsersConnectedTo(String providerId, Set<String> providerUserIds) {
-        return (Set<String>) getSession().createCriteria(UserConnection.class)
-                .setProjection(Projections.property("userId"))
+        return (Set<String>) getSession().createCriteria(User.class)
+                .setProjection(Projections.property("id"))
+                .createCriteria("userConnections")
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.in("providerUserId", providerUserIds))
                 .list();
@@ -56,22 +57,24 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     @Override
     public List<UserConnection> getPrimary(String userId, String providerId) {
         return (List<UserConnection>) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("rank", 1))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .list();
     }
 
     @Override
-    public int getRank(String userId, String providerId) {
+    public Integer getMaxRank(String userId, String providerId) {
         //     todo: reimplement to hibernate api
-        String result = getSession().createCriteria(UserConnection.class)
-                .setProjection(Projections.sqlProjection("coalesce(max(rank) + 1, 1)", new String[]{"rank"},
-                                                         new Type[]{Hibernate.STRING}))
-                .add(Restrictions.eq("userId", userId))
+        //     todo: separate coalesce business logic from DAO layer
+        Integer result = (Integer) getSession().createCriteria(UserConnection.class)
+                .setProjection(Projections.max("rank"))
                 .add(Restrictions.eq("providerId", providerId))
-                .uniqueResult().toString();
-        return Integer.valueOf(result);
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
+                .uniqueResult();
+        return result;
     }
 
     @Override
@@ -94,9 +97,10 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
 
         }
         return (List<UserConnection>) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.sqlRestriction(providerUsersCriteriaSql.toString()))
                 .addOrder(Order.asc("providerId"))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .addOrder(Order.asc("rank"))
                 .list();
     }
@@ -104,8 +108,9 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     @Override
     public List<UserConnection> getAll(String userId) {
         return (List<UserConnection>) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .addOrder(Order.asc("providerId"))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .addOrder(Order.asc("rank"))
                 .list();
     }
@@ -113,35 +118,40 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     @Override
     public List<UserConnection> getAll(String userId, String providerId) {
         return (List<UserConnection>) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("providerId", providerId))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .addOrder(Order.asc("rank"))
                 .list();
     }
 
     @Override
     public UserConnection get(String userId, String providerId, String providerUserId) {
-        return (UserConnection) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
-                .add(Restrictions.eq("providerId", providerId))
+        Criteria criteria = getSession().createCriteria(UserConnection.class);
+        criteria.add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("providerUserId", providerUserId))
-                .uniqueResult();
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId));
+        return (UserConnection) criteria.uniqueResult();
+
     }
 
     @Override
     public UserConnection get(String providerId, String providerUserId)
             throws IncorrectResultSizeDataAccessException {
-        return (UserConnection) getSession().createCriteria(UserConnection.class)
+        UserConnection userConnection = (UserConnection) getSession().createCriteria(UserConnection.class)
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("providerUserId", providerUserId))
                 .uniqueResult();
+        return userConnection;
     }
 
     @Override
     public void remove(String userId, String providerId) {
         UserConnection userConnection = (UserConnection) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("providerId", providerId))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .uniqueResult();
         getSession().delete(userConnection);
     }
@@ -149,9 +159,10 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     @Override
     public void remove(String userId, String providerId, String providerUserId) {
         UserConnection userConnection = (UserConnection) getSession().createCriteria(UserConnection.class)
-                .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("providerUserId", providerUserId))
+                .createCriteria("user")
+                .add(Restrictions.eq("id", userId))
                 .uniqueResult();
         getSession().delete(userConnection);
     }

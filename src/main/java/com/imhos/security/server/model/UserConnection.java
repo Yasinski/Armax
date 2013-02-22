@@ -17,7 +17,7 @@ import java.util.Collection;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"providerId", "providerUserId"}),
-        @UniqueConstraint(columnNames = {"user", "providerId", "rank"})})
+        @UniqueConstraint(columnNames = {"id", "providerId", "rank"})})           //column "user doesn't exist"
 public class UserConnection implements UserDetails {
 
     public static String USERNAME_SEPARATOR = "/";
@@ -26,9 +26,8 @@ public class UserConnection implements UserDetails {
     @Column
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
 
     @Column
     private int rank;
@@ -67,7 +66,10 @@ public class UserConnection implements UserDetails {
     public UserConnection(User user, String providerId, String providerUserId, int rank, String displayName,
                           String profileUrl, String imageUrl, String accessToken, String secret, String refreshToken,
                           Long expireTime) {
-        this.user = user;
+        this.user = user;  // ты про это? да ну так это база данных они должны быть связаны чтобы легко поднять
+        // из  юзерконнекшна юзера а у того взять например роли
+        //у нас же есть юзер айди (был) по нему и поднимать. просто сейчас его нет. и надо переписывать методы с джоинами
+
         this.providerId = providerId;
         this.providerUserId = providerUserId;
         this.rank = rank;

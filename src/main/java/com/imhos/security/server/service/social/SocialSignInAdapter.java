@@ -1,7 +1,7 @@
-package com.imhos.security.server.social;
+package com.imhos.security.server.service.social;
 
-import com.imhos.security.server.CustomUserAuthentication;
 import com.imhos.security.server.model.UserConnection;
+import com.imhos.security.server.service.CustomUserAuthentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;

@@ -1,8 +1,6 @@
-package com.imhos.security.server;
+package com.imhos.security.server.service.social;
 
 import com.imhos.security.server.model.UserConnection;
-import com.imhos.security.server.social.HibernateConnectionRepository;
-import com.imhos.security.server.social.facebook.FacebookController;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,10 +18,9 @@ import third.DAO.UserConnectionDAO;
  * Time: 9:02
  * To change this template use File | Settings | File Templates.
  */
-public class UserDetailsServicesSocialWrapper implements UserDetailsService {
+public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
     private UserDetailsService userDetailsService;
-    private FacebookController facebookController;
     private UserConnectionDAO userConnectDAO;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
@@ -40,9 +37,6 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
         this.userConnectDAO = userConnectDAO;
     }
 
-    public void setFacebookController(FacebookController facebookController) {
-        this.facebookController = facebookController;
-    }
 
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -57,8 +51,8 @@ public class UserDetailsServicesSocialWrapper implements UserDetailsService {
         String providerUserId = login.substring(userNameSeparatorIndex + 1);
         UserConnection userConnection = userConnectDAO.get(providerId, providerUserId);
 
-        HibernateConnectionRepository.ServiceProviderConnectionMapper connectionMapper
-                = new HibernateConnectionRepository.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
+        UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
+                = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         Connection connection = connectionMapper.mapEntity(userConnection);
         try {
             if (!userConnection.getUsername().equals(connection.fetchUserProfile().getUsername())) {

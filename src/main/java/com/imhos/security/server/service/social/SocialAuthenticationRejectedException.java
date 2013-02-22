@@ -1,4 +1,4 @@
-package com.imhos.security.server;
+package com.imhos.security.server.service.social;
 
 import org.springframework.security.authentication.AccountStatusException;
 
@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AccountStatusException;
  * @updated 13.02.13 6:43
  */
 public class SocialAuthenticationRejectedException extends AccountStatusException {
-
 
 
     public SocialAuthenticationRejectedException() {

@@ -12,15 +12,15 @@ import java.util.List;
 
 public interface DirectorsDAO {
 
-	public void saveDirector(Director director)  ;
+    public void saveDirector(Director director);
 
-	public void updateDirector(Integer id, Director director)  ;
+    public void updateDirector(Integer id, Director director);
 
-	public void deleteDirector(Director director)  ;
+    public void deleteDirector(Director director);
 
-	public Director getParticularDirector(Director director)  ;
+    public Director getParticularDirector(Director director);
 
-	public Director findWithThisMovie(Integer id);
+    public Director findWithThisMovie(Integer id);
 
-	public List<Director> findThisActorDirs(Integer id);
+    public List<Director> findThisActorDirs(Integer id);
 }

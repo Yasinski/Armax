@@ -57,26 +57,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     </authentication-manager>
 
 
-    <beans:bean name="userDetailsService" class="com.imhos.security.server.UserDetailsServiceImpl"/>
+    <beans:bean name="userDetailsService" class="com.imhos.security.server.service.UserDetailsService"/>
 
-    <beans:bean name="rememberMeUserDetailsService" class="com.imhos.security.server.UserDetailsServicesSocialWrapper"/>
+    <beans:bean name="rememberMeUserDetailsService"
+                class="com.imhos.security.server.service.social.UserDetailsServiceSocialWrapper"/>
 
-    <beans:bean name="facebookController" class="com.imhos.security.server.social.facebook.FacebookController">
-        <beans:constructor-arg name="appID" value="${facebook.application.id}"/>
-        <beans:constructor-arg name="appSecret" value="${facebook.application.secret}"/>
-        <beans:constructor-arg name="facebookCallBackUrl" value="${facebook.call.back.url}"/>
-    </beans:bean>
 
-    <beans:bean name="twitterController" class="com.imhos.security.server.social.twitter.TwitterController">
-        <beans:constructor-arg name="appID" value="${twitter.application.id}"/>
-        <beans:constructor-arg name="appSecret" value="${twitter.application.secret}"/>
-        <beans:constructor-arg name="twitterCallBackUrl" value="${twitter.call.back.url}"/>
-    </beans:bean>
-    <beans:bean name="twitterController2" class="com.imhos.security.server.social.twitterNew.TwitterController2">
-        <beans:constructor-arg name="appID" value="${twitter.application.id}"/>
-        <beans:constructor-arg name="appSecret" value="${twitter.application.secret}"/>
-        <beans:constructor-arg name="twitterCallBackUrl" value="${twitter.call.back.url}"/>
-    </beans:bean>
     <!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
     <!--<beans:property name="exposedContextBeanNames">-->
     <!--<beans:list>-->
@@ -87,7 +73,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <!--</beans:property>-->
     <!--</beans:bean>-->
 
-    <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.social.SocialResponseBuilder"/>
+    <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.service.social.SocialResponseBuilder"/>
     <beans:bean name="authenticationSerializer" class="com.imhos.security.server.serializer.AuthenticationSerializer"/>
     <beans:bean name="authenticationExceptionSerializer"
                 class="com.imhos.security.server.serializer.AuthenticationExceptionSerializer"/>
@@ -114,10 +100,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
         </beans:property>
     </beans:bean>
     <beans:bean id="usersConnectionRepository"
-                class="com.imhos.security.server.social.HibernateUsersConnectionRepository">
-        <beans:constructor-arg ref="userConnectionDAO"/>
-        <beans:constructor-arg ref="connectionFactoryLocator"/>
-        <beans:constructor-arg ref="textEncryptor"/>
+                class="com.imhos.security.server.service.social.UsersConnectionServiceWrapper">
+        <!--<beans:constructor-arg ref="userConnectionDAO"/>-->
+        <!--<beans:constructor-arg ref="connectionFactoryLocator"/>-->
+        <!--<beans:constructor-arg ref="textEncryptor"/>-->
+        <beans:constructor-arg ref="userConnectionService"/>
     </beans:bean>
 
     <!--<beans:bean id="connectionRepository" factory-method="createConnectionRepository"-->
@@ -126,9 +113,16 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <!--<aop:scoped-proxy proxy-target-class="false"/>-->
     <!--</beans:bean>-->
     <beans:bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
-                factory-method="text">
-        <beans:constructor-arg value="asswordf"/>
-        <beans:constructor-arg value="abab12"/>
+                factory-method="queryableText">
+        <beans:constructor-arg value="87a9949e861b4887"/>
+        <beans:constructor-arg value="c08f9054f2e48d56"/>
+    </beans:bean>
+
+    <beans:bean name="connectionSignUp" class="com.imhos.security.server.service.social.SocialConnectionSignUp"/>
+
+    <beans:bean name="userConnectionService" class="com.imhos.security.server.service.social.UsersConnectionService">
+        <beans:constructor-arg ref="connectionFactoryLocator"/>
+        <beans:constructor-arg ref="textEncryptor"/>
     </beans:bean>
 
 </beans:beans>

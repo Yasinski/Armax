@@ -89,7 +89,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserById(String userId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        // todo: implement method asap
+        return (User) getSession().createCriteria(User.class)
+                .add(Restrictions.eq("id", userId))
+                .uniqueResult();
+
+//        User user = (User)sessionFactory.getCurrentSession().createCriteria(User.class)
+//                .createCriteria("userConnections")
+//                .add(Restrictions.eq("id", userId))
+//                .uniqueResult();
+//         return user;
     }
 
 

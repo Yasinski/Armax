@@ -1,8 +1,7 @@
 package com.imhos.security.server.serializer;
 
-import com.imhos.security.server.SocialAuthenticationRejectedException;
+import com.imhos.security.server.service.social.SocialAuthenticationRejectedException;
 import com.imhos.security.shared.model.AuthenticationError;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 
 /**

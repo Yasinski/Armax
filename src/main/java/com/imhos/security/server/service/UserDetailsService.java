@@ -1,17 +1,11 @@
-package com.imhos.security.server;
+package com.imhos.security.server.service;
 
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import third.facade.DBUserQueryer;
 
 
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private DBUserQueryer dbUserQueryer;
 
     public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {

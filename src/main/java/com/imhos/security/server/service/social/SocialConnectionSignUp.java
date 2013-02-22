@@ -1,9 +1,7 @@
-package com.imhos.security.server.social;
+package com.imhos.security.server.service.social;
 
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.social.connect.DuplicateConnectionException;
 import third.facade.DBUserQueryer;
 import third.model.Role;
 import third.model.User;
@@ -28,16 +26,16 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
 
     @Override
     public String execute(Connection<?> connection) {
-        try {
-            Set<Role> authorities = new HashSet<Role>();
-            authorities.add(Role.ROLE_USER);
-            User user = new User();
-            user.setAuthorities(authorities);
-            dbUserQueryer.saveUser(user);
-            return user.getId();  //To change body of implemented methods use File | Settings | File Templates.
-        } catch (DuplicateKeyException e) {
-            throw new DuplicateConnectionException(connection.getKey());
-        }
+//        try {
+        Set<Role> authorities = new HashSet<Role>();
+        authorities.add(Role.ROLE_USER);
+        User user = new User();
+        user.setAuthorities(authorities);
+        dbUserQueryer.saveUser(user);
+        return user.getId();
+//        } catch (DuplicateKeyException e) {
+//            throw new DuplicateConnectionException(connection.getKey());
+//        }
     }
 
 

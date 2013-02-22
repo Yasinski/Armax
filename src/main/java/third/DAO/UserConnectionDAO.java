@@ -22,7 +22,7 @@ public interface UserConnectionDAO {
 
     public List<UserConnection> getPrimary(String userId, String providerId);
 
-    public int getRank(String userId, String providerId);
+    public Integer getMaxRank(String userId, String providerId);
 
     public List<UserConnection> getAll(
             String userId,

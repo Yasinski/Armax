@@ -1,4 +1,4 @@
-package com.imhos.security.server.social;
+package com.imhos.security.server.service.social;
 
 import com.imhos.security.server.model.UserConnection;
 import org.springframework.dao.DuplicateKeyException;
@@ -22,18 +22,19 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public class HibernateConnectionRepository implements ConnectionRepository {
-
+public class UsersConnectionService {
 
     private UserConnectionDAOImpl userConnectionDAO;
-
-    private final String userId;
-
-    private final ConnectionFactoryLocator connectionFactoryLocator;
-
-    private final TextEncryptor textEncryptor;
-    private final ServiceProviderConnectionMapper connectionMapper;
+    private ConnectionFactoryLocator connectionFactoryLocator;
+    private TextEncryptor textEncryptor;
+    private ServiceProviderConnectionMapper connectionMapper;
     private UserDAO userDAO;
+
+    private ConnectionSignUp connectionSignUp;
+
+    public void setConnectionSignUp(ConnectionSignUp connectionSignUp) {
+        this.connectionSignUp = connectionSignUp;
+    }
 
     public void setUserConnectionDAO(UserConnectionDAOImpl userConnectionDAO) {
         this.userConnectionDAO = userConnectionDAO;
@@ -43,17 +44,17 @@ public class HibernateConnectionRepository implements ConnectionRepository {
         this.userDAO = userDAO;
     }
 
-    public HibernateConnectionRepository(String userId, UserConnectionDAOImpl userConnectionDAO,
-                                         ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
+    public UsersConnectionService() {
+    }
+
+    public UsersConnectionService(ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
         connectionMapper = new ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
-        this.userConnectionDAO = userConnectionDAO;
-        this.userId = userId;
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.textEncryptor = textEncryptor;
     }
 
-    //+
-    public MultiValueMap<String, Connection<?>> findAllConnections() {
+
+    public MultiValueMap<String, Connection<?>> findAllConnections(String userId) {
         List<Connection<?>> resultList = connectionMapper.mapEntities(userConnectionDAO.getAll(userId));
 
         MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
@@ -71,19 +72,19 @@ public class HibernateConnectionRepository implements ConnectionRepository {
         return connections;
     }
 
-    //+
-    public List<Connection<?>> findConnections(String providerId) {
+
+    public List<Connection<?>> findConnections(String providerId, String userId) {
         return connectionMapper.mapEntities(userConnectionDAO.getAll(userId, providerId));
     }
 
     @SuppressWarnings("unchecked")
-    public <A> List<Connection<A>> findConnections(Class<A> apiType) {
-        List<?> connections = findConnections(getProviderId(apiType));
+    public <A> List<Connection<A>> findConnections(Class<A> apiType, String userId) {
+        List<?> connections = findConnections(getProviderId(apiType), userId);
         return (List<Connection<A>>) connections;
     }
 
-    //+
-    public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUsers) {
+
+    public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUsers, String userId) {
         if (providerUsers.isEmpty()) {
             throw new IllegalArgumentException("Unable to execute find: no providerUsers provided");
         }
@@ -109,8 +110,8 @@ public class HibernateConnectionRepository implements ConnectionRepository {
         return connectionsForUsers;
     }
 
-    //+
-    public Connection<?> getConnection(ConnectionKey connectionKey) {
+
+    public Connection<?> getConnection(ConnectionKey connectionKey, String userId) {
         try {
             return connectionMapper.mapEntity(userConnectionDAO.get(userId, connectionKey.getProviderId(),
                                                                     connectionKey.getProviderUserId()));
@@ -120,15 +121,15 @@ public class HibernateConnectionRepository implements ConnectionRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public <A> Connection<A> getConnection(Class<A> apiType, String providerUserId) {
+    public <A> Connection<A> getConnection(Class<A> apiType, String providerUserId, String userId) {
         String providerId = getProviderId(apiType);
-        return (Connection<A>) getConnection(new ConnectionKey(providerId, providerUserId));
+        return (Connection<A>) getConnection(new ConnectionKey(providerId, providerUserId), userId);
     }
 
     @SuppressWarnings("unchecked")
-    public <A> Connection<A> getPrimaryConnection(Class<A> apiType) {
+    public <A> Connection<A> getPrimaryConnection(Class<A> apiType, String userId) {
         String providerId = getProviderId(apiType);
-        Connection<A> connection = (Connection<A>) findPrimaryConnection(providerId);
+        Connection<A> connection = (Connection<A>) findPrimaryConnection(providerId, userId);
         if (connection == null) {
             throw new NotConnectedException(providerId);
         }
@@ -136,17 +137,23 @@ public class HibernateConnectionRepository implements ConnectionRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public <A> Connection<A> findPrimaryConnection(Class<A> apiType) {
+    public <A> Connection<A> findPrimaryConnection(Class<A> apiType, String userId) {
         String providerId = getProviderId(apiType);
-        return (Connection<A>) findPrimaryConnection(providerId);
+        return (Connection<A>) findPrimaryConnection(providerId, userId);
     }
 
-    //+
+
     @Transactional
-    public void addConnection(Connection<?> connection) {
+    public void addConnection(Connection<?> connection, String userId) {
         try {
             ConnectionData data = connection.createData();
-            int rank = userConnectionDAO.getRank(userId, data.getProviderId());
+            Integer rank = userConnectionDAO.getMaxRank(userId, data.getProviderId());    //??
+            if (rank == null) {
+                rank = 1;
+            } else {
+                rank++;
+            }
+
             User user = userDAO.getUserById(userId);
             UserConnection userConnection = new UserConnection(user, data.getProviderId(), data.getProviderUserId(), rank,
                                                                data.getDisplayName(), data.getProfileUrl(), data.getImageUrl(),
@@ -158,36 +165,36 @@ public class HibernateConnectionRepository implements ConnectionRepository {
         }
     }
 
-    //+
-    public void updateConnection(Connection<?> connection) {
+
+    public void updateConnection(Connection<?> connection, String userId) {
         ConnectionData data = connection.createData();
 
-        UserConnection uc = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
-        if (uc != null) {
-            uc.setDisplayName(data.getDisplayName());
-            uc.setProfileUrl(data.getProfileUrl());
-            uc.setImageUrl(data.getImageUrl());
-            uc.setAccessToken(encrypt(data.getAccessToken()));
-            uc.setSecret(encrypt(data.getSecret()));
-            uc.setRefreshToken(encrypt(data.getRefreshToken()));
-            uc.setExpireTime(data.getExpireTime());
+        UserConnection userConnection = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
+        if (userConnection != null) {
+            userConnection.setDisplayName(data.getDisplayName());
+            userConnection.setProfileUrl(data.getProfileUrl());
+            userConnection.setImageUrl(data.getImageUrl());
+            userConnection.setAccessToken(encrypt(data.getAccessToken()));
+            userConnection.setSecret(encrypt(data.getSecret()));
+            userConnection.setRefreshToken(encrypt(data.getRefreshToken()));
+            userConnection.setExpireTime(data.getExpireTime());
 
-            userConnectionDAO.update(uc);
+            userConnectionDAO.update(userConnection);
         }
     }
 
-    //+
-    public void removeConnections(String providerId) {
+
+    public void removeConnections(String providerId, String userId) {
         userConnectionDAO.remove(userId, providerId);
     }
 
-    //+
-    public void removeConnection(ConnectionKey connectionKey) {
+
+    public void removeConnection(ConnectionKey connectionKey, String userId) {
         userConnectionDAO.remove(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
     }
 
-    //+
-    private Connection<?> findPrimaryConnection(String providerId) {
+
+    public Connection<?> findPrimaryConnection(String providerId, String userId) {
         List<Connection<?>> connections = connectionMapper.mapEntities(userConnectionDAO.getPrimary(userId, providerId));
         if (connections.size() > 0) {
             return connections.get(0);
@@ -240,11 +247,48 @@ public class HibernateConnectionRepository implements ConnectionRepository {
 
     }
 
-    private <A> String getProviderId(Class<A> apiType) {
+    public <A> String getProviderId(Class<A> apiType) {
         return connectionFactoryLocator.getConnectionFactory(apiType).getProviderId();
     }
 
-    private String encrypt(String text) {
+    public String encrypt(String text) {
         return text != null ? textEncryptor.encrypt(text) : text;
     }
+
+
+    public List<String> findUserIdsWithConnection(Connection<?> connection) {
+        List<String> usrs = new ArrayList<String>();
+        ConnectionKey key = connection.getKey();
+        UserConnection user = userConnectionDAO.get(key.getProviderId(), key.getProviderUserId());
+        if (user != null) {
+            usrs.add(user.getUserId());
+            return usrs;
+        }
+
+        if (connectionSignUp != null) {
+
+            String newUserId = connectionSignUp.execute(connection);
+            if (newUserId == null)
+            //auto signup failed, so we need to go to a sign up form
+            {
+                return usrs;
+            }
+            addConnection(connection, newUserId);
+            usrs.add(newUserId);
+        }
+        //if empty we should go to the sign up form
+        return usrs;
+    }
+
+    public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds) {
+        return userConnectionDAO.findUsersConnectedTo(providerId, providerUserIds);
+    }
+
+    public ConnectionRepository createConnectionRepository(String userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId cannot be null");
+        }
+        return new ConnectionRepositoryWrapper(userId, this);
+    }
+
 }

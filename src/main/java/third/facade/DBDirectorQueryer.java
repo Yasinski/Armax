@@ -14,34 +14,37 @@ import java.util.List;
 
 public class DBDirectorQueryer {
 
-	private DirectorsDAO directorsDAO;
+    private DirectorsDAO directorsDAO;
 
-	public void setDirectorsDAO(DirectorsDAO directorsDAO) {
-		this.directorsDAO = directorsDAO;
-	}
+    public void setDirectorsDAO(DirectorsDAO directorsDAO) {
+        this.directorsDAO = directorsDAO;
+    }
 
-	//DIRECTORS METHODS
+    //DIRECTORS METHODS
 
-		public void saveDirector(Director director) throws SQLException {
-			directorsDAO.saveDirector(director);
-		}
+    public void saveDirector(Director director) throws SQLException {
+        directorsDAO.saveDirector(director);
+    }
 
-		public void updateDirector(Integer id, Director director) throws SQLException{
-			directorsDAO.updateDirector(id,director);
-		}
+    public void updateDirector(Integer id, Director director) throws SQLException {
+        directorsDAO.updateDirector(id, director);
+    }
 
-		public void deleteDirector(Director director) throws SQLException{
-			directorsDAO.deleteDirector(director);
-		}
+    public void deleteDirector(Director director) throws SQLException {
+        directorsDAO.deleteDirector(director);
+    }
 
-		public Director getParticularDirector(Director director) throws SQLException{
-			return directorsDAO.getParticularDirector(director);
-		}
+    public Director getParticularDirector(Director director) throws SQLException {
+        return directorsDAO.getParticularDirector(director);
+    }
 
-		public Director findWithThisMovie(Integer id){
-			return directorsDAO.findWithThisMovie(id);
-		}
-	public List<Director> findThisActorDirs(Integer id){
-		return directorsDAO.findThisActorDirs(id);
-	}
+    public Director findWithThisMovie(Integer id) {
+        return directorsDAO.findWithThisMovie(id);
+    }
+
+    public List<Director> findThisActorDirs(Integer id) {
+        return directorsDAO.findThisActorDirs(id);
+    }
+
+
 }

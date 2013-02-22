@@ -13,12 +13,6 @@
     <!--</property>-->
 
     <!--</bean>-->
-    <bean name="/facebookconnect/" class="com.imhos.security.server.social.facebook.FacebookConnect"/>
-    <bean name="/facebookcallback/" class="com.imhos.security.server.social.facebook.FacebookCallback"/>
-    <bean name="/twitterconnect/" class="com.imhos.security.server.social.twitter.TwitterConnect"/>
-    <bean name="/twittercallback/" class="com.imhos.security.server.social.twitter.TwitterCallback"/>
-    <bean name="/twitterconnect2/" class="com.imhos.security.server.social.twitterNew.TwitterConnect2"/>
-    <bean name="/twittercallback2/" class="com.imhos.security.server.social.twitterNew.TwitterCallback2"/>
 
 
     <bean name="/start/" class="third.service.ServletStart"/>
@@ -41,11 +35,11 @@
 
     <context:annotation-config/>
     <!--<bean id="connectController" class="org.springframework.social.connect.web.ConnectController">-->
-    <bean id="connectController" class="com.imhos.security.server.social.SocialConnectController">
+    <bean id="connectController" class="com.imhos.security.server.controller.SocialConnectController">
         <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
         <constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
         <constructor-arg name="signInAdapter">
-            <bean class="com.imhos.security.server.social.SocialSignInAdapter"/>
+            <bean class="com.imhos.security.server.service.social.SocialSignInAdapter"/>
         </constructor-arg>
         <!--<beans:property name="applicationUrl" value=""/>-->
     </bean>
@@ -54,7 +48,7 @@
     <!--<constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>-->
     <!--<constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>-->
     <!--<constructor-arg name="signInAdapter">-->
-    <!--<bean class="com.imhos.security.server.social.SocialSignInAdapter"/>-->
+    <!--<bean class="com.imhos.security.server.service.social.SocialSignInAdapter"/>-->
     <!--</constructor-arg>-->
     <!--&lt;!&ndash;<beans:property name="applicationUrl" value=""/>&ndash;&gt;-->
     <!--</bean>-->

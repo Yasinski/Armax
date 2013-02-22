@@ -1,4 +1,4 @@
-package com.imhos.security.server.social;
+package com.imhos.security.server.service.social;
 
 import com.imhos.security.server.serializer.Serializer;
 import org.springframework.security.core.Authentication;

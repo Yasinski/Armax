@@ -1,4 +1,4 @@
-package com.imhos.security.server.social;
+package com.imhos.security.server.controller;
 
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;

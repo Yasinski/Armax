@@ -10,7 +10,9 @@
 
     <aop:config>
         <aop:pointcut id="myPointcut" expression="execution(* third.facade.*.*(..))"/>
+        <aop:pointcut id="socialPointcut" expression="execution(* com.imhos.security.server.service..*Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="socialPointcut"/>
     </aop:config>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
@@ -21,6 +23,7 @@
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
             <tx:method name="search*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>

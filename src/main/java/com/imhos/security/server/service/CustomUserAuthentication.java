@@ -1,4 +1,4 @@
-package com.imhos.security.server;
+package com.imhos.security.server.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

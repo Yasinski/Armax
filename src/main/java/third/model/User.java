@@ -1,6 +1,8 @@
 package third.model;
 
+import com.imhos.security.server.model.UserConnection;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -15,15 +17,15 @@ import java.util.Set;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}))
 public class User implements UserDetails {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column
     private String id;
-
 
     @Column
     private String username;
@@ -43,6 +45,10 @@ public class User implements UserDetails {
 
     @Column
     private boolean enabled = true;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserConnection> userConnections = new HashSet<UserConnection>();
+
 
     public User() {
     }
