@@ -9,7 +9,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
-import third.DAO.UserConnectionDAO;
+import third.dao.UserConnectionDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +47,7 @@ public class SocialSignInAdapter implements SignInAdapter {
         authentication = new CustomUserAuthentication(userConnection, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if (rememberMe) {
+        if(rememberMe) {
             rememberMeServices.onLoginSuccess((HttpServletRequest) request.getNativeRequest(),
                                               (HttpServletResponse) request.getNativeResponse(), authentication);
         } else {

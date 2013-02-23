@@ -7,8 +7,8 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import third.DAO.UserConnectionDAO;
-import third.DAO.UserDAO;
+import third.dao.UserConnectionDAO;
+import third.dao.UserDAO;
 import third.model.User;
 
 import java.util.*;
@@ -68,7 +68,7 @@ public class UsersConnectionService {
         }
         for (Connection<?> connection : resultList) {
             String providerId = connection.getKey().getProviderId();
-            if (connections.get(providerId).size() == 0) {
+            if(connections.get(providerId).size() == 0) {
                 connections.put(providerId, new LinkedList<Connection<?>>());
             }
             connections.add(providerId, connection);
@@ -89,7 +89,7 @@ public class UsersConnectionService {
 
 
     public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUsers, String userId) {
-        if (providerUsers.isEmpty()) {
+        if(providerUsers.isEmpty()) {
             throw new IllegalArgumentException("Unable to execute find: no providerUsers provided");
         }
 
@@ -100,7 +100,7 @@ public class UsersConnectionService {
             String providerId = connection.getKey().getProviderId();
             List<String> userIds = providerUsers.get(providerId);
             List<Connection<?>> connections = connectionsForUsers.get(providerId);
-            if (connections == null) {
+            if(connections == null) {
                 connections = new ArrayList<Connection<?>>(userIds.size());
                 for (int i = 0; i < userIds.size(); i++) {
                     connections.add(null);
@@ -134,7 +134,7 @@ public class UsersConnectionService {
     public <A> Connection<A> getPrimaryConnection(Class<A> apiType, String userId) {
         String providerId = getProviderId(apiType);
         Connection<A> connection = (Connection<A>) findPrimaryConnection(providerId, userId);
-        if (connection == null) {
+        if(connection == null) {
             throw new NotConnectedException(providerId);
         }
         return connection;
@@ -151,7 +151,7 @@ public class UsersConnectionService {
         try {
             ConnectionData data = connection.createData();
             Integer rank = userConnectionDAO.getMaxRank(userId, data.getProviderId());    //??
-            if (rank == null) {
+            if(rank == null) {
                 rank = 1;
             } else {
                 rank++;
@@ -173,7 +173,7 @@ public class UsersConnectionService {
         ConnectionData data = connection.createData();
 
         UserConnection userConnection = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
-        if (userConnection != null) {
+        if(userConnection != null) {
             userConnection.setDisplayName(data.getDisplayName());
             userConnection.setProfileUrl(data.getProfileUrl());
             userConnection.setImageUrl(data.getImageUrl());
@@ -199,7 +199,7 @@ public class UsersConnectionService {
 
     public Connection<?> findPrimaryConnection(String providerId, String userId) {
         List<Connection<?>> connections = connectionMapper.mapEntities(userConnectionDAO.getPrimary(userId, providerId));
-        if (connections.size() > 0) {
+        if(connections.size() > 0) {
             return connections.get(0);
         } else {
             return null;
@@ -263,14 +263,14 @@ public class UsersConnectionService {
         List<String> usrs = new ArrayList<String>();
         ConnectionKey key = connection.getKey();
         UserConnection user = userConnectionDAO.get(key.getProviderId(), key.getProviderUserId());
-        if (user != null) {
+        if(user != null) {
             usrs.add(user.getUserId());
             return usrs;
         }
 
-        if (connectionSignUp != null) {
+        if(connectionSignUp != null) {
             String newUserId = addNewUserWithConnection(connection);
-            if (newUserId != null) {
+            if(newUserId != null) {
                 usrs.add(newUserId);
             }
         }
@@ -282,7 +282,7 @@ public class UsersConnectionService {
 //    todo: method name should be find* (have to fix transaction read-only problem)
     public String addNewUserWithConnection(Connection<?> connection) {
         String newUserId = connectionSignUp.execute(connection);
-        if (newUserId == null)
+        if(newUserId == null)
         //auto signup failed, so we need to go to a sign up form
         {
             return null;
@@ -296,7 +296,7 @@ public class UsersConnectionService {
     }
 
     public ConnectionRepository createConnectionRepository(String userId) {
-        if (userId == null) {
+        if(userId == null) {
             throw new IllegalArgumentException("userId cannot be null");
         }
         return new ConnectionRepositoryWrapper(userId, this);
