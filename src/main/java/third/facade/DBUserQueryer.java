@@ -1,6 +1,6 @@
 package third.facade;
 
-import third.DAO.UserDAO;
+import third.dao.UserDAO;
 import third.model.User;
 
 import java.util.List;
@@ -41,6 +41,7 @@ public class DBUserQueryer {
     public User getUserByFacebookId(String facebookId) {
         return userDAO.getUserByFacebookId(facebookId);
     }
+
     public User getUserByTwitterId(String twitterId) {
         return userDAO.getUserByTwitterId(twitterId);
     }

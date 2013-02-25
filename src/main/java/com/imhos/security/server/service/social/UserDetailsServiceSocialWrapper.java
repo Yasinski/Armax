@@ -9,7 +9,7 @@ import org.springframework.social.NotAuthorizedException;
 import org.springframework.social.RejectedAuthorizationException;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import third.DAO.UserConnectionDAO;
+import third.dao.UserConnectionDAO;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,7 +44,7 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         int userNameSeparatorIndex = login.indexOf(UserConnection.USERNAME_SEPARATOR);
-        if (userNameSeparatorIndex == -1) {
+        if(userNameSeparatorIndex == -1) {
             return userDetailsService.loadUserByUsername(login);
         }
         String providerId = login.substring(0, userNameSeparatorIndex);
@@ -55,7 +55,7 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
                 = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         Connection connection = connectionMapper.mapEntity(userConnection);
         try {
-            if (!userConnection.getUsername().equals(connection.fetchUserProfile().getUsername())) {
+            if(!userConnection.getUsername().equals(connection.fetchUserProfile().getUsername())) {
                 throw new UsernameNotFoundException("");
             }
         } catch (RejectedAuthorizationException e) {

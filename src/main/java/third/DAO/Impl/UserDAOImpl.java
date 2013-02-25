@@ -1,11 +1,11 @@
-package third.DAO.Impl;
+package third.dao.impl;
 
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import third.DAO.UserDAO;
+import third.dao.UserDAO;
 import third.model.User;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
 
     public void deleteUser(String username) {
         User user = getUserByLogin(username);
-        if (user != null) {
+        if(user != null) {
             getSession().delete(user);
         }
 

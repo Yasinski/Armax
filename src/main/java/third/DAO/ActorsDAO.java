@@ -1,4 +1,4 @@
-package third.DAO;
+package third.dao;
 
 import org.hibernate.exception.ConstraintViolationException;
 import third.model.Actor;
@@ -13,19 +13,19 @@ import java.util.List;
 
 public interface ActorsDAO {
 
-	public void saveActor(Actor actor) throws ConstraintViolationException;
+    public void saveActor(Actor actor) throws ConstraintViolationException;
 
-	public void updateActor(Integer id, Actor actor);
+    public void updateActor(Integer id, Actor actor);
 
-	public void deleteActor(Actor actor);
+    public void deleteActor(Actor actor);
 
-	public List<Actor> getActors();
+    public List<Actor> getActors();
 
-	public Actor getParticularActor(Actor actor);
+    public Actor getParticularActor(Actor actor);
 
-	public List<Actor> findAll();
+    public List<Actor> findAll();
 
-	public List<Actor> findThisDirectorActors(Integer directorId);
+    public List<Actor> findThisDirectorActors(Integer directorId);
 
-	public List<Actor> findWithThisMovie(Integer movieId);
+    public List<Actor> findWithThisMovie(Integer movieId);
 }

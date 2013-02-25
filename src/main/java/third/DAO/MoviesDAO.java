@@ -1,4 +1,4 @@
-package third.DAO;
+package third.dao;
 
 import third.model.Movie;
 
@@ -13,34 +13,34 @@ import java.util.List;
 
 public interface MoviesDAO {
 
-	public Movie getMovie(Integer movieId);
+    public Movie getMovie(Integer movieId);
 
-	public void saveMovie(Movie movie);
+    public void saveMovie(Movie movie);
 
-	public void updateMovie(Movie movie) throws SQLException;
+    public void updateMovie(Movie movie) throws SQLException;
 
-	public void deleteMovie(Movie movie) throws SQLException;
+    public void deleteMovie(Movie movie) throws SQLException;
 
-	public List<Movie> findAll();
+    public List<Movie> findAll();
 
-	public List<Movie> findWithoutAnyActor();
+    public List<Movie> findWithoutAnyActor();
 
-	public List<Movie> findWithThisActor(Integer id);
+    public List<Movie> findWithThisActor(Integer id);
 
-	public List<Movie> findAll_dirName();
+    public List<Movie> findAll_dirName();
 
-	public List<Movie> findAll_dirName1();
+    public List<Movie> findAll_dirName1();
 
-	public List<Movie> findAll_dirName3();
+    public List<Movie> findAll_dirName3();
 
-	public List<Movie> searchByTitle(String searchString, Integer firstOnPage, Integer rowsOnPage);
+    public List<Movie> searchByTitle(String searchString, Integer firstOnPage, Integer rowsOnPage);
 
-	public Integer getCountOfFound(String searchString);
+    public Integer getCountOfFound(String searchString);
 
-	public List<Movie> findLimit(Integer firstOnPage, Integer rowsOnPage);
+    public List<Movie> findLimit(Integer firstOnPage, Integer rowsOnPage);
 
-	public Integer findCountOfMovies();
+    public Integer findCountOfMovies();
 
-	public List<Movie> findWithThisDirector(Integer directorId);
+    public List<Movie> findWithThisDirector(Integer directorId);
 
 }

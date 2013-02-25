@@ -1,11 +1,11 @@
-package third.DAO.Impl;
+package third.dao.impl;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import third.DAO.DirectorsDAO;
+import third.dao.DirectorsDAO;
 import third.model.Director;
 
 import java.util.List;
