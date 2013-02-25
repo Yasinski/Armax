@@ -9,6 +9,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import third.dao.UserConnectionDAO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 //todo: rename to smth like SocialConnectionSignUp
 public class SocialSignInAdapter implements SignInAdapter {
-    public static final String REMEMBER_ME_PARAMETER = "rememberMe";
+
+    public static final String REMEMBER_ME_ATTRIBUTE = "rememberMe";
     private TokenBasedRememberMeServices rememberMeServices;
     private UserConnectionDAO userConnectionDAO;
 
@@ -37,8 +39,8 @@ public class SocialSignInAdapter implements SignInAdapter {
 
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-        String rememberMeParameter = request.getParameter(REMEMBER_ME_PARAMETER);
-        boolean rememberMe = "true".equals(rememberMeParameter);
+        boolean rememberMe = (Boolean) request.getAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
+        request.removeAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 
         ConnectionData data = connection.createData();
         UserConnection userConnection = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
@@ -47,12 +49,12 @@ public class SocialSignInAdapter implements SignInAdapter {
         authentication = new CustomUserAuthentication(userConnection, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        if(rememberMe) {
+        if (rememberMe) {
             rememberMeServices.onLoginSuccess((HttpServletRequest) request.getNativeRequest(),
                                               (HttpServletResponse) request.getNativeResponse(), authentication);
-        } else {
-            rememberMeServices.logout((HttpServletRequest) request.getNativeRequest(),
-                                      (HttpServletResponse) request.getNativeResponse(), authentication);
+//        } else {
+//            rememberMeServices.logout((HttpServletRequest) request.getNativeRequest(),
+//                                      (HttpServletResponse) request.getNativeResponse(), authentication);
         }
         return null;
     }

@@ -5,8 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.social.NotAuthorizedException;
-import org.springframework.social.RejectedAuthorizationException;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import third.dao.UserConnectionDAO;
@@ -21,7 +19,7 @@ import third.dao.UserConnectionDAO;
 public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
     private UserDetailsService userDetailsService;
-    private UserConnectionDAO userConnectDAO;
+    private UserConnectionDAO userConnectionDAO;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
 
@@ -33,8 +31,8 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
         this.connectionFactoryLocator = connectionFactoryLocator;
     }
 
-    public void setUserConnectDAO(UserConnectionDAO userConnectDAO) {
-        this.userConnectDAO = userConnectDAO;
+    public void setUserConnectionDAO(UserConnectionDAO userConnectionDAO) {
+        this.userConnectionDAO = userConnectionDAO;
     }
 
 
@@ -44,29 +42,20 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         int userNameSeparatorIndex = login.indexOf(UserConnection.USERNAME_SEPARATOR);
-        if(userNameSeparatorIndex == -1) {
+        if (userNameSeparatorIndex == -1) {
             return userDetailsService.loadUserByUsername(login);
         }
         String providerId = login.substring(0, userNameSeparatorIndex);
         String providerUserId = login.substring(userNameSeparatorIndex + 1);
-        UserConnection userConnection = userConnectDAO.get(providerId, providerUserId);
+        UserConnection userConnection = userConnectionDAO.get(providerId, providerUserId);
 
         UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
                 = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         Connection connection = connectionMapper.mapEntity(userConnection);
-        try {
-            if(!userConnection.getUsername().equals(connection.fetchUserProfile().getUsername())) {
-                throw new UsernameNotFoundException("");
-            }
-        } catch (RejectedAuthorizationException e) {
-            throw new SocialAuthenticationRejectedException(e.getMessage(), e);
-        } catch (NotAuthorizedException e) {
-            throw new SocialAuthenticationRejectedException(e.getMessage(), e);
+        if (!connection.test()) {
+//            todo: delete userConnection??????
+            throw new UsernameNotFoundException("");
         }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
 
         return userConnection;
 

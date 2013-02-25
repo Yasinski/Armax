@@ -101,9 +101,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     </beans:bean>
     <beans:bean id="usersConnectionRepository"
                 class="com.imhos.security.server.service.social.UsersConnectionServiceWrapper">
-        <!--<beans:constructor-arg ref="userConnectionDAO"/>-->
-        <!--<beans:constructor-arg ref="connectionFactoryLocator"/>-->
-        <!--<beans:constructor-arg ref="textEncryptor"/>-->
         <beans:constructor-arg ref="usersConnectionService"/>
     </beans:bean>
 
