@@ -119,6 +119,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
 
     private void login(String login, String pass, boolean rememberMe) {
 
+
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
         rb.setRequestData("j_username=" + URL.encode(login) + "&j_password=" + URL.encode(pass)
