@@ -108,12 +108,12 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     }
 
     private void loginFacebook(boolean rememberMe) {
-        Window.open("/facebookconnect/?rememberMe=" + rememberMe, "Facebook Login", "width=500,height=300," +
+        Window.open("/connect/signin/facebook/?rememberMe=" + rememberMe, "Facebook Login", "width=500,height=300," +
                 "location=1,left=0,top=0");
     }
 
     private void loginTwitter(boolean rememberMe) {
-        Window.open("/twitterconnect2/?rememberMe=" + rememberMe, "Twitter Login", "width=500,height=300," +
+        Window.open("/connect/signin/twitter/?rememberMe=" + rememberMe, "Twitter Login", "width=500,height=300," +
                 "location=1,left=0,top=0");
     }
 
@@ -131,7 +131,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(Response.SC_OK == response.getStatusCode()) {
+                if (Response.SC_OK == response.getStatusCode()) {
 //                    JsonUtils.safeEval(response.getText())
                     handleLoginSuccess(response.getText());
                 } else {
@@ -159,7 +159,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             }
 
             public void onResponseReceived(Request request, Response response) {
-                if(Response.SC_OK == response.getStatusCode()) {
+                if (Response.SC_OK == response.getStatusCode()) {
                     //todo: logout handler should be implemented
                     message.setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
@@ -197,7 +197,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
 
     public boolean checkAuthentication() {
         String authenticationJSON = getAuthenticationJSON();
-        if(authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
+        if (authenticationJSON != null && !getAuthenticationJSON().isEmpty()) {
             handleLoginSuccess(authenticationJSON);
             return true;
         } else {

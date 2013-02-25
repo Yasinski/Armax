@@ -20,7 +20,7 @@ public class SocialConnectController extends ProviderSignInController {
 
     public SocialConnectController(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, SignInAdapter signInAdapter) {
         super(connectionFactoryLocator, usersConnectionRepository, signInAdapter);
-        setPostSignInUrl("/application");
+        setPostSignInUrl("/postSignIn/");
     }
 
     @RequestMapping(value = "/{providerId}")

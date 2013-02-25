@@ -54,6 +54,6 @@ public class SocialSignInAdapter implements SignInAdapter {
             rememberMeServices.logout((HttpServletRequest) request.getNativeRequest(),
                                       (HttpServletResponse) request.getNativeResponse(), authentication);
         }
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }
