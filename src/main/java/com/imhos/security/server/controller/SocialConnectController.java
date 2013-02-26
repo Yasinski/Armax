@@ -1,8 +1,8 @@
 package com.imhos.security.server.controller;
 
+import com.imhos.security.server.service.social.SignInSocialAdapter;
 import com.imhos.security.server.service.social.SocialAuthenticationRejectedException;
 import com.imhos.security.server.service.social.SocialResponseBuilder;
-import com.imhos.security.server.service.social.SocialSignInAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -39,8 +39,8 @@ public class SocialConnectController extends ProviderSignInController {
 
     @RequestMapping(value = "/{providerId}")
     public RedirectView signIn(@PathVariable String providerId, NativeWebRequest request) {
-        boolean rememberMe = "true".equals(request.getParameter(SocialSignInAdapter.REMEMBER_ME_ATTRIBUTE));
-        request.setAttribute(SocialSignInAdapter.REMEMBER_ME_ATTRIBUTE, rememberMe, RequestAttributes.SCOPE_SESSION);
+        boolean rememberMe = "true".equals(request.getParameter(SignInSocialAdapter.REMEMBER_ME_ATTRIBUTE));
+        request.setAttribute(SignInSocialAdapter.REMEMBER_ME_ATTRIBUTE, rememberMe, RequestAttributes.SCOPE_SESSION);
         super.signIn(providerId, request);
         Authentication authentication = (Authentication) request.getUserPrincipal();
         try {

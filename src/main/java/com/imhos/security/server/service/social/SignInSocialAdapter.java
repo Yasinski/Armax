@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  * Time: 6:48
  * To change this template use File | Settings | File Templates.
  */
-//todo: rename to smth like SocialConnectionSignUp
-public class SocialSignInAdapter implements SignInAdapter {
+//todo: rename to smth like SignUpSocialConnection
+public class SignInSocialAdapter implements SignInAdapter {
 
     public static final String REMEMBER_ME_ATTRIBUTE = "rememberMe";
     private TokenBasedRememberMeServices rememberMeServices;

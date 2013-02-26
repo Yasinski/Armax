@@ -38,7 +38,7 @@
         <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
         <constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
         <constructor-arg name="signInAdapter">
-            <bean class="com.imhos.security.server.service.social.SocialSignInAdapter"/>
+            <bean class="com.imhos.security.server.service.social.SignInSocialAdapter"/>
         </constructor-arg>
         <!--<beans:property name="applicationUrl" value=""/>-->
     </bean>

@@ -111,11 +111,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <!--</beans:bean>-->
     <beans:bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
                 factory-method="queryableText">
-        <beans:constructor-arg value="47582920264f212c566d5e5a6d"/>
-        <beans:constructor-arg value="39783e315e6a207e733d6f4141"/>
+        <beans:constructor-arg value="testee"/>
+        <beans:constructor-arg value="8ea925882ab08b94"/>
     </beans:bean>
 
-    <beans:bean name="connectionSignUp" class="com.imhos.security.server.service.social.SocialConnectionSignUp"/>
+    <beans:bean name="connectionSignUp" class="com.imhos.security.server.service.social.SignUpSocialConnection"/>
 
     <beans:bean name="usersConnectionService" class="com.imhos.security.server.service.social.UsersConnectionService">
         <beans:constructor-arg ref="connectionFactoryLocator"/>

@@ -14,7 +14,7 @@ import third.model.User;
  * Time: 11:56
  * To change this template use File | Settings | File Templates.
  */
-public class SocialConnectionSignUp implements ConnectionSignUp {
+public class SignUpSocialConnection implements ConnectionSignUp {
 
     private DBUserQueryer dbUserQueryer;
 
