@@ -1,6 +1,9 @@
 package com.imhos.security.server.controller;
 
+import com.imhos.security.server.service.social.SocialAuthenticationRejectedException;
+import com.imhos.security.server.service.social.SocialResponseBuilder;
 import com.imhos.security.server.service.social.SocialSignInAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
@@ -11,6 +14,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * writeme: Should be the description of the class
  *
@@ -19,30 +25,44 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 public class SocialConnectController extends ProviderSignInController {
 
-    public SocialConnectController(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, SignInAdapter signInAdapter) {
+    private SocialResponseBuilder socialResponseBuilder;
+
+    public SocialConnectController(ConnectionFactoryLocator connectionFactoryLocator,
+                                   UsersConnectionRepository usersConnectionRepository, SignInAdapter signInAdapter) {
         super(connectionFactoryLocator, usersConnectionRepository, signInAdapter);
         setPostSignInUrl("/postSignIn/");
+    }
+
+    public void setSocialResponseBuilder(SocialResponseBuilder socialResponseBuilder) {
+        this.socialResponseBuilder = socialResponseBuilder;
     }
 
     @RequestMapping(value = "/{providerId}")
     public RedirectView signIn(@PathVariable String providerId, NativeWebRequest request) {
         boolean rememberMe = "true".equals(request.getParameter(SocialSignInAdapter.REMEMBER_ME_ATTRIBUTE));
         request.setAttribute(SocialSignInAdapter.REMEMBER_ME_ATTRIBUTE, rememberMe, RequestAttributes.SCOPE_SESSION);
-        return super.signIn(providerId, request);
+        super.signIn(providerId, request);
+        Authentication authentication = (Authentication) request.getUserPrincipal();
+        try {
+            ((HttpServletResponse) request.getNativeResponse()).getWriter().write(socialResponseBuilder.buildResponse(authentication));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
-//    public RedirectView oauth1Callback(@PathVariable String providerId, NativeWebRequest request) {
-//        boolean rememberMe = (Boolean) request.getAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
-//        request.removeAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
-//        return   super.oauth1Callback(providerId,  request) ;
-//    }
-//
-//    public RedirectView oauth2Callback(@PathVariable String providerId, @RequestParam("code") String code, NativeWebRequest request) {
-//      return   super.oauth2Callback(providerId,code,  request) ;
-//    }
 
-    @RequestMapping(value = "/cancel/{providerId}")
+    @RequestMapping(value = "/error")
     public RedirectView canceledAuthorizationCallback() {
         return super.canceledAuthorizationCallback();
+    }
+
+    public void sendError(NativeWebRequest request) {
+        try {
+            HttpServletResponse response = (HttpServletResponse) request.getNativeResponse();
+            response.getWriter().write(socialResponseBuilder.buildResponse(new SocialAuthenticationRejectedException()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -52,9 +52,9 @@ public class SocialSignInAdapter implements SignInAdapter {
         if (rememberMe) {
             rememberMeServices.onLoginSuccess((HttpServletRequest) request.getNativeRequest(),
                                               (HttpServletResponse) request.getNativeResponse(), authentication);
-//        } else {
-//            rememberMeServices.logout((HttpServletRequest) request.getNativeRequest(),
-//                                      (HttpServletResponse) request.getNativeResponse(), authentication);
+        } else {
+            rememberMeServices.logout((HttpServletRequest) request.getNativeRequest(),
+                                      (HttpServletResponse) request.getNativeResponse(), authentication);
         }
         return null;
     }

@@ -1,11 +1,10 @@
 package com.imhos.security.server.serializer;
 
 import com.google.gson.Gson;
-import com.imhos.security.shared.model.UserDetailsImpl;
+import com.imhos.security.shared.model.UserDetailsDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import third.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class AuthenticationSerializer implements Serializer<Authentication> {
     @Override
     public String serialize(Authentication authentication) {
 
-        UserDetailsImpl user = new UserDetailsImpl();
+        UserDetailsDTO user = new UserDetailsDTO();
         user.setUsername(((UserDetails) authentication.getPrincipal()).getUsername());
         List<String> authorities = new ArrayList<String>();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {

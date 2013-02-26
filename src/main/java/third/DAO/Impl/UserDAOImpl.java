@@ -56,6 +56,14 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    public User getUserByEmail(String email) {
+        User user = (User) getSession().createCriteria(User.class)
+                .add(Restrictions.eq("email", email))
+                .uniqueResult();
+        return user;
+
+    }
+
     public User getUserByFacebookId(String facebookId) {
         return (User) getSession().createCriteria(User.class)
                 .add(Restrictions.eq("facebookId", facebookId))
@@ -74,7 +82,7 @@ public class UserDAOImpl implements UserDAO {
 
     public void deleteUser(String username) {
         User user = getUserByLogin(username);
-        if(user != null) {
+        if (user != null) {
             getSession().delete(user);
         }
 

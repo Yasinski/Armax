@@ -2,12 +2,10 @@ package com.imhos.security.server.service.social;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
+import org.springframework.social.connect.UserProfile;
 import third.facade.DBUserQueryer;
 import third.model.Role;
 import third.model.User;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,11 +25,19 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
     @Override
     public String execute(Connection<?> connection) {
 //        try {
-        Set<Role> authorities = new HashSet<Role>();
-        authorities.add(Role.ROLE_USER);
-        User user = new User();
-        user.setAuthorities(authorities);
-        dbUserQueryer.saveUser(user);
+        UserProfile userProfile = connection.fetchUserProfile();
+        String email = userProfile.getEmail();
+        if (email == null) {
+            email = connection.getKey().getProviderUserId() + "@" + connection.getKey().getProviderId();
+        }
+        User user = dbUserQueryer.getUserByEmail(email);
+        if (user == null) {
+            user = new User();
+            user.setAuthorities(Role.ROLE_USER);
+            user.setEmail(email);
+            user.setFullName(userProfile.getName());
+            dbUserQueryer.saveUser(user);
+        }
         return user.getId();
 //        } catch (DuplicateKeyException e) {
 //            throw new DuplicateConnectionException(connection.getKey());

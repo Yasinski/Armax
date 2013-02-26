@@ -20,6 +20,8 @@ public interface UserDAO {
 
     public User getUserByLogin(String username);
 
+    public User getUserByEmail(String email);
+
     public User getUserByFacebookId(String facebookId);
 
     public User getUserByTwitterId(String twitterId);

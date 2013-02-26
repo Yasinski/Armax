@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 public class User implements UserDetails {
 
 
@@ -29,10 +30,11 @@ public class User implements UserDetails {
     private String id;
 
     @Column
-    private String username;
-
+    private String fullName;
     @Column
-    private String login;
+    private String username;
+    @Column
+    private String email;
 
     @Column
     private String password;
@@ -67,19 +69,25 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
 
-    public User(String username, String login, String password, Set<Role> authorities, boolean enabled) {
-        this.username = username;
-        this.login = login;
-        this.password = password;
-        this.authorities = authorities;
-        this.enabled = enabled;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getId() {
         return id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Override
     //    todo: getUserName() method logically should return full name
@@ -123,6 +131,10 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    public void setAuthorities(Role... authorities) {
+        this.authorities = new HashSet<Role>(Arrays.asList(authorities));
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -131,13 +143,5 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
 }

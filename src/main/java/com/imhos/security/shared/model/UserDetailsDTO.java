@@ -9,14 +9,14 @@ import java.util.List;
  * @author <a href="a.kasinskiy@gmail.com">Arthur Kasinskiy</a>
  * @updated 12.02.13 12:26
  */
-public class UserDetailsImpl implements UserDetails {
+public class UserDetailsDTO implements UserDetails {
 
     public static final String USERNAME_FIELD = "username";
     public static final String AUTHORITIES_FIELD = "authorities";
     private String username;
     private List<String> authorities;
 
-    public UserDetailsImpl() {
+    public UserDetailsDTO() {
         authorities = new ArrayList<String>();
     }
 

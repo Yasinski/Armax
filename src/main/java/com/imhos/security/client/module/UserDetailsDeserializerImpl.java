@@ -5,7 +5,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.imhos.security.shared.model.UserDetails;
-import com.imhos.security.shared.model.UserDetailsImpl;
+import com.imhos.security.shared.model.UserDetailsDTO;
 
 /**
  * writeme: Should be the description of the class
@@ -19,10 +19,10 @@ public class UserDetailsDeserializerImpl implements Deserializer<UserDetails> {
     public UserDetails deserialize(String json) {
         JSONValue parsed = JSONParser.parseStrict(json);
         JSONObject jsonObj = parsed.isObject();
-        UserDetailsImpl user = new UserDetailsImpl();
-        if(jsonObj != null) {
-            user.setUsername(jsonObj.get(UserDetailsImpl.USERNAME_FIELD).toString());
-            JSONArray array = jsonObj.get(UserDetailsImpl.AUTHORITIES_FIELD).isArray();
+        UserDetailsDTO user = new UserDetailsDTO();
+        if (jsonObj != null) {
+            user.setUsername(jsonObj.get(UserDetailsDTO.USERNAME_FIELD).toString());
+            JSONArray array = jsonObj.get(UserDetailsDTO.AUTHORITIES_FIELD).isArray();
             for (int i = 0; i < array.size(); i++) {
                 JSONValue obj = array.get(i);
                 user.getAuthorities().add(obj.toString());

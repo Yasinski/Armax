@@ -38,6 +38,10 @@ public class DBUserQueryer {
         return userDAO.getUserByLogin(username);
     }
 
+    public User getUserByEmail(String email) {
+        return userDAO.getUserByEmail(email);
+    }
+
     public User getUserByFacebookId(String facebookId) {
         return userDAO.getUserByFacebookId(facebookId);
     }

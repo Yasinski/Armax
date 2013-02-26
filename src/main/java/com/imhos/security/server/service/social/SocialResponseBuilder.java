@@ -3,6 +3,11 @@ package com.imhos.security.server.service.social;
 import com.imhos.security.server.serializer.Serializer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.servlet.view.AbstractTemplateView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,7 +17,7 @@ import org.springframework.security.core.AuthenticationException;
  * To change this template use File | Settings | File Templates.
  */
 
-public class SocialResponseBuilder {
+public class SocialResponseBuilder extends AbstractTemplateView {
 
     public static final String SCRIPT_PREFIX = "<script>window.opener.";
     public static final String SCRIPT_POSTFIX = "');window.close();</script>";
@@ -45,4 +50,9 @@ public class SocialResponseBuilder {
         return builder.toString();
     }
 
+    @Override
+    protected void renderMergedTemplateModel(Map<String, Object> model,
+                                             HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    }
 }
