@@ -73,7 +73,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
     <!--</beans:property>-->
     <!--</beans:bean>-->
 
-    <beans:bean name="socialResponseBuilder" class="com.imhos.security.server.service.social.SocialResponseBuilder"/>
     <beans:bean name="authenticationSerializer" class="com.imhos.security.server.serializer.AuthenticationSerializer"/>
     <beans:bean name="authenticationExceptionSerializer"
                 class="com.imhos.security.server.serializer.AuthenticationExceptionSerializer"/>

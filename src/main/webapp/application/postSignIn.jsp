@@ -1,5 +1,5 @@
 <%@ page import="com.imhos.security.server.serializer.AuthenticationSerializer" %>
-<%@ page import="com.imhos.security.server.service.social.SocialResponseBuilder" %>
+<%@ page import="com.imhos.security.server.view.AbstractSocialView" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
@@ -18,8 +18,8 @@
         Authentication authentication = (Authentication) request.getUserPrincipal();
 
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application);
-        SocialResponseBuilder socialResponseBuilder =
-                (SocialResponseBuilder) context.getBean("socialResponseBuilder");
+        AbstractSocialView socialResponseView =
+                (AbstractSocialView) context.getBean("socialResponseView");
         if (authentication != null) {
             AuthenticationSerializer authenticationSerializer =
                     (AuthenticationSerializer) context.getBean("authenticationSerializer");
@@ -34,7 +34,7 @@
 <script>
     window.authentication = '${authenticationJSON}';
     <%
-      response.getWriter().print(socialResponseBuilder.buildResponse(authentication));
+      response.getWriter().print(socialResponseView.buildResponse(authentication));
       %>
 </script>
 </body>

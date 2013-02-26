@@ -51,7 +51,12 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
         UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
                 = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
-        Connection connection = connectionMapper.mapEntity(userConnection);
+        Connection connection = null;
+        try {
+            connection = connectionMapper.mapEntity(userConnection);
+        } catch (IllegalStateException e) {
+            throw new UsernameNotFoundException("");
+        }
         if (!connection.test()) {
 //            todo: delete userConnection??????
             throw new UsernameNotFoundException("");
