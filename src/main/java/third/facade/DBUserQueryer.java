@@ -24,7 +24,7 @@ public class DBUserQueryer {
     }
 
     public void updateUser(User user) {
-        userDAO.updateUser(user);
+        userDAO.update(user);
     }
 
 

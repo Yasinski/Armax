@@ -7,7 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import third.dao.UserConnectionDAO;
+import third.dao.UserDAO;
+import third.model.User;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,10 +19,9 @@ import third.dao.UserConnectionDAO;
  */
 public class UserDetailsServiceSocialWrapper implements UserDetailsService {
 
-    private UserDetailsService userDetailsService;
-    private UserConnectionDAO userConnectionDAO;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
+    private UserDAO userDAO;
 
     public void setTextEncryptor(TextEncryptor textEncryptor) {
         this.textEncryptor = textEncryptor;
@@ -31,27 +31,24 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
         this.connectionFactoryLocator = connectionFactoryLocator;
     }
 
-    public void setUserConnectionDAO(UserConnectionDAO userConnectionDAO) {
-        this.userConnectionDAO = userConnectionDAO;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        int userNameSeparatorIndex = login.indexOf(UserConnection.USERNAME_SEPARATOR);
-        if (userNameSeparatorIndex == -1) {
-            return userDetailsService.loadUserByUsername(login);
-        }
-        String providerId = login.substring(0, userNameSeparatorIndex);
-        String providerUserId = login.substring(userNameSeparatorIndex + 1);
-        UserConnection userConnection = userConnectionDAO.get(providerId, providerUserId);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        int userNameSeparatorIndex = login.indexOf(UserConnection.USERNAME_SEPARATOR);
+//        if (userNameSeparatorIndex == -1) {
+//            return userDetailsService.loadUserByUsername(login);
+//        }
+//        String providerId = login.substring(0, userNameSeparatorIndex);
+//        String providerUserId = login.substring(userNameSeparatorIndex + 1);
+//        String email = providerUserId + "@" + providerId;
+        User user = userDAO.getUserByEmail(email);
+        UserConnection userConnection = user.getLastConnection();
 
         UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
                 = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
-        Connection connection = null;
+        Connection connection;
         try {
             connection = connectionMapper.mapEntity(userConnection);
         } catch (IllegalStateException e) {
@@ -62,7 +59,7 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
             throw new UsernameNotFoundException("");
         }
 
-        return userConnection;
+        return user;
 
     }
 

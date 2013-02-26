@@ -91,7 +91,7 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
                     .append(" and providerUserId in (:providerUserIds_").append(providerId).append(")");
             parameters.addValue("providerId_" + providerId, providerId);
             parameters.addValue("providerUserIds_" + providerId, entry.getValue());
-            if(it.hasNext()) {
+            if (it.hasNext()) {
                 providerUsersCriteriaSql.append(" or ");
             }
 
@@ -145,6 +145,14 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
                 .uniqueResult();
         return userConnection;
     }
+
+    public UserConnection getByEmail(String email) {
+        return (UserConnection) getSession().createCriteria(UserConnection.class)
+                .createCriteria("user")
+                .add(Restrictions.eq("email", email))
+                .uniqueResult();
+    }
+
 
     @Override
     public void remove(String userId, String providerId) {

@@ -21,7 +21,7 @@ import java.util.Collection;
         @UniqueConstraint(columnNames = {"id", "providerId", "rank"})})           //column "user doesn't exist"
 public class UserConnection implements UserDetails {
 
-    public static String USERNAME_SEPARATOR = "/";
+    //    public static String USERNAME_SEPARATOR = "/";
     @Id
     @GeneratedValue
     @Column
@@ -190,7 +190,7 @@ public class UserConnection implements UserDetails {
     @Override
 //    todo: getUserName() method logically should return full name
     public String getUsername() {
-        return providerId + USERNAME_SEPARATOR + providerUserId;
+        return user.getEmail();
     }
 
     @Override

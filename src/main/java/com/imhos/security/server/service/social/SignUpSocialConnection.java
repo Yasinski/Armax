@@ -17,18 +17,25 @@ import third.model.User;
 public class SignUpSocialConnection implements ConnectionSignUp {
 
     private DBUserQueryer dbUserQueryer;
+    private UsersConnectionService usersConnectionService;
 
     public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
         this.dbUserQueryer = dbUserQueryer;
+    }
+
+    public void setUsersConnectionService(UsersConnectionService usersConnectionService) {
+        this.usersConnectionService = usersConnectionService;
     }
 
     @Override
     public String execute(Connection<?> connection) {
 //        try {
         UserProfile userProfile = connection.fetchUserProfile();
+        String providerUserId = connection.getKey().getProviderUserId();
+        String providerId = connection.getKey().getProviderId();
         String email = userProfile.getEmail();
         if (email == null) {
-            email = connection.getKey().getProviderUserId() + "@" + connection.getKey().getProviderId();
+            email = providerUserId + "@" + providerId;
         }
         User user = dbUserQueryer.getUserByEmail(email);
         if (user == null) {
@@ -36,7 +43,13 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setAuthorities(Role.ROLE_USER);
             user.setEmail(email);
             user.setFullName(userProfile.getName());
+            user.setPassword(providerId);
             dbUserQueryer.saveUser(user);
+        } else if (!user.isProfileSubmittedByUser() &&
+                connection.equals(usersConnectionService.findPrimaryConnection(providerId, user.getId()))) {
+            user.setEmail(email);
+            user.setFullName(userProfile.getName());
+            dbUserQueryer.updateUser(user);
         }
         return user.getId();
 //        } catch (DuplicateKeyException e) {

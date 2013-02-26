@@ -32,12 +32,15 @@ public class User implements UserDetails {
     @Column
     private String fullName;
     @Column
-    private String username;
+    private String username;  // equals to email
     @Column
     private String email;
 
     @Column
     private String password;
+
+    @OneToOne
+    private UserConnection lastConnection;
 
 
     @CollectionOfElements(fetch = FetchType.EAGER)
@@ -49,9 +52,23 @@ public class User implements UserDetails {
     @Column
     private boolean enabled = true;
 
+    @Column
+    private boolean profileSubmittedByUser;
+
     @OneToMany(mappedBy = "user")
     private Set<UserConnection> userConnections = new HashSet<UserConnection>();
 
+    public Set<UserConnection> getUserConnections() {
+        return userConnections;
+    }
+
+    public UserConnection getLastConnection() {
+        return lastConnection;
+    }
+
+    public void setLastConnection(UserConnection lastConnection) {
+        this.lastConnection = lastConnection;
+    }
 
     public User() {
     }
@@ -92,7 +109,7 @@ public class User implements UserDetails {
     @Override
     //    todo: getUserName() method logically should return full name
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -143,5 +160,11 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public boolean isProfileSubmittedByUser() {
+        return profileSubmittedByUser;
+    }
 
+    public void setProfileSubmittedByUser(boolean profileSubmittedByUser) {
+        this.profileSubmittedByUser = profileSubmittedByUser;
+    }
 }

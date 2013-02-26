@@ -40,6 +40,8 @@ public interface UserConnectionDAO {
     public UserConnection get(String providerId, String providerUserId)
             throws IncorrectResultSizeDataAccessException;
 
+    public UserConnection getByEmail(String email);
+
     public void remove(String userId, String providerId);
 
     public void remove(String userId, String providerId, String providerUserId);
