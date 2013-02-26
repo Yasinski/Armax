@@ -1,6 +1,5 @@
 package com.imhos.security.server.view;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.web.servlet.view.AbstractView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +31,8 @@ public abstract class AbstractSocialView extends AbstractView {
     public abstract void appendJSMethodCall(StringBuilder builder);
 
     @Override
-    protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Authentication authentication = (Authentication) request.getUserPrincipal();
+    protected void renderMergedOutputModel(Map<String, Object> model,
+                                           HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.getWriter().write(buildResponse());
 
     }

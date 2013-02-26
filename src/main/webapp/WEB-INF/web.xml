@@ -111,104 +111,6 @@
         <url-pattern>/jsp/start.jsp/</url-pattern>
     </servlet-mapping>
 
-    <!--<servlet>-->
-    <!--<servlet-name>servletStart</servlet-name>-->
-    <!--<servlet-class>third.service.ServletStart</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>servletStart</servlet-name>-->
-    <!--<url-pattern>/servletStart/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ActorsInfo</servlet-name>-->
-    <!--<servlet-class>third.service.ActorsInfo</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ActorsInfo</servlet-name>-->
-    <!--<url-pattern>/actorsInfo/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ServletActorsMoviesList</servlet-name>-->
-    <!--<servlet-class>third.service.ActorsMoviesList</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ServletActorsMoviesList</servlet-name>-->
-    <!--<url-pattern>/servletActorsMoviesList/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ServletActorsDirectorsList</servlet-name>-->
-    <!--<servlet-class>third.service.ActorDirectorsList</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ServletActorsDirectorsList</servlet-name>-->
-    <!--<url-pattern>/servletActorsDirectorsList/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ServletDirectorActorsList</servlet-name>-->
-    <!--<servlet-class>third.service.DirectorActorsList</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ServletDirectorActorsList</servlet-name>-->
-    <!--<url-pattern>/servletDirectorActorsList/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ServletDirectorMoviesList</servlet-name>-->
-    <!--<servlet-class>third.service.DirectorMoviesList</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ServletDirectorMoviesList</servlet-name>-->
-    <!--<url-pattern>/servletDirectorMoviesList/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>servletAddMovie</servlet-name>-->
-    <!--<servlet-class>third.service.MovieAdd</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>servletAddMovie</servlet-name>-->
-    <!--<url-pattern>/servletAddMovie/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>servletAddMovieShort</servlet-name>-->
-    <!--<servlet-class>third.service.MovieAddShort</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>servletAddMovieShort</servlet-name>-->
-    <!--<url-pattern>/servletAddMovieShort/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>servletAddActor</servlet-name>-->
-    <!--<servlet-class>third.service.ActorAdd</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>servletAddActor</servlet-name>-->
-    <!--<url-pattern>/servletAddActor/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>servletUpdateMovie</servlet-name>-->
-    <!--<servlet-class>third.service.MovieUpdate</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>servletUpdateMovie</servlet-name>-->
-    <!--<url-pattern>/servletUpdateMovie/</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>ServletMovsWithoutActs</servlet-name>-->
-    <!--<servlet-class>third.service.MoviesWithoutActors</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>ServletMovsWithoutActs</servlet-name>-->
-    <!--<url-pattern>/ServletMovsWithoutActs/</url-pattern>-->
-    <!--</servlet-mapping>-->
 
     <servlet>
         <servlet-name>moviesInfo</servlet-name>
@@ -217,15 +119,6 @@
     <servlet-mapping>
         <servlet-name>moviesInfo</servlet-name>
         <url-pattern>/moviesInfo/</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>postSignIn</servlet-name>
-        <jsp-file>/application/postSignIn.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>postSignIn</servlet-name>
-        <url-pattern>/postSignIn/</url-pattern>
     </servlet-mapping>
 
     <servlet>
