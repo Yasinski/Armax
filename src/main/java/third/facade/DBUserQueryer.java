@@ -1,5 +1,6 @@
 package third.facade;
 
+import org.springframework.security.access.annotation.Secured;
 import third.dao.UserDAO;
 import third.model.User;
 
@@ -28,12 +29,12 @@ public class DBUserQueryer {
     }
 
 
+    //todo: !!!! implement an AccessDeniedException handler in service layer
+    @Secured("ROLE_ADMIN")
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
-    //todo: !!!! implement an AccessDeniedException handler in service layer
-    //    @Secured("ROLE_ADMIN")
     public User getUserByLogin(String username) {
         return userDAO.getUserByLogin(username);
     }

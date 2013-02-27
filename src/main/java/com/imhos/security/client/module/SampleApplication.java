@@ -91,7 +91,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
                 SampleApplicationService.App.getInstance().getMessage("test", new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("[Failure] " + caught.getMessage());
+                        Window.alert("[Failure] " + caught.getClass() + " " + caught.getMessage());
 
                     }
 

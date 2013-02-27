@@ -189,8 +189,4 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
         getSession().update(userConnection);
     }
 
-    public void delete(UserConnection userConnection) {
-        getSession().delete(userConnection);
-    }
-
 }
