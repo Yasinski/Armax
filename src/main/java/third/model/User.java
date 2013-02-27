@@ -39,9 +39,6 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @OneToOne
-    private UserConnection lastConnection;
-
 
     @CollectionOfElements(fetch = FetchType.EAGER)
     @JoinTable
@@ -60,14 +57,6 @@ public class User implements UserDetails {
 
     public Set<UserConnection> getUserConnections() {
         return userConnections;
-    }
-
-    public UserConnection getLastConnection() {
-        return lastConnection;
-    }
-
-    public void setLastConnection(UserConnection lastConnection) {
-        this.lastConnection = lastConnection;
     }
 
     public User() {
