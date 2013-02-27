@@ -1,6 +1,7 @@
 package com.imhos.security.server.service.social;
 
 import com.imhos.security.server.model.UserConnection;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
@@ -50,7 +51,7 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setEmail(email);
             user.setUsername(email);
             user.setDisplayName(userProfile.getName());
-            user.setPassword(providerId);
+            user.setPassword(passwordEncoder.encodePassword(providerId, email));
             dbUserQueryer.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&
 //                todo: have to simplify logic

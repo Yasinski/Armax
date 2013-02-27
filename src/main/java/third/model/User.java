@@ -4,7 +4,6 @@ import com.imhos.security.server.model.UserConnection;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -157,24 +156,4 @@ public class User implements UserDetails {
         this.profileSubmittedByUser = profileSubmittedByUser;
     }
 
-
-    private class Encryptor {
-        private TextEncryptor textEncryptor;
-
-        public void setTextEncryptor(TextEncryptor textEncryptor) {
-            this.textEncryptor = textEncryptor;
-        }
-
-        private Encryptor() {
-        }
-
-        public String encrypt(String text) {
-            return text != null ? textEncryptor.encrypt(text) : text;
-        }
-
-        private String decrypt(String encryptedText) {
-            return encryptedText != null ? textEncryptor.decrypt(encryptedText) : encryptedText;
-        }
-
-    }
 }
