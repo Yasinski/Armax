@@ -55,7 +55,7 @@ public class SignInSocialAdapter implements SignInAdapter {
         user.setLastConnection(userConnection);
         userDAO.update(user);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication = new CustomUserAuthentication(userConnection, authentication.getDetails());
+        authentication = new CustomUserAuthentication(user, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         if (rememberMe) {

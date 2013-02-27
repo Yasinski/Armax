@@ -43,6 +43,7 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setAuthorities(Role.ROLE_USER);
             user.setEmail(email);
             user.setFullName(userProfile.getName());
+//            user.setUsername(userProfile.getUsername());
             user.setPassword(providerId);
             dbUserQueryer.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&

@@ -68,6 +68,7 @@ public class SocialConnectController {
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.usersConnectionRepository = usersConnectionRepository;
         this.signInAdapter = signInAdapter;
+
     }
 
     public void setSocialResponseView(AbstractSocialView socialResponseView) {
@@ -79,7 +80,9 @@ public class SocialConnectController {
         request.setAttribute(SignInSocialAdapter.REMEMBER_ME_ATTRIBUTE, rememberMe, RequestAttributes.SCOPE_SESSION);
         ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
         try {
-            return new RedirectView(webSupport.buildOAuthUrl(connectionFactory, request) + NEED_EMAIL);
+            return new RedirectView(webSupport.buildOAuthUrl(connectionFactory, request)
+//                                            + NEED_EMAIL
+            );
         } catch (Exception e) {
             return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "provider").build().toString());
         }
