@@ -2,9 +2,9 @@ package third.facade;
 
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
-import third.dao.ActorsDAO;
-import third.dao.DirectorsDAO;
-import third.dao.MoviesDAO;
+import third.daooo.ActorsDAO;
+import third.daooo.DirectorsDAO;
+import third.daooo.MoviesDAO;
 import third.model.Actor;
 import third.model.Director;
 import third.model.Movie;
@@ -68,7 +68,7 @@ public class MoviesUpdater {
             throw new HumanExistsException(e);
         }
         Director particDir = directorsDAO.getParticularDirector(director);                   //  проверим, есть ли в БД такой режиссер.
-        if(particDir != null) {  // значит, в БД такой режиссер существует
+        if (particDir != null) {  // значит, в БД такой режиссер существует
             director = particDir;
         } else {
             directorsDAO.saveDirector(director);
@@ -103,7 +103,7 @@ public class MoviesUpdater {
             System.err.println("Ошибка при вставке" + " " + e);
             session.getTransaction().rollback();
         } finally {
-            if(session != null && session.isOpen()) {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }

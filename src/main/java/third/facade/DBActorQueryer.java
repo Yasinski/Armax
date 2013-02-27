@@ -1,7 +1,7 @@
 package third.facade;
 
 import org.hibernate.exception.ConstraintViolationException;
-import third.dao.ActorsDAO;
+import third.daooo.ActorsDAO;
 import third.model.Actor;
 
 import java.util.List;

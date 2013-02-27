@@ -1,4 +1,4 @@
-package third.dao;
+package third.daooo;
 
 import org.hibernate.exception.ConstraintViolationException;
 import third.model.Actor;

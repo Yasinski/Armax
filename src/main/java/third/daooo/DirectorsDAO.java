@@ -1,4 +1,4 @@
-package third.dao;
+package third.daooo;
 
 import third.model.Director;
 

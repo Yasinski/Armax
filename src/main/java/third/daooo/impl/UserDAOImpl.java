@@ -1,11 +1,11 @@
-package third.dao.impl;
+package third.daooo.impl;
 
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import third.dao.UserDAO;
+import third.daooo.UserDAO;
 import third.model.User;
 
 import java.util.List;

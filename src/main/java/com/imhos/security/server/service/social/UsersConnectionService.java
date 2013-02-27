@@ -7,8 +7,8 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import third.dao.UserConnectionDAO;
-import third.dao.UserDAO;
+import third.daooo.UserConnectionDAO;
+import third.daooo.UserDAO;
 import third.model.User;
 
 import java.util.*;

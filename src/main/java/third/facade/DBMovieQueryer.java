@@ -1,6 +1,6 @@
 package third.facade;
 
-import third.dao.MoviesDAO;
+import third.daooo.MoviesDAO;
 import third.model.Movie;
 
 import java.sql.SQLException;

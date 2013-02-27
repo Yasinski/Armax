@@ -1,4 +1,4 @@
-package third.dao;
+package third.daooo;
 
 import com.imhos.security.server.model.UserConnection;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -42,11 +42,17 @@ public interface UserConnectionDAO {
 
     public UserConnection getByEmail(String email);
 
+    public UserConnection getByUserName(String username);
+
     public void remove(String userId, String providerId);
 
     public void remove(String userId, String providerId, String providerUserId);
 
     public void save(UserConnection userConnection);
 
-    public void update(UserConnection user);
+    public void update(UserConnection userConnection);
+
+    public void delete(UserConnection userConnection);
+
+
 }

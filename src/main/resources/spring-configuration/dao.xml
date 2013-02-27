@@ -5,9 +5,9 @@
        default-autowire="byName">
 
 
-    <bean id="actorsDAO" class="third.dao.impl.ActorsDAOImpl"/>
-    <bean id="directorsDAO" class="third.dao.impl.DirectorsDAOImpl"/>
-    <bean id="moviesDAO" class="third.dao.impl.MoviesDAOImpl"/>
-    <bean id="userDAO" class="third.dao.impl.UserDAOImpl"/>
-    <bean id="userConnectionDAO" class="third.dao.impl.UserConnectionDAOImpl"/>
+    <bean id="actorsDAO" class="third.daooo.impl.ActorsDAOImpl"/>
+    <bean id="directorsDAO" class="third.daooo.impl.DirectorsDAOImpl"/>
+    <bean id="moviesDAO" class="third.daooo.impl.MoviesDAOImpl"/>
+    <bean id="userDAO" class="third.daooo.impl.UserDAOImpl"/>
+    <bean id="userConnectionDAO" class="third.daooo.impl.UserConnectionDAOImpl"/>
 </beans>

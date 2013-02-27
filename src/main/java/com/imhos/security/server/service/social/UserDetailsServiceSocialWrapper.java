@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import third.dao.UserConnectionDAO;
+import third.daooo.UserConnectionDAO;
 
 /**
  * Created with IntelliJ IDEA.
@@ -55,6 +55,7 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
         }
         if (!connection.test()) {
 //            todo: delete userConnection??????
+            userConnectionDAO.delete(userConnection);
             throw new UsernameNotFoundException("");
         }
 
