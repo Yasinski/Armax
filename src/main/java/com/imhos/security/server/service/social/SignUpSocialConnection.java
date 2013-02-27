@@ -19,6 +19,7 @@ public class SignUpSocialConnection implements ConnectionSignUp {
 
     private DBUserQueryer dbUserQueryer;
     private UsersConnectionService usersConnectionService;
+    private Md5PasswordEncoder passwordEncoder;
 
     public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
         this.dbUserQueryer = dbUserQueryer;
@@ -26,6 +27,10 @@ public class SignUpSocialConnection implements ConnectionSignUp {
 
     public void setUsersConnectionService(UsersConnectionService usersConnectionService) {
         this.usersConnectionService = usersConnectionService;
+    }
+
+    public void setPasswordEncoder(Md5PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

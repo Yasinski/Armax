@@ -1,5 +1,7 @@
 package third.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import third.facade.DBMovieQueryer;
@@ -15,6 +17,8 @@ public class ServletStart implements Controller {
     private DBMovieQueryer dbMovieQueryer;
     private DBUserQueryer dbUserQueryer;
     private Pagination pagination;
+    @Autowired
+    private Md5PasswordEncoder passwordEncoder;
 
     public void setDbMovieQueryer(DBMovieQueryer dbMovieQueryer) {
         this.dbMovieQueryer = dbMovieQueryer;
@@ -30,22 +34,23 @@ public class ServletStart implements Controller {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        временно. засетаем юзеров в базу)
 //        Set<Role> authorities = new HashSet<Role>();
 //        authorities.add(Role.ROLE_USER);
 //        Set<Role> authorities2 = new HashSet<Role>();
 //        authorities2.add(Role.ROLE_USER);
 //        authorities2.add(Role.ROLE_ADMIN);
 //
-//        User user1 = new User("user1@gmail.com", "1111", authorities, true);
-//        User user3 = new User("user2@gmail.com", "2222", authorities, true);
-//        User user4 = new User("user4@gmail.com", "4444", authorities, false);
-//        User admin = new User("admin@gmail.com", "admin", authorities2, true);
+//        User user1 = new User("user1@gmail.com", passwordEncoder.encodePassword("1111", "user1@gmail.com"), authorities, true);
+//        User user3 = new User("user2@gmail.com", passwordEncoder.encodePassword("2222", "user2@gmail.com"), authorities, true);
+//        User user4 = new User("user4@gmail.com", passwordEncoder.encodePassword("4444", "user4@gmail.com"), authorities, false);
+//        User admin = new User("admin@gmail.com", passwordEncoder.encodePassword("admin", "admin@gmail.com"), authorities2, true);
 //
 //        dbUserQueryer.saveUser(user1);
 //        dbUserQueryer.saveUser(user3);
 //        dbUserQueryer.saveUser(user4);
 //        dbUserQueryer.saveUser(admin);
-
+//
         Integer currentPage = 1;
         Integer rowsOnPage = 10;
         if (request.getParameter("nextPage") != null) {
@@ -69,9 +74,6 @@ public class ServletStart implements Controller {
         }
         Integer numberOfPages = pagination.countNumberOfPages(overallCount, rowsOnPage);
         if (movies != null && !movies.isEmpty()) {
-
-//            //временно. засетаем юзеров в базу)
-//			//
 
             request.setAttribute("movies", movies);
             request.setAttribute("searchStr", searchStr);

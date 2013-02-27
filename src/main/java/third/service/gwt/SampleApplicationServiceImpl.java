@@ -1,9 +1,10 @@
 package third.service.gwt;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.imhos.security.client.module.SampleApplicationService;
+import com.imhos.security.shared.model.AccessDeniedGWTException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.imhos.security.client.module.SampleApplicationService;
 import third.facade.DBUserQueryer;
 import third.model.User;
 
@@ -17,16 +18,19 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
     }
 
     public String getMessage(String msg) {
-        dbUserQueryer.getAllUsers();
-
-        return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
-                SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
+        try {
+            dbUserQueryer.getAllUsers();
+            return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
+                    SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
+        } catch (AccessDeniedGWTException ex) {
+            return "Client said: \"" + msg + "\"<br>Server answered: \"Ooops!" + ex.getMessage();
+        }
     }
 
     @Override
     public boolean login(String login, String password) {
         User user = dbUserQueryer.getUserByLogin(login);
-        if(user != null) {
+        if (user != null) {
             String storedPass = user.getPassword();
             return storedPass.equals(password);
         } else {

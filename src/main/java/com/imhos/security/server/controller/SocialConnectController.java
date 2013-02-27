@@ -79,7 +79,9 @@ public class SocialConnectController {
         request.setAttribute(SignInSocialAdapter.REMEMBER_ME_ATTRIBUTE, rememberMe, RequestAttributes.SCOPE_SESSION);
         ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
         try {
-            return new RedirectView(webSupport.buildOAuthUrl(connectionFactory, request) + NEED_EMAIL);
+            return new RedirectView(webSupport.buildOAuthUrl(connectionFactory, request)
+//                                            + NEED_EMAIL
+            );
         } catch (Exception e) {
             LOGGER.warn("Exception while signing in (" + e.getMessage() + "). Redirecting to " + signInUrl);
             e.printStackTrace();

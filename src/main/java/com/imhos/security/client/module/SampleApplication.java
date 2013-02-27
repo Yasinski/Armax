@@ -108,7 +108,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     }
 
     private void loginFacebook(boolean rememberMe) {
-        Window.open("/connect/signin/facebook/?rememberMe=" + rememberMe, "Facebook Login", "width=500,height=300," +
+        Window.open("/connect/signin/facebook/?rememberMe=" + rememberMe + "&scope=email", "Facebook Login", "width=500,height=300," +
                 "location=1,left=0,top=0");
     }
 
