@@ -66,8 +66,6 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
 
     @Override
     public Integer getMaxRank(String userId, String providerId) {
-        //     todo: reimplement to hibernate api
-        //     todo: separate coalesce business logic from dao layer
         Integer result = (Integer) getSession().createCriteria(UserConnection.class)
                 .setProjection(Projections.max("rank"))
                 .add(Restrictions.eq("providerId", providerId))

@@ -189,7 +189,6 @@ public class UserConnection implements UserDetails {
     }
 
     @Override
-//    todo: getUserName() method logically should return full name
     public String getUsername() {
         return username;
     }

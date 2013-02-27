@@ -259,7 +259,7 @@ public class UsersConnectionService {
         return text != null ? textEncryptor.encrypt(text) : text;
     }
 
-
+    //    todo: method name should be find* (have to fix transaction read-only problem)
     public List<String> addUserIdsWithConnection(Connection<?> connection) {
         List<String> usrs = new ArrayList<String>();
         ConnectionKey key = connection.getKey();
@@ -280,7 +280,6 @@ public class UsersConnectionService {
     }
 
     //    @Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW)
-//    todo: method name should be find* (have to fix transaction read-only problem)
     public String addNewUserWithConnection(Connection<?> connection) {
         String newUserId = connectionSignUp.execute(connection);
         if (newUserId == null)

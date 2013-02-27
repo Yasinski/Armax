@@ -81,6 +81,8 @@ public class SocialConnectController {
         try {
             return new RedirectView(webSupport.buildOAuthUrl(connectionFactory, request) + NEED_EMAIL);
         } catch (Exception e) {
+            LOGGER.warn("Exception while signing in (" + e.getMessage() + "). Redirecting to " + signInUrl);
+            e.printStackTrace();
             return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "provider").build().toString());
         }
     }
@@ -93,6 +95,7 @@ public class SocialConnectController {
             return handleSignIn(connection, request);
         } catch (Exception e) {
             LOGGER.warn("Exception while handling OAuth1 callback (" + e.getMessage() + "). Redirecting to " + signInUrl);
+            e.printStackTrace();
             return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "provider").build().toString());
         }
 
@@ -106,6 +109,7 @@ public class SocialConnectController {
             return handleSignIn(connection, request);
         } catch (Exception e) {
             LOGGER.warn("Exception while handling OAuth2 callback (" + e.getMessage() + "). Redirecting to " + signInUrl);
+            e.printStackTrace();
             return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "provider").build().toString());
         }
     }
