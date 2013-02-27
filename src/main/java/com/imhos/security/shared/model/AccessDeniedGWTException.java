@@ -8,8 +8,6 @@ package com.imhos.security.shared.model;
  */
 public class AccessDeniedGWTException extends Exception {
 
-    private AccessDeniedGWTException accessDeniedGWTException;
-
     public AccessDeniedGWTException() {
     }
 

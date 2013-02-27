@@ -54,7 +54,6 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
             throw new UsernameNotFoundException("");
         }
         if (!connection.test()) {
-//            todo: delete userConnection??????
             userConnectionDAO.removeConnection(userConnection.getProviderId(), userConnection.getProviderUserId());
             throw new UsernameNotFoundException("");
         }

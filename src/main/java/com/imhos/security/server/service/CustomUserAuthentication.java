@@ -26,7 +26,7 @@ public class CustomUserAuthentication implements Authentication {
         this.details = details;
         this.user = user;
         this.authorities = user.getAuthorities();
-        authenticated = true;
+        this.authenticated = true;
     }
 
 

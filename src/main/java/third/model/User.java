@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String id;
 
     @Column
-    private String fullName;
+    private String displayName;
     @Column
     private String username;  // equals to email
     @Column
@@ -75,12 +75,12 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getId() {

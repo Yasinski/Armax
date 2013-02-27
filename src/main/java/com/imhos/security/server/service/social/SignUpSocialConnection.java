@@ -44,13 +44,15 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setAuthorities(Role.ROLE_USER);
             user.setEmail(email);
             user.setUsername(email);
-            user.setFullName(userProfile.getName());
+            user.setDisplayName(userProfile.getName());
             user.setPassword(providerId);
             dbUserQueryer.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&
+//                todo: have to simplify logic
                 connection.equals(usersConnectionService.findPrimaryConnection(providerId, user.getId()))) {
+            user.setUsername(email);
             user.setEmail(email);
-            user.setFullName(userProfile.getName());
+            user.setDisplayName(userProfile.getName());
             dbUserQueryer.updateUser(user);
         }
         return user.getId();

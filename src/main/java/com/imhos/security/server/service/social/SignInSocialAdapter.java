@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -42,8 +41,8 @@ public class SignInSocialAdapter implements SignInAdapter {
         boolean rememberMe = (Boolean) request.getAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
         request.removeAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 
-        ConnectionData data = connection.createData();
-        UserConnection userConnection = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
+        UserConnection userConnection = userConnectionDAO.get(userId, connection.getKey().getProviderId(),
+                                                              connection.getKey().getProviderUserId());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         authentication = new CustomUserAuthentication(userConnection, authentication.getDetails());

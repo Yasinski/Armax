@@ -16,6 +16,6 @@ public class AccessDeniedAdvice implements ThrowsAdvice {
     }
 
     public void afterThrowing(AccessDeniedException ex) throws Throwable {
-        throw new AccessDeniedGWTException(ex.getCause(), ex.getMessage());
+        throw new AccessDeniedGWTException(ex.getMessage());
     }
 }
