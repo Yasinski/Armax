@@ -1,5 +1,6 @@
 package com.imhos.security.server.service.social;
 
+import com.imhos.security.server.model.UserConnection;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
@@ -35,13 +36,14 @@ public class SignUpSocialConnection implements ConnectionSignUp {
         String providerId = connection.getKey().getProviderId();
         String email = userProfile.getEmail();
         if (email == null) {
-            email = providerUserId + "@" + providerId;
+            email = providerUserId + UserConnection.USERNAME_SEPARATOR + providerId;
         }
         User user = dbUserQueryer.getUserByEmail(email);
         if (user == null) {
             user = new User();
             user.setAuthorities(Role.ROLE_USER);
             user.setEmail(email);
+            user.setUsername(email);
             user.setFullName(userProfile.getName());
             user.setPassword(providerId);
             dbUserQueryer.saveUser(user);

@@ -107,9 +107,8 @@ public class User implements UserDetails {
     }
 
     @Override
-    //    todo: getUserName() method logically should return full name
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

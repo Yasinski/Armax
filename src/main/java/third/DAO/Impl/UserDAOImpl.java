@@ -38,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
         getSession().save(user);
     }
 
-    public void updateUser(User user) {
+    public void update(User user) {
         getSession().update(user);
     }
 

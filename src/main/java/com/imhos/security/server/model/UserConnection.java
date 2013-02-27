@@ -18,14 +18,14 @@ import java.util.Collection;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"providerId", "providerUserId"}),
-        @UniqueConstraint(columnNames = {"id", "providerId", "rank"})})           //column "user doesn't exist"
+        @UniqueConstraint(columnNames = {"username", "providerId", "rank"})})           //column "user doesn't exist"
 public class UserConnection implements UserDetails {
 
-    //    public static String USERNAME_SEPARATOR = "/";
+    public static String USERNAME_SEPARATOR = "@";
     @Id
-    @GeneratedValue
     @Column
-    private long id;
+    private String username;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
@@ -82,6 +82,7 @@ public class UserConnection implements UserDetails {
         this.secret = secret;
         this.refreshToken = refreshToken;
         this.expireTime = expireTime;
+        this.username = providerUserId + USERNAME_SEPARATOR + providerId;
     }
 
 
@@ -190,7 +191,7 @@ public class UserConnection implements UserDetails {
     @Override
 //    todo: getUserName() method logically should return full name
     public String getUsername() {
-        return user.getEmail();
+        return username;
     }
 
     @Override

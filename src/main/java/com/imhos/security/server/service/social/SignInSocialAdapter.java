@@ -11,8 +11,6 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import third.dao.UserConnectionDAO;
-import third.dao.UserDAO;
-import third.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +28,6 @@ public class SignInSocialAdapter implements SignInAdapter {
     public static final String REMEMBER_ME_ATTRIBUTE = "rememberMe";
     private TokenBasedRememberMeServices rememberMeServices;
     private UserConnectionDAO userConnectionDAO;
-    private UserDAO userDAO;
 
     public void setUserConnectionDAO(UserConnectionDAO userConnectionDAO) {
         this.userConnectionDAO = userConnectionDAO;
@@ -40,10 +37,6 @@ public class SignInSocialAdapter implements SignInAdapter {
         this.rememberMeServices = rememberMeServices;
     }
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
         boolean rememberMe = (Boolean) request.getAttribute(REMEMBER_ME_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
@@ -51,9 +44,7 @@ public class SignInSocialAdapter implements SignInAdapter {
 
         ConnectionData data = connection.createData();
         UserConnection userConnection = userConnectionDAO.get(userId, data.getProviderId(), data.getProviderUserId());
-        User user = userConnection.getUser();
-        user.setLastConnection(userConnection);
-        userDAO.update(user);
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         authentication = new CustomUserAuthentication(userConnection, authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
