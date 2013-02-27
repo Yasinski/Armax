@@ -17,14 +17,14 @@ public class SampleApplicationServiceImpl extends RemoteServiceServlet implement
         this.dbUserQueryer = dbUserQueryer;
     }
 
-    public String getMessage(String msg) {
-        try {
-            dbUserQueryer.getAllUsers();
-            return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
-                    SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
-        } catch (AccessDeniedGWTException ex) {
-            return "Client said: \"" + msg + "\"<br>Server answered: \"Ooops!" + ex.getMessage();
-        }
+    public String getMessage(String msg) throws AccessDeniedGWTException {
+//        try {
+        dbUserQueryer.getAllUsers();
+        return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
+                SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
+//        } catch (AccessDeniedGWTException ex) {
+//            return "Client said: \"" + msg + "\"<br>Server answered: \"Ooops!" + ex.getMessage();
+//        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package third.facade;
 
-import com.imhos.security.shared.model.AccessDeniedGWTException;
 import org.springframework.security.access.annotation.Secured;
 import third.dao.UserDAO;
 import third.model.User;
@@ -32,7 +31,7 @@ public class DBUserQueryer {
 
     //todo: !!!! implement an AccessDeniedException handler in service layer
     @Secured("ROLE_ADMIN")
-    public List<User> getAllUsers() throws AccessDeniedGWTException {
+    public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
