@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import third.daooo.UserConnectionDAO;
+import third.dao.UserConnectionDAO;
 
 /**
  * Created with IntelliJ IDEA.

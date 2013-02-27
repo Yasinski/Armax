@@ -1,6 +1,6 @@
 package third.facade;
 
-import third.daooo.UserDAO;
+import third.dao.UserDAO;
 import third.model.User;
 
 import java.util.List;

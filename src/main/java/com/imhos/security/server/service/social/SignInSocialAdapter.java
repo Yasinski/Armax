@@ -10,7 +10,7 @@ import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
-import third.daooo.UserConnectionDAO;
+import third.dao.UserConnectionDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

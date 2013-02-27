@@ -1,4 +1,4 @@
-package third.daooo;
+package third.dao;
 
 import com.imhos.security.server.model.UserConnection;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;

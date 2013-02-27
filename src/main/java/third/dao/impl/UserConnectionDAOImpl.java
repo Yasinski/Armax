@@ -1,4 +1,4 @@
-package third.daooo.impl;
+package third.dao.impl;
 
 import com.imhos.security.server.model.UserConnection;
 import org.hibernate.Criteria;
@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.util.MultiValueMap;
-import third.daooo.UserConnectionDAO;
+import third.dao.UserConnectionDAO;
 import third.model.User;
 
 import java.util.Iterator;
@@ -67,7 +67,7 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
     @Override
     public Integer getMaxRank(String userId, String providerId) {
         //     todo: reimplement to hibernate api
-        //     todo: separate coalesce business logic from daooo layer
+        //     todo: separate coalesce business logic from dao layer
         Integer result = (Integer) getSession().createCriteria(UserConnection.class)
                 .setProjection(Projections.max("rank"))
                 .add(Restrictions.eq("providerId", providerId))

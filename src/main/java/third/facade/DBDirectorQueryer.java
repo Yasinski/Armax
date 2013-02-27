@@ -1,6 +1,6 @@
 package third.facade;
 
-import third.daooo.DirectorsDAO;
+import third.dao.DirectorsDAO;
 import third.model.Director;
 
 import java.sql.SQLException;

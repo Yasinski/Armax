@@ -2,9 +2,9 @@ package third.facade;
 
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
-import third.daooo.ActorsDAO;
-import third.daooo.DirectorsDAO;
-import third.daooo.MoviesDAO;
+import third.dao.ActorsDAO;
+import third.dao.DirectorsDAO;
+import third.dao.MoviesDAO;
 import third.model.Actor;
 import third.model.Director;
 import third.model.Movie;
