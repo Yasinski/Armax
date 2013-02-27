@@ -44,15 +44,12 @@ public interface UserConnectionDAO {
 
     public UserConnection getByUserName(String username);
 
-    public void remove(String userId, String providerId);
+    public void removeConnections(String userId, String providerId);
 
-    public void remove(String userId, String providerId, String providerUserId);
+    public void removeConnection(String providerId, String providerUserId);
 
     public void save(UserConnection userConnection);
 
     public void update(UserConnection userConnection);
-
-    public void delete(UserConnection userConnection);
-
 
 }

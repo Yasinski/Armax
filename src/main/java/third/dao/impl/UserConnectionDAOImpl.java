@@ -159,22 +159,22 @@ public class UserConnectionDAOImpl implements UserConnectionDAO {
 
 
     @Override
-    public void remove(String userId, String providerId) {
-        UserConnection userConnection = (UserConnection) getSession().createCriteria(UserConnection.class)
+    public void removeConnections(String userId, String providerId) {
+        List<UserConnection> userConnections = (List<UserConnection>) getSession().createCriteria(UserConnection.class)
                 .add(Restrictions.eq("providerId", providerId))
                 .createCriteria("user")
                 .add(Restrictions.eq("id", userId))
-                .uniqueResult();
-        getSession().delete(userConnection);
+                .list();
+        for (UserConnection userConnection : userConnections) {
+            getSession().delete(userConnection);
+        }
     }
 
     @Override
-    public void remove(String userId, String providerId, String providerUserId) {
+    public void removeConnection(String providerId, String providerUserId) {
         UserConnection userConnection = (UserConnection) getSession().createCriteria(UserConnection.class)
                 .add(Restrictions.eq("providerId", providerId))
                 .add(Restrictions.eq("providerUserId", providerUserId))
-                .createCriteria("user")
-                .add(Restrictions.eq("id", userId))
                 .uniqueResult();
         getSession().delete(userConnection);
     }

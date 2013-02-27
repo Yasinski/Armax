@@ -189,12 +189,12 @@ public class UsersConnectionService {
 
 
     public void removeConnections(String providerId, String userId) {
-        userConnectionDAO.remove(userId, providerId);
+        userConnectionDAO.removeConnections(userId, providerId);
     }
 
 
-    public void removeConnection(ConnectionKey connectionKey, String userId) {
-        userConnectionDAO.remove(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+    public void removeConnection(ConnectionKey connectionKey) {
+        userConnectionDAO.removeConnection(connectionKey.getProviderId(), connectionKey.getProviderUserId());
     }
 
 

@@ -78,7 +78,7 @@ public class ConnectionRepositoryWrapper implements ConnectionRepository {
     }
 
     public void removeConnection(ConnectionKey connectionKey) {
-        usersConnectionService.removeConnection(connectionKey, userId);
+        usersConnectionService.removeConnection(connectionKey);
     }
 
     private Connection<?> findPrimaryConnection(String providerId) {
