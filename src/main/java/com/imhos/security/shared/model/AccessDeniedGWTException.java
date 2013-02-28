@@ -6,7 +6,7 @@ package com.imhos.security.shared.model;
  * @author <a href="">Max Yasinski</a>
  * @updated 25.01.13 10:41
  */
-public class AccessDeniedGWTException extends RuntimeException {
+public class AccessDeniedGWTException extends GWTException {
 
     public AccessDeniedGWTException() {
     }
@@ -15,7 +15,7 @@ public class AccessDeniedGWTException extends RuntimeException {
         super(message);
     }
 
-    public AccessDeniedGWTException(Throwable cause, String message) {
+    public AccessDeniedGWTException(String message, Throwable cause) {
         super(message, cause);
     }
 

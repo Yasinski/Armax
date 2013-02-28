@@ -35,7 +35,6 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
         this.userConnectionDAO = userConnectionDAO;
     }
 
-
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -43,7 +42,11 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserConnection userConnection = userConnectionDAO.getByUserName(username);
         if (userConnection == null) {
-            return userDetailsService.loadUserByUsername(username);
+            UserDetails user = userDetailsService.loadUserByUsername(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("");
+            }
+            return user;
         }
         UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
                 = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);

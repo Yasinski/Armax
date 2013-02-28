@@ -3,12 +3,12 @@ package com.imhos.security.client.module;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.imhos.security.shared.model.AccessDeniedGWTException;
+import com.imhos.security.shared.model.GWTException;
 
 @RemoteServiceRelativePath("rpc/sample")
 public interface SampleApplicationService extends RemoteService {
     // Sample interface method of remote interface
-    String getMessage(String msg) throws AccessDeniedGWTException;
+    String getMessage(String msg) throws GWTException;
 
     boolean login(String login, String password);
 

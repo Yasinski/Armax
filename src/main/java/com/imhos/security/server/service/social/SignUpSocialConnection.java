@@ -51,6 +51,7 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setEmail(email);
             user.setUsername(email);
             user.setDisplayName(userProfile.getName());
+            //                todo: implement custom SaltSource
             user.setPassword(passwordEncoder.encodePassword(providerId, email));
             dbUserQueryer.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&
