@@ -48,9 +48,10 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd"
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
     <!--<beans:constructor-arg index="0" value="256"/>-->
-    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-        <beans:property name="userPropertyToUse" value="username"/>
-    </beans:bean>
+    <!--<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">-->
+    <!--<beans:property name="userPropertyToUse" value="username"/>-->
+    <!--</beans:bean>-->
+    <beans:bean id="saltSource" class="com.imhos.security.server.service.CustomSaltSource"/>
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref='userDetailsService'>

@@ -41,14 +41,12 @@ public class ServletStart implements Controller {
 //        authorities2.add(Role.ROLE_USER);
 //        authorities2.add(Role.ROLE_ADMIN);
 //
-//        User user1 = new User("user1@gmail.com", passwordEncoder.encodePassword("1111", "user1@gmail.com"), authorities, true);
-//        User user3 = new User("user2@gmail.com", passwordEncoder.encodePassword("2222", "user2@gmail.com"), authorities, true);
-//        User user4 = new User("user4@gmail.com", passwordEncoder.encodePassword("4444", "user4@gmail.com"), authorities, false);
-//        User admin = new User("admin@gmail.com", passwordEncoder.encodePassword("admin", "admin@gmail.com"), authorities2, true);
+//        User user1 = new User("user1", "user1@gmail.com", "user1@gmail.com", passwordEncoder.encodePassword("1111", "user1@gmail.com"), authorities, true);
+//        User user3 = new User("user3", "user3@gmail.com", "user3@gmail.com", passwordEncoder.encodePassword("3333", "user3@gmail.com"), authorities, true);
+//        User admin = new User("admin", "admin@gmail.com", "admin@gmail.com", passwordEncoder.encodePassword("admin", "admin@gmail.com"), authorities2, true);
 //
 //        dbUserQueryer.saveUser(user1);
 //        dbUserQueryer.saveUser(user3);
-//        dbUserQueryer.saveUser(user4);
 //        dbUserQueryer.saveUser(admin);
 //
         Integer currentPage = 1;

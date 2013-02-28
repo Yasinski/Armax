@@ -67,12 +67,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-
-    public User(String username, String password, Set<Role> authorities, boolean enabled) {
-        this.authorities = authorities;
+    public User(String displayName, String username, String email, String password, Set<Role> authorities, boolean profileSubmittedByUser) {
+        this.displayName = displayName;
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.enabled = enabled;
+        this.authorities = authorities;
+        this.profileSubmittedByUser = profileSubmittedByUser;
     }
 
     public String getDisplayName() {

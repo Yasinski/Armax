@@ -1,6 +1,8 @@
 package com.imhos.security.server.service.social;
 
 import com.imhos.security.server.model.UserConnection;
+import com.imhos.security.server.service.CustomSaltSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -21,6 +23,8 @@ public class SignUpSocialConnection implements ConnectionSignUp {
     private DBUserQueryer dbUserQueryer;
     private UsersConnectionService usersConnectionService;
     private Md5PasswordEncoder passwordEncoder;
+    @Autowired
+    private CustomSaltSource saltSource;
 
     public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
         this.dbUserQueryer = dbUserQueryer;
@@ -52,7 +56,7 @@ public class SignUpSocialConnection implements ConnectionSignUp {
             user.setUsername(email);
             user.setDisplayName(userProfile.getName());
             //                todo: implement custom SaltSource
-            user.setPassword(passwordEncoder.encodePassword(providerId, email));
+            user.setPassword(passwordEncoder.encodePassword(providerId, saltSource.getSalt(user)));
             dbUserQueryer.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&
 //                todo: have to simplify logic
