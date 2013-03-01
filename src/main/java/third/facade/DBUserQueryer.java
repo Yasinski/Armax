@@ -29,7 +29,6 @@ public class DBUserQueryer {
     }
 
 
-    //todo: !!!! implement an AccessDeniedException handler in service layer
     @Secured("ROLE_ADMIN")
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();

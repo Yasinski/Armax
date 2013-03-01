@@ -97,7 +97,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserById(String userId) {
-        // todo: implement method asap
         return (User) getSession().createCriteria(User.class)
                 .add(Restrictions.eq("id", userId))
                 .uniqueResult();
