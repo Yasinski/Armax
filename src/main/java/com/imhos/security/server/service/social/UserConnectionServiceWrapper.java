@@ -14,27 +14,27 @@ import java.util.Set;
  * Time: 8:41
  * To change this template use File | Settings | File Templates.
  */
-public class UsersConnectionServiceWrapper implements UsersConnectionRepository {
+public class UserConnectionServiceWrapper implements UsersConnectionRepository {
 
-    private UsersConnectionService usersConnectionService;
+    private UserConnectionService userConnectionService;
 
-    public UsersConnectionServiceWrapper(UsersConnectionService usersConnectionService) {
-        this.usersConnectionService = usersConnectionService;
+    public UserConnectionServiceWrapper(UserConnectionService userConnectionService) {
+        this.userConnectionService = userConnectionService;
     }
 
 
     public List<String> findUserIdsWithConnection(Connection<?> connection) {
-        return usersConnectionService.addUserIdsWithConnection(connection);
+        return userConnectionService.addUserIdsWithConnection(connection);
     }
 
     public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds) {
-        return usersConnectionService.findUserIdsConnectedTo(providerId, providerUserIds);
+        return userConnectionService.findUserIdsConnectedTo(providerId, providerUserIds);
     }
 
     public ConnectionRepository createConnectionRepository(String userId) {
         if (userId == null) {
             throw new IllegalArgumentException("userId cannot be null");
         }
-        return new ConnectionRepositoryWrapper(userId, usersConnectionService);
+        return new ConnectionRepositoryWrapper(userId, userConnectionService);
     }
 }

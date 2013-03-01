@@ -1,15 +1,14 @@
 package com.imhos.security.server.service.social;
 
+import com.imhos.security.server.model.User;
 import com.imhos.security.server.model.UserConnection;
 import com.imhos.security.server.service.CustomSaltSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
-import third.facade.DBUserQueryer;
+import third.dao.UserDAO;
 import third.model.Role;
-import third.model.User;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,22 +19,25 @@ import third.model.User;
  */
 public class SignUpSocialConnection implements ConnectionSignUp {
 
-    private DBUserQueryer dbUserQueryer;
-    private UsersConnectionService usersConnectionService;
+    private UserDAO userDAO;
+    private UserConnectionService userConnectionService;
     private Md5PasswordEncoder passwordEncoder;
-    @Autowired
     private CustomSaltSource saltSource;
 
-    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-        this.dbUserQueryer = dbUserQueryer;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public void setUsersConnectionService(UsersConnectionService usersConnectionService) {
-        this.usersConnectionService = usersConnectionService;
+    public void setUserConnectionService(UserConnectionService userConnectionService) {
+        this.userConnectionService = userConnectionService;
     }
 
     public void setPasswordEncoder(Md5PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public void setSaltSource(CustomSaltSource saltSource) {
+        this.saltSource = saltSource;
     }
 
     @Override
@@ -48,23 +50,23 @@ public class SignUpSocialConnection implements ConnectionSignUp {
         if (email == null) {
             email = providerUserId + UserConnection.USERNAME_SEPARATOR + providerId;
         }
-        User user = dbUserQueryer.getUserByEmail(email);
+        User user = userDAO.getUserByEmail(email);
         if (user == null) {
             user = new User();
             user.setAuthorities(Role.ROLE_USER);
             user.setEmail(email);
             user.setUsername(email);
             user.setDisplayName(userProfile.getName());
-            //                todo: implement custom SaltSource
+            //                todo: implement custom SaltSource     fixed!
             user.setPassword(passwordEncoder.encodePassword(providerId, saltSource.getSalt(user)));
-            dbUserQueryer.saveUser(user);
+            userDAO.saveUser(user);
         } else if (!user.isProfileSubmittedByUser() &&
 //                todo: have to simplify logic
-                connection.equals(usersConnectionService.findPrimaryConnection(providerId, user.getId()))) {
+                connection.equals(userConnectionService.findPrimaryConnection(providerId, user.getId()))) {
             user.setUsername(email);
             user.setEmail(email);
             user.setDisplayName(userProfile.getName());
-            dbUserQueryer.updateUser(user);
+            userDAO.update(user);
         }
         return user.getId();
 //        } catch (DuplicateKeyException e) {

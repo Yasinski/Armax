@@ -1,6 +1,6 @@
 package com.imhos.security.server.view;
 
-import com.imhos.security.server.serializer.Serializer;
+import com.imhos.security.server.service.serializer.Serializer;
 import org.springframework.security.core.AuthenticationException;
 
 /**

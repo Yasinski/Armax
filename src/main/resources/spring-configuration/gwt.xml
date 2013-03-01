@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:secure="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-          http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-autowire="byName">
 
     <!-- The GWT handler. Watch out the mappings! -->
@@ -21,6 +18,6 @@
     <bean name="/sample" class="third.service.gwt.SampleApplicationServiceImpl"/>
 
     <!--<bean class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>-->
-    <bean class="com.imhos.security.server.SimpleGwtServletHandlerAdapter"/>
+    <bean class="com.imhos.security.server.handlers.SimpleGwtServletHandlerAdapter"/>
 
 </beans>

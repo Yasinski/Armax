@@ -1,5 +1,6 @@
 package com.imhos.security.server.service.social;
 
+import com.imhos.security.server.model.User;
 import com.imhos.security.server.model.UserConnection;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,7 +10,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import third.dao.UserConnectionDAO;
 import third.dao.UserDAO;
-import third.model.User;
 
 import java.util.*;
 
@@ -21,9 +21,9 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public class UsersConnectionService {
+public class UserConnectionService {
 
-    private UsersConnectionService usersConnectionService;
+    private UserConnectionService userConnectionService;
     private UserConnectionDAO userConnectionDAO;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
@@ -32,8 +32,8 @@ public class UsersConnectionService {
 
     private ConnectionSignUp connectionSignUp;
 
-    public void setUsersConnectionService(UsersConnectionService usersConnectionService) {
-        this.usersConnectionService = usersConnectionService;
+    public void setUserConnectionService(UserConnectionService userConnectionService) {
+        this.userConnectionService = userConnectionService;
     }
 
     public void setConnectionSignUp(ConnectionSignUp connectionSignUp) {
@@ -48,10 +48,10 @@ public class UsersConnectionService {
         this.userDAO = userDAO;
     }
 
-    public UsersConnectionService() {
+    public UserConnectionService() {
     }
 
-    public UsersConnectionService(ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
+    public UserConnectionService(ConnectionFactoryLocator connectionFactoryLocator, TextEncryptor textEncryptor) {
         connectionMapper = new ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.textEncryptor = textEncryptor;

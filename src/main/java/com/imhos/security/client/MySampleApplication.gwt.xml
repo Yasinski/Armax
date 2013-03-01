@@ -9,7 +9,7 @@
     <inherits name='com.imhos.security.shared.SharedSecurity'/>
 
     <!-- Specify the app entry point class.                   -->
-    <entry-point class='com.imhos.security.client.module.SampleApplication'/>
+    <entry-point class='com.imhos.security.client.module.Application'/>
 
 
     <!-- Specify the app servlets.                   -->

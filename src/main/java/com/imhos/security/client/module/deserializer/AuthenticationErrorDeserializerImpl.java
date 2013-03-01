@@ -1,4 +1,4 @@
-package com.imhos.security.client.module;
+package com.imhos.security.client.module.deserializer;
 
 import com.imhos.security.shared.model.AuthenticationError;
 

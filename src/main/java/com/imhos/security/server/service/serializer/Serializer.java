@@ -1,4 +1,4 @@
-package com.imhos.security.server.serializer;
+package com.imhos.security.server.service.serializer;
 
 /**
  * Created with IntelliJ IDEA.

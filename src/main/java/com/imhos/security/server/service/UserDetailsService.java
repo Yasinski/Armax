@@ -2,22 +2,18 @@ package com.imhos.security.server.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import third.facade.DBUserQueryer;
+import third.dao.UserDAO;
 
 
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-    private DBUserQueryer dbUserQueryer;
+    private UserDAO userDAO;
 
-    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-        this.dbUserQueryer = dbUserQueryer;
-    }
-
-    public DBUserQueryer getDbUserQueryer() {
-        return dbUserQueryer;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return dbUserQueryer.getUserByLogin(login);
+        return userDAO.getUserByLogin(login);
     }
 
 }

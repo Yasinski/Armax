@@ -1,4 +1,4 @@
-<%@ page import="com.imhos.security.server.serializer.AuthenticationSerializer" %>
+<%@ page import="com.imhos.security.server.service.serializer.AuthenticationSerializer" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>

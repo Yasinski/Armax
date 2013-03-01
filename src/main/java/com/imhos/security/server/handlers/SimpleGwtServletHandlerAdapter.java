@@ -1,4 +1,4 @@
-package com.imhos.security.server;
+package com.imhos.security.server.handlers;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleServletHandlerAdapter;
@@ -21,7 +21,7 @@ public class SimpleGwtServletHandlerAdapter extends SimpleServletHandlerAdapter 
     public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         Servlet servletHandler = (Servlet) handler;
-        if(servletHandler.getServletConfig() == null) {
+        if (servletHandler.getServletConfig() == null) {
             servletHandler.init(servletConfig);
         }
         return super.handle(request, response, handler);

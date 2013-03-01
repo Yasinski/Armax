@@ -13,7 +13,7 @@
         <aop:pointcut id="securityServicePointcut"
                       expression="execution(* com.imhos.security.server.service..*Service.*(..))"/>
         <aop:pointcut id="daoPointcut" expression="execution(* third.dao..*DAO.*(..))"/>
-        <aop:advisor order="0" advice-ref="accessDeniedAdvice" pointcut-ref="servicePointcut"/>
+        <aop:advisor order="0" advice-ref="accessDeniedAdvice" pointcut-ref="daoPointcut"/>
         <aop:advisor order="0" advice-ref="accessDeniedAdvice" pointcut-ref="securityServicePointcut"/>
         <aop:advisor order="1" advice-ref="txAdvice" pointcut-ref="servicePointcut"/>
         <aop:advisor order="1" advice-ref="txAdvice" pointcut-ref="securityServicePointcut"/>
@@ -57,7 +57,7 @@
                 <value>third.model.Actor</value>
                 <value>third.model.Director</value>
                 <value>third.model.Movie</value>
-                <value>third.model.User</value>
+                <value>com.imhos.security.server.model.User</value>
                 <value>com.imhos.security.server.model.UserConnection</value>
             </list>
         </property>

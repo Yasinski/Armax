@@ -1,4 +1,4 @@
-package com.imhos.security.server.serializer;
+package com.imhos.security.server.service.serializer;
 
 import com.imhos.security.server.service.social.SocialAuthenticationRejectedException;
 import com.imhos.security.shared.model.AuthenticationError;

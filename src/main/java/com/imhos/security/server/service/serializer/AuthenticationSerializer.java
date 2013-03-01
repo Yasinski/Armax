@@ -1,11 +1,11 @@
-package com.imhos.security.server.serializer;
+package com.imhos.security.server.service.serializer;
 
 import com.google.gson.Gson;
+import com.imhos.security.server.model.User;
 import com.imhos.security.server.model.UserConnection;
 import com.imhos.security.shared.model.UserDetailsDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import third.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.imhos.security.server.handlers;
 
-import com.imhos.security.server.serializer.AuthenticationExceptionSerializer;
-import com.imhos.security.server.serializer.Serializer;
+import com.imhos.security.server.service.serializer.AuthenticationExceptionSerializer;
+import com.imhos.security.server.service.serializer.Serializer;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 

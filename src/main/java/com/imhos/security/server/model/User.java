@@ -1,9 +1,9 @@
-package third.model;
+package com.imhos.security.server.model;
 
-import com.imhos.security.server.model.UserConnection;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
+import third.model.Role;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -54,6 +54,13 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private Set<UserConnection> userConnections = new HashSet<UserConnection>();
+
+    public User(String username, String password, Set<Role> authorities, boolean enabled) {
+        this.username = username;
+        this.enabled = enabled;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     public Set<UserConnection> getUserConnections() {
         return userConnections;

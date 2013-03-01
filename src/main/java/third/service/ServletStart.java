@@ -1,11 +1,10 @@
 package third.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import third.dao.UserDAO;
 import third.facade.DBMovieQueryer;
-import third.facade.DBUserQueryer;
 import third.facade.Pagination;
 import third.model.Movie;
 
@@ -15,21 +14,24 @@ import java.util.List;
 
 public class ServletStart implements Controller {
     private DBMovieQueryer dbMovieQueryer;
-    private DBUserQueryer dbUserQueryer;
     private Pagination pagination;
-    @Autowired
     private Md5PasswordEncoder passwordEncoder;
+    private UserDAO userDAO;
+
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public void setDbMovieQueryer(DBMovieQueryer dbMovieQueryer) {
         this.dbMovieQueryer = dbMovieQueryer;
     }
 
-    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-        this.dbUserQueryer = dbUserQueryer;
-    }
-
     public void setPagination(Pagination pagination) {
         this.pagination = pagination;
+    }
+
+    public void setPasswordEncoder(Md5PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -45,9 +47,9 @@ public class ServletStart implements Controller {
 //        User user3 = new User("user3", "user3@gmail.com", "user3@gmail.com", passwordEncoder.encodePassword("3333", "user3@gmail.com"), authorities, true);
 //        User admin = new User("admin", "admin@gmail.com", "admin@gmail.com", passwordEncoder.encodePassword("admin", "admin@gmail.com"), authorities2, true);
 //
-//        dbUserQueryer.saveUser(user1);
-//        dbUserQueryer.saveUser(user3);
-//        dbUserQueryer.saveUser(admin);
+//        userDAO.saveUser(user1);
+//        userDAO.saveUser(user3);
+//        userDAO.saveUser(admin);
 //
         Integer currentPage = 1;
         Integer rowsOnPage = 10;

@@ -3,7 +3,6 @@ package com.imhos.security.server.model;
 import org.hibernate.validator.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import third.model.User;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -25,7 +24,6 @@ public class UserConnection implements UserDetails {
     @Id
     @Column
     private String username;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
@@ -61,7 +59,6 @@ public class UserConnection implements UserDetails {
     @Column
     private Long expireTime;
 
-
     public UserConnection() {
     }
 
@@ -84,7 +81,6 @@ public class UserConnection implements UserDetails {
         this.expireTime = expireTime;
         this.username = providerUserId + USERNAME_SEPARATOR + providerId;
     }
-
 
     public int getRank() {
         return rank;

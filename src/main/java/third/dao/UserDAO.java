@@ -1,6 +1,6 @@
 package third.dao;
 
-import third.model.User;
+import com.imhos.security.server.model.User;
 
 import java.util.List;
 

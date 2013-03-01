@@ -1,38 +1,30 @@
 package com.imhos.security.client.module;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Widget;
+import com.imhos.security.client.module.deserializer.AuthenticationErrorDeserializerImpl;
+import com.imhos.security.client.module.deserializer.Deserializer;
+import com.imhos.security.client.module.deserializer.UserDetailsDeserializerGwtImpl;
+import com.imhos.security.client.module.view.SampleApplicationView;
 import com.imhos.security.shared.model.AuthenticationError;
 import com.imhos.security.shared.model.UserDetails;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
  */
-public class SampleApplication implements EntryPoint, LoginHandler<AuthenticationError> {
+public class LoginEditor implements LoginHandler<AuthenticationError> {
 
     public static final String NOT_LOGGED_IN = "Not logged in";
-    private Label message = new Label(NOT_LOGGED_IN);
-    private SubmitButton login = new SubmitButton("Login");
-    private Button loginFacebook = new Button("Sign in with Facebook");
-    private Button loginTwitter = new Button("Sign in with Twitter");
-    private Button logout = new Button("Logout");
-    private Button button = new Button("Button");
-    private TextBox username = new TextBox();
-    private PasswordTextBox password = new PasswordTextBox();
-    private CheckBox rememberMe = new CheckBox("rememberMe");
+    private SampleApplicationView view;
     private Deserializer<UserDetails> userDetailsDeserializer;
     private Deserializer<AuthenticationError> authenticationErrorDeserializer;
     private LoginHandler<AuthenticationError> loginHandler;
 
-    /**
-     * This is the entry point method.
-     */
-    public void onModuleLoad() {
+    public LoginEditor(SampleApplicationView loginView) {
+        this.view = loginView;
         registerLoginHandler(this);
 
         userDetailsDeserializer = new UserDetailsDeserializerGwtImpl();
@@ -45,66 +37,34 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
         //        FlowPanel formPanel = new FlowPanel();
         //        form.add(formPanel);
 
-        login.addClickHandler(new ClickHandler() {
+        view.getLogin().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                login(username.getText(), password.getText(), rememberMe.getValue());
+                login(view.getUsername().getValue(), view.getPassword().getValue(), view.getRememberMe().getValue());
             }
         });
-        logout.addClickHandler(new ClickHandler() {
+        view.getLogout().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 logout();
             }
         });
-        loginFacebook.addClickHandler(new ClickHandler() {
+        view.loginFacebook().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                loginFacebook(rememberMe.getValue());
+                loginFacebook(view.getRememberMe().getValue());
             }
         });
-        loginTwitter.addClickHandler(new ClickHandler() {
+        view.loginTwitter().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                loginTwitter(rememberMe.getValue());
-            }
-        });
-
-//        formPanel.add(username);
-//        formPanel.add(password);
-//        formPanel.add(rememberMe);
-//        formPanel.add(login);
-//        RootPanel.get("slot1").add(form);
-
-        RootPanel.get("slot1").add(message);
-        RootPanel.get("slot1").add(username);
-        RootPanel.get("slot1").add(password);
-        RootPanel.get("slot1").add(rememberMe);
-        RootPanel.get("slot1").add(login);
-        RootPanel.get("slot1").add(loginFacebook);
-        RootPanel.get("slot1").add(loginTwitter);
-        RootPanel.get("slot1").add(logout);
-
-
-        RootPanel.get("slot2").add(button);
-
-        button.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                SampleApplicationService.App.getInstance().getMessage("test", new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Window.alert("[Failure] " + caught.getClass() + " " + caught.getMessage());
-
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        Window.alert("Success " + result);
-
-                    }
-                });
+                loginTwitter(view.getRememberMe().getValue());
             }
         });
 
         checkAuthentication();
+    }
+
+    public Widget asWidget() {
+        return (Widget) view;
     }
 
     private void loginFacebook(boolean rememberMe) {
@@ -118,7 +78,6 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
     }
 
     private void login(String login, String pass, boolean rememberMe) {
-
 
         RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, "/j_spring_security_check");
         rb.setHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -162,7 +121,7 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
             public void onResponseReceived(Request request, Response response) {
                 if (Response.SC_OK == response.getStatusCode()) {
                     //todo: logout handler should be implemented
-                    message.setText(NOT_LOGGED_IN);
+                    view.getMessage().setText(NOT_LOGGED_IN);
                     Window.alert("[logout] Success");
                 } else {
                     //todo: logout handler should be implemented
@@ -180,11 +139,11 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
 
 
     public void handleLoginSuccess(UserDetails user) {
-        message.setText(user.getUsername());
+        view.getMessage().setText(user.getUsername());
     }
 
     public void handleLoginError(AuthenticationError error) {
-        message.setText(error.toString());
+        view.getMessage().setText(error.toString());
     }
 
     private void handleLoginSuccess(String json) {
@@ -210,13 +169,13 @@ public class SampleApplication implements EntryPoint, LoginHandler<Authenticatio
         return $wnd.authentication;
     }-*/;
 
-    public native void registerLoginHandler(SampleApplication impl) /*-{
+    public native void registerLoginHandler(LoginEditor impl) /*-{
 
         $wnd.handleLoginSuccess = $entry(function (user) {
-            impl.@com.imhos.security.client.module.SampleApplication::handleLoginSuccess(Ljava/lang/String;)(user);
+            impl.@com.imhos.security.client.module.LoginEditor::handleLoginSuccess(Ljava/lang/String;)(user);
         });
         $wnd.handleLoginError = $entry(function (user) {
-            impl.@com.imhos.security.client.module.SampleApplication::handleLoginError(Ljava/lang/String;)(user);
+            impl.@com.imhos.security.client.module.LoginEditor::handleLoginError(Ljava/lang/String;)(user);
         });
     }-*/;
 }

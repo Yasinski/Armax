@@ -69,23 +69,12 @@ package third.facade;
 //}
 
 
-//import third.model.User;
 //
 //import java.util.HashSet;
 //import java.util.Set;
 //
 //public class FacebookController {
 //
-//	public static void main(String[] args) {
-//		DBUserQueryer dbUserQueryer = new DBUserQueryer();
-//		String username = "user1";
-//		String password = "1111";
-//		boolean enabled = true;
-//		Set<String> authotities = new HashSet<String>();
-//		authotities.add("ROLE_USER");   // ROLE_ADMIN
-//
-//		User user = new User(username, password, authotities, enabled);
-//		dbUserQueryer.saveUser(user);
 //
 //	}
 //}

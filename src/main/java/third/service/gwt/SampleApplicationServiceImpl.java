@@ -2,30 +2,30 @@ package third.service.gwt;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.imhos.security.client.module.SampleApplicationService;
+import com.imhos.security.server.model.User;
 import com.imhos.security.shared.model.GWTException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import third.facade.DBUserQueryer;
-import third.model.User;
+import third.dao.UserDAO;
 
 
 public class SampleApplicationServiceImpl extends RemoteServiceServlet implements SampleApplicationService {
     // Implementation of sample interface method
-    private DBUserQueryer dbUserQueryer;
+    private UserDAO userDAO;
 
-    public void setDbUserQueryer(DBUserQueryer dbUserQueryer) {
-        this.dbUserQueryer = dbUserQueryer;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     public String getMessage(String msg) throws GWTException {
-        dbUserQueryer.getAllUsers();
+        userDAO.getAllUsers();
         return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!" +
                 SecurityContextHolder.getContext().getAuthentication().getName() + "\"\n";
     }
 
     @Override
     public boolean login(String login, String password) {
-        User user = dbUserQueryer.getUserByLogin(login);
+        User user = userDAO.getUserByLogin(login);
         if (user != null) {
             String storedPass = user.getPassword();
             return storedPass.equals(password);

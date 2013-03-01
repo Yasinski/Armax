@@ -48,8 +48,8 @@ public class UserDetailsServiceSocialWrapper implements UserDetailsService {
             }
             return user;
         }
-        UsersConnectionService.ServiceProviderConnectionMapper connectionMapper
-                = new UsersConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
+        UserConnectionService.ServiceProviderConnectionMapper connectionMapper
+                = new UserConnectionService.ServiceProviderConnectionMapper(connectionFactoryLocator, textEncryptor);
         Connection connection;
         try {
             connection = connectionMapper.mapEntity(userConnection);

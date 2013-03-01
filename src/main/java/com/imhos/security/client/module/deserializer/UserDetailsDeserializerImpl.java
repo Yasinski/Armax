@@ -1,4 +1,4 @@
-package com.imhos.security.client.module;
+package com.imhos.security.client.module.deserializer;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;

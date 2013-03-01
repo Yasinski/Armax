@@ -1,5 +1,6 @@
 package third.dao.impl;
 
+import com.imhos.security.server.model.User;
 import com.imhos.security.server.model.UserConnection;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,7 +12,6 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.util.MultiValueMap;
 import third.dao.UserConnectionDAO;
-import third.model.User;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.imhos.security.server.handlers;
 
-import com.imhos.security.server.serializer.Serializer;
-import com.imhos.security.server.serializer.AuthenticationSerializer;
+import com.imhos.security.server.service.serializer.AuthenticationSerializer;
+import com.imhos.security.server.service.serializer.Serializer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

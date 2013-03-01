@@ -1,4 +1,4 @@
-package com.imhos.security.client.module;
+package com.imhos.security.client.module.deserializer;
 
 /**
  * writeme: Should be the description of the class

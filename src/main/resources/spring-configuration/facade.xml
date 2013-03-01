@@ -14,5 +14,4 @@
     <bean id="dbActorQueryer" name="dbActorQueryer" class="third.facade.DBActorQueryer"/>
     <bean id="dbDirectorQueryer" name="dbDirectorQueryer" class="third.facade.DBDirectorQueryer"/>
     <bean id="dbMovieQueryer" name="dbMovieQueryer" class="third.facade.DBMovieQueryer"/>
-    <bean id="dbUserQueryer" name="dbUserQueryer" class="third.facade.DBUserQueryer"/>
 </beans>

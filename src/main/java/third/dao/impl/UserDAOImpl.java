@@ -1,12 +1,13 @@
 package third.dao.impl;
 
+import com.imhos.security.server.model.User;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.access.annotation.Secured;
 import third.dao.UserDAO;
-import third.model.User;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class UserDAOImpl implements UserDAO {
         getSession().update(user);
     }
 
+    @Secured("ROLE_ADMIN")      //todo: !!!! implement an AccessDeniedException handler in service layer
     public List<User> getAllUsers() {
         return getSession().createCriteria(User.class)
                 .list();

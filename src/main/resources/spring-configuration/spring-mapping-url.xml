@@ -36,7 +36,7 @@
     <context:annotation-config/>
     <bean id="connectController" class="com.imhos.security.server.controller.SocialConnectController">
         <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
-        <constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
+        <constructor-arg name="usersConnectionRepository" ref="userConnectionRepository"/>
         <constructor-arg name="signInAdapter">
             <bean class="com.imhos.security.server.service.social.SignInSocialAdapter"/>
         </constructor-arg>

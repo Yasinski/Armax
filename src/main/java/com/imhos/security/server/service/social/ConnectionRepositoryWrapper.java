@@ -20,76 +20,76 @@ public class ConnectionRepositoryWrapper implements ConnectionRepository {
 
 
     private final String userId;
-    private UsersConnectionService usersConnectionService;
+    private UserConnectionService userConnectionService;
 
 
-    public ConnectionRepositoryWrapper(String userId, UsersConnectionService usersConnectionService) {
-        this.usersConnectionService = usersConnectionService;
+    public ConnectionRepositoryWrapper(String userId, UserConnectionService userConnectionService) {
+        this.userConnectionService = userConnectionService;
         this.userId = userId;
     }
 
     public MultiValueMap<String, Connection<?>> findAllConnections() {
-        return usersConnectionService.findAllConnections(userId);
+        return userConnectionService.findAllConnections(userId);
     }
 
     public List<Connection<?>> findConnections(String providerId) {
-        return usersConnectionService.findConnections(providerId, userId);
+        return userConnectionService.findConnections(providerId, userId);
     }
 
     @SuppressWarnings("unchecked")
     public <A> List<Connection<A>> findConnections(Class<A> apiType) {
-        return usersConnectionService.findConnections(apiType, userId);
+        return userConnectionService.findConnections(apiType, userId);
     }
 
     public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUsers) {
-        return usersConnectionService.findConnectionsToUsers(providerUsers, userId);
+        return userConnectionService.findConnectionsToUsers(providerUsers, userId);
     }
 
     public Connection<?> getConnection(ConnectionKey connectionKey) {
-        return usersConnectionService.getConnection(connectionKey, userId);
+        return userConnectionService.getConnection(connectionKey, userId);
     }
 
     @SuppressWarnings("unchecked")
     public <A> Connection<A> getConnection(Class<A> apiType, String providerUserId) {
-        return usersConnectionService.getConnection(apiType, providerUserId, userId);
+        return userConnectionService.getConnection(apiType, providerUserId, userId);
     }
 
     @SuppressWarnings("unchecked")
     public <A> Connection<A> getPrimaryConnection(Class<A> apiType) {
-        return usersConnectionService.getPrimaryConnection(apiType, userId);
+        return userConnectionService.getPrimaryConnection(apiType, userId);
     }
 
     @SuppressWarnings("unchecked")
     public <A> Connection<A> findPrimaryConnection(Class<A> apiType) {
-        return usersConnectionService.findPrimaryConnection(apiType, userId);
+        return userConnectionService.findPrimaryConnection(apiType, userId);
     }
 
     @Transactional
     public void addConnection(Connection<?> connection) {
-        usersConnectionService.addConnection(connection, userId);
+        userConnectionService.addConnection(connection, userId);
     }
 
     public void updateConnection(Connection<?> connection) {
-        usersConnectionService.updateConnection(connection, userId);
+        userConnectionService.updateConnection(connection, userId);
     }
 
     public void removeConnections(String providerId) {
-        usersConnectionService.removeConnections(providerId, userId);
+        userConnectionService.removeConnections(providerId, userId);
     }
 
     public void removeConnection(ConnectionKey connectionKey) {
-        usersConnectionService.removeConnection(connectionKey);
+        userConnectionService.removeConnection(connectionKey);
     }
 
     private Connection<?> findPrimaryConnection(String providerId) {
-        return usersConnectionService.findPrimaryConnection(providerId, userId);
+        return userConnectionService.findPrimaryConnection(providerId, userId);
     }
 
     private <A> String getProviderId(Class<A> apiType) {
-        return usersConnectionService.getProviderId(apiType);
+        return userConnectionService.getProviderId(apiType);
     }
 
     private String encrypt(String text) {
-        return usersConnectionService.encrypt(text);
+        return userConnectionService.encrypt(text);
     }
 }

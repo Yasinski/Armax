@@ -1,9 +1,9 @@
 package com.imhos.security.server.controller;
 
-import com.imhos.security.server.serializer.Serializer;
+import com.imhos.security.server.service.serializer.Serializer;
 import com.imhos.security.server.service.social.SignInSocialAdapter;
 import com.imhos.security.server.service.social.SocialAuthenticationRejectedException;
-import com.imhos.security.server.service.social.UsersConnectionServiceWrapper;
+import com.imhos.security.server.service.social.UserConnectionServiceWrapper;
 import com.imhos.security.server.view.AbstractSocialView;
 import com.imhos.security.server.view.SocialErrorView;
 import com.imhos.security.server.view.SocialSuccessView;
@@ -46,7 +46,7 @@ public class SocialConnectController {
     private Serializer<AuthenticationException> authenticationExceptionSerializer;
     private ConnectionFactoryLocator connectionFactoryLocator;
     private final ConnectSupport webSupport = new ConnectSupport();
-    private UsersConnectionServiceWrapper usersConnectionRepository;
+    private UserConnectionServiceWrapper usersConnectionRepository;
     private SignInSocialAdapter signInAdapter;
     private String signInUrl = "/signin";
     private String signUpUrl = "/signup";
@@ -64,7 +64,7 @@ public class SocialConnectController {
 
 
     public SocialConnectController(ConnectionFactoryLocator connectionFactoryLocator,
-                                   UsersConnectionServiceWrapper usersConnectionRepository, SignInSocialAdapter signInAdapter) {
+                                   UserConnectionServiceWrapper usersConnectionRepository, SignInSocialAdapter signInAdapter) {
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.usersConnectionRepository = usersConnectionRepository;
         this.signInAdapter = signInAdapter;

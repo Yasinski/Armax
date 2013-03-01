@@ -1,4 +1,4 @@
-package com.imhos.security.client.module;
+package com.imhos.security.client.module.deserializer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.web.bindery.autobean.shared.AutoBean;
